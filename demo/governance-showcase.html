@@ -1,0 +1,521 @@
+<title>VEGA Document Governance — Live Showcase</title>
+<style>
+:root {
+  --bg: #ffffff; --bg2: #f7f8fa; --bg3: #eef1f6;
+  --text: #0c1222; --text2: #3d4a5c; --text3: #7a8599;
+  --accent: #1a56db; --accent2: #2563eb; --accent-soft: rgba(26,86,219,0.08);
+  --teal: #0d9488; --teal-soft: rgba(13,148,136,0.08);
+  --border: rgba(12,18,34,0.08);
+  --card: #ffffff; --card-border: rgba(12,18,34,0.06);
+  --green: #059669; --green-bg: rgba(5,150,105,0.08);
+  --yellow: #d97706; --yellow-bg: rgba(217,119,6,0.08);
+  --red: #dc2626; --red-bg: rgba(220,38,38,0.08);
+  --purple: #7c3aed; --purple-bg: rgba(124,58,237,0.08);
+  --orange: #ea580c;
+  --mono: 'Cascadia Code','Fira Code','Consolas',monospace;
+}
+@media(prefers-color-scheme:dark){:root{
+  --bg: #0a0e1a; --bg2: #0f1424; --bg3: #151b2e;
+  --text: #e2e6ef; --text2: #9ba3b5; --text3: #5c6478;
+  --accent: #60a5fa; --accent2: #93bbfc; --accent-soft: rgba(96,165,250,0.1);
+  --teal: #2dd4bf; --teal-soft: rgba(45,212,191,0.08);
+  --border: rgba(255,255,255,0.06);
+  --card: #111827; --card-border: rgba(255,255,255,0.06);
+  --green: #34d399; --green-bg: rgba(52,211,153,0.1);
+  --yellow: #fbbf24; --yellow-bg: rgba(251,191,36,0.1);
+  --red: #f87171; --red-bg: rgba(248,113,113,0.1);
+  --purple: #a78bfa; --purple-bg: rgba(167,139,250,0.1);
+  --orange: #fb923c;
+}}
+:root[data-theme="dark"]{
+  --bg: #0a0e1a; --bg2: #0f1424; --bg3: #151b2e;
+  --text: #e2e6ef; --text2: #9ba3b5; --text3: #5c6478;
+  --accent: #60a5fa; --accent2: #93bbfc; --accent-soft: rgba(96,165,250,0.1);
+  --teal: #2dd4bf; --teal-soft: rgba(45,212,191,0.08);
+  --border: rgba(255,255,255,0.06);
+  --card: #111827; --card-border: rgba(255,255,255,0.06);
+  --green: #34d399; --green-bg: rgba(52,211,153,0.1);
+  --yellow: #fbbf24; --yellow-bg: rgba(251,191,36,0.1);
+  --red: #f87171; --red-bg: rgba(248,113,113,0.1);
+  --purple: #a78bfa; --purple-bg: rgba(167,139,250,0.1);
+  --orange: #fb923c;
+}
+:root[data-theme="light"]{
+  --bg: #ffffff; --bg2: #f7f8fa; --bg3: #eef1f6;
+  --text: #0c1222; --text2: #3d4a5c; --text3: #7a8599;
+  --accent: #1a56db; --accent2: #2563eb; --accent-soft: rgba(26,86,219,0.08);
+  --teal: #0d9488; --teal-soft: rgba(13,148,136,0.08);
+  --border: rgba(12,18,34,0.08);
+  --card: #ffffff; --card-border: rgba(12,18,34,0.06);
+  --green: #059669; --green-bg: rgba(5,150,105,0.08);
+  --yellow: #d97706; --yellow-bg: rgba(217,119,6,0.08);
+  --red: #dc2626; --red-bg: rgba(220,38,38,0.08);
+  --purple: #7c3aed; --purple-bg: rgba(124,58,237,0.08);
+  --orange: #ea580c;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;color:var(--text);background:var(--bg);line-height:1.6}
+
+.container{max-width:960px;margin:0 auto;padding:32px 20px 80px}
+
+.back-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text3);text-decoration:none;margin-bottom:24px;transition:color .2s}
+.back-link:hover{color:var(--accent)}
+
+.page-header{text-align:center;margin-bottom:48px}
+.page-header h1{font-size:28px;font-weight:800;letter-spacing:-0.5px;margin-bottom:8px}
+.page-header h1 span{background:linear-gradient(135deg,var(--accent),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.page-header p{font-size:15px;color:var(--text2);max-width:600px;margin:0 auto}
+
+/* Module cards */
+.modules{display:flex;flex-direction:column;gap:48px}
+
+.module{background:var(--card);border:1px solid var(--card-border);border-radius:16px;overflow:hidden}
+.module-header{padding:24px 28px 16px;border-bottom:1px solid var(--border)}
+.module-num{font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.module-title{font-size:20px;font-weight:700;margin-bottom:4px}
+.module-desc{font-size:13px;color:var(--text3)}
+
+.module-screen{padding:20px;background:var(--bg2)}
+
+/* === MODULE 1: Document Pipeline === */
+.pipeline{display:flex;flex-direction:column;gap:6px}
+.pipe-stage{display:flex;align-items:center;gap:0;min-height:44px}
+.pipe-label{width:140px;flex-shrink:0;padding:10px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;border-radius:8px 0 0 8px;display:flex;align-items:center;gap:8px}
+.pipe-items{flex:1;padding:8px 12px;display:flex;flex-wrap:wrap;gap:6px;background:var(--bg3);border-radius:0 8px 8px 0;min-height:44px;align-items:center}
+
+.pipe-stage:nth-child(1) .pipe-label{background:var(--green-bg);color:var(--green)}
+.pipe-stage:nth-child(2) .pipe-label{background:var(--yellow-bg);color:var(--yellow)}
+.pipe-stage:nth-child(3) .pipe-label{background:var(--purple-bg);color:var(--purple)}
+.pipe-stage:nth-child(4) .pipe-label{background:var(--accent-soft);color:var(--accent)}
+.pipe-stage:nth-child(5) .pipe-label{background:var(--red-bg);color:var(--red)}
+.pipe-stage:nth-child(6) .pipe-label{background:var(--teal-soft);color:var(--teal)}
+
+.pipe-count{font-size:10px;padding:2px 6px;border-radius:8px;background:rgba(255,255,255,0.2)}
+
+.doc-chip{padding:4px 10px;border-radius:5px;font-size:11px;font-weight:600;cursor:default;transition:transform .15s}
+.doc-chip:hover{transform:translateY(-1px)}
+.chip-green{background:var(--green-bg);color:var(--green)}
+.chip-yellow{background:var(--yellow-bg);color:var(--yellow)}
+.chip-purple{background:var(--purple-bg);color:var(--purple)}
+.chip-blue{background:var(--accent-soft);color:var(--accent)}
+.chip-red{background:var(--red-bg);color:var(--red)}
+.chip-teal{background:var(--teal-soft);color:var(--teal)}
+.chip-empty{color:var(--text3);font-style:italic;font-weight:400}
+
+/* === MODULE 2: Compliance Findings === */
+.findings-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.find-stat{text-align:center;padding:12px 8px;background:var(--bg3);border-radius:10px}
+.find-stat-num{font-size:22px;font-weight:800}
+.find-stat-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--text3)}
+
+.findings-list{display:flex;flex-direction:column;gap:6px;max-height:320px;overflow-y:auto}
+.finding-row{display:grid;grid-template-columns:40px 1fr 80px 90px;gap:12px;align-items:center;padding:10px 14px;background:var(--bg3);border-radius:8px;font-size:13px}
+.finding-id{font-family:var(--mono);font-size:11px;color:var(--text3);font-weight:600}
+.finding-text{color:var(--text2)}
+.sev-badge{padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;text-transform:uppercase;text-align:center}
+.sev-critical{background:var(--red-bg);color:var(--red)}
+.sev-high{background:rgba(234,88,12,0.1);color:var(--orange)}
+.sev-medium{background:var(--yellow-bg);color:var(--yellow)}
+.sev-low{background:var(--green-bg);color:var(--green)}
+.status-badge{padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;text-align:center}
+.st-fixed{background:var(--green-bg);color:var(--green)}
+.st-wip{background:var(--yellow-bg);color:var(--yellow)}
+.st-open{background:var(--red-bg);color:var(--red)}
+
+/* === MODULE 3: Entropy Matrix === */
+.matrix-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table.matrix{border-collapse:collapse;font-size:11px;width:100%}
+table.matrix th{padding:8px 10px;border:1px solid var(--border);font-weight:600;background:var(--bg3);text-align:center}
+table.matrix th.row-h{text-align:left;min-width:160px;position:sticky;left:0;background:var(--bg3);z-index:1}
+table.matrix td{padding:8px 10px;border:1px solid var(--border);text-align:center;font-weight:500}
+table.matrix td.row-h{text-align:left;position:sticky;left:0;background:var(--card);z-index:1;font-weight:600;font-size:11px}
+.h0{color:var(--text3)}
+.h1{background:var(--green-bg);color:var(--green)}
+.h2{background:var(--yellow-bg);color:var(--yellow)}
+.h3{background:rgba(234,88,12,0.1);color:var(--orange)}
+.h4{background:var(--red-bg);color:var(--red)}
+
+/* === MODULE 4: Legal Network === */
+.legal-net{position:relative;min-height:300px}
+.legal-canvas{width:100%;height:340px}
+
+/* Module footer */
+.module-footer{padding:16px 28px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.module-footer span{font-size:12px;color:var(--text3)}
+.module-tag{padding:3px 10px;border-radius:5px;font-size:11px;font-weight:600;background:var(--accent-soft);color:var(--accent)}
+
+.disclaimer{margin-top:40px;font-size:11.5px;color:var(--text3);text-align:center;line-height:1.5;max-width:600px;margin-left:auto;margin-right:auto}
+
+@media(max-width:600px){
+  .container{padding:20px 16px 60px}
+  .page-header h1{font-size:22px}
+  .pipe-label{width:100px;font-size:10px}
+  .findings-stats{grid-template-columns:repeat(2,1fr)}
+  .finding-row{grid-template-columns:36px 1fr;gap:6px}
+  .finding-row .sev-badge,.finding-row .status-badge{display:none}
+}
+</style>
+
+<div class="container">
+  <a href="../" class="back-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5m0 0l7 7m-7-7l7-7"/></svg> vegaplatform.app</a>
+
+  <div class="page-header">
+    <h1>Document <span>Governance</span> in Action</h1>
+    <p>How VEGA manages regulatory documents from intake to compliance. Real architecture, anonymized data.</p>
+  </div>
+
+  <div class="modules">
+
+    <!-- MODULE 1: Document Pipeline -->
+    <div class="module">
+      <div class="module-header">
+        <div class="module-num">Module 1</div>
+        <div class="module-title">Document Lifecycle Pipeline</div>
+        <div class="module-desc">Every document flows through 6 phases. No document skips a phase.</div>
+      </div>
+      <div class="module-screen">
+        <div class="pipeline">
+          <div class="pipe-stage">
+            <div class="pipe-label">Approved <span class="pipe-count">34</span></div>
+            <div class="pipe-items">
+              <span class="doc-chip chip-green">D-001 Statute</span>
+              <span class="doc-chip chip-green">D-004 Quality Manual</span>
+              <span class="doc-chip chip-green">D-007 Board Rules</span>
+              <span class="doc-chip chip-green">D-012 Expert Policy</span>
+              <span class="doc-chip chip-green">D-019 Risk Register</span>
+              <span class="doc-chip chip-green" style="opacity:0.6">+29 more</span>
+            </div>
+          </div>
+          <div class="pipe-stage">
+            <div class="pipe-label">AI Review <span class="pipe-count">8</span></div>
+            <div class="pipe-items">
+              <span class="doc-chip chip-yellow">D-041 Fire Safety</span>
+              <span class="doc-chip chip-yellow">D-052 Waste Protocol</span>
+              <span class="doc-chip chip-yellow">D-058 Incident Report</span>
+              <span class="doc-chip chip-yellow" style="opacity:0.6">+5 more</span>
+            </div>
+          </div>
+          <div class="pipe-stage">
+            <div class="pipe-label">Verification <span class="pipe-count">12</span></div>
+            <div class="pipe-items">
+              <span class="doc-chip chip-purple">D-023 Privacy Policy</span>
+              <span class="doc-chip chip-purple">D-031 Employment</span>
+              <span class="doc-chip chip-purple">D-044 Maintenance</span>
+              <span class="doc-chip chip-purple" style="opacity:0.6">+9 more</span>
+            </div>
+          </div>
+          <div class="pipe-stage">
+            <div class="pipe-label">OCR <span class="pipe-count">14</span></div>
+            <div class="pipe-items">
+              <span class="doc-chip chip-blue">D-055 Amendment v3</span>
+              <span class="doc-chip chip-blue">D-061 Procedure 014</span>
+              <span class="doc-chip chip-blue">D-067 Internal Audit</span>
+              <span class="doc-chip chip-blue" style="opacity:0.6">+11 more</span>
+            </div>
+          </div>
+          <div class="pipe-stage">
+            <div class="pipe-label">Flagged <span class="pipe-count">3</span></div>
+            <div class="pipe-items">
+              <span class="doc-chip chip-red">D-028 Medication SOP</span>
+              <span class="doc-chip chip-red">D-064 Oversight v2</span>
+              <span class="doc-chip chip-red">D-072 Post-market</span>
+            </div>
+          </div>
+          <div class="pipe-stage">
+            <div class="pipe-label">Intake <span class="pipe-count">9</span></div>
+            <div class="pipe-items">
+              <span class="doc-chip chip-teal">D-074 New policy</span>
+              <span class="doc-chip chip-teal">D-075 Amendment</span>
+              <span class="doc-chip chip-teal" style="opacity:0.6">+7 queued</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="module-footer">
+        <span>80 documents across 6 lifecycle phases</span>
+        <span class="module-tag">Drag-and-drop import</span>
+      </div>
+    </div>
+
+    <!-- MODULE 2: Compliance Findings -->
+    <div class="module">
+      <div class="module-header">
+        <div class="module-num">Module 2</div>
+        <div class="module-title">Compliance Audit Tracker</div>
+        <div class="module-desc">AI-detected findings with severity, status tracking, and fix verification.</div>
+      </div>
+      <div class="module-screen">
+        <div class="findings-stats">
+          <div class="find-stat"><div class="find-stat-num" style="color:var(--red)">7</div><div class="find-stat-label">Critical</div></div>
+          <div class="find-stat"><div class="find-stat-num" style="color:var(--orange)">23</div><div class="find-stat-label">High</div></div>
+          <div class="find-stat"><div class="find-stat-num" style="color:var(--yellow)">51</div><div class="find-stat-label">Medium</div></div>
+          <div class="find-stat"><div class="find-stat-num" style="color:var(--green)">37</div><div class="find-stat-label">Fixed</div></div>
+        </div>
+        <div class="findings-list">
+          <div class="finding-row">
+            <div class="finding-id">#001</div>
+            <div class="finding-text">Governance body mandate exceeds legislative authority (Art. 12)</div>
+            <div><span class="sev-badge sev-critical">Critical</span></div>
+            <div><span class="status-badge st-fixed">Fixed</span></div>
+          </div>
+          <div class="finding-row">
+            <div class="finding-id">#002</div>
+            <div class="finding-text">Document references repealed regulation (Official Gazette 45/2019)</div>
+            <div><span class="sev-badge sev-critical">Critical</span></div>
+            <div><span class="status-badge st-fixed">Fixed</span></div>
+          </div>
+          <div class="finding-row">
+            <div class="finding-id">#003</div>
+            <div class="finding-text">Internal procedure contradicts national patient rights framework</div>
+            <div><span class="sev-badge sev-critical">Critical</span></div>
+            <div><span class="status-badge st-wip">In Progress</span></div>
+          </div>
+          <div class="finding-row">
+            <div class="finding-id">#017</div>
+            <div class="finding-text">Risk register missing probability assessment for 3 categories</div>
+            <div><span class="sev-badge sev-high">High</span></div>
+            <div><span class="status-badge st-fixed">Fixed</span></div>
+          </div>
+          <div class="finding-row">
+            <div class="finding-id">#024</div>
+            <div class="finding-text">Fire safety protocol references wrong building zone designation</div>
+            <div><span class="sev-badge sev-high">High</span></div>
+            <div><span class="status-badge st-open">Open</span></div>
+          </div>
+          <div class="finding-row">
+            <div class="finding-id">#031</div>
+            <div class="finding-text">GDPR data retention clause missing from employment contract template</div>
+            <div><span class="sev-badge sev-high">High</span></div>
+            <div><span class="status-badge st-wip">In Progress</span></div>
+          </div>
+          <div class="finding-row">
+            <div class="finding-id">#042</div>
+            <div class="finding-text">Version control: two editions of same policy active simultaneously</div>
+            <div><span class="sev-badge sev-medium">Medium</span></div>
+            <div><span class="status-badge st-fixed">Fixed</span></div>
+          </div>
+          <div class="finding-row">
+            <div class="finding-id">#058</div>
+            <div class="finding-text">Cross-reference to procedure D-031 uses outdated paragraph numbering</div>
+            <div><span class="sev-badge sev-medium">Medium</span></div>
+            <div><span class="status-badge st-open">Open</span></div>
+          </div>
+          <div class="finding-row">
+            <div class="finding-id">#073</div>
+            <div class="finding-text">Training record format inconsistent with quality management appendix</div>
+            <div><span class="sev-badge sev-low">Low</span></div>
+            <div><span class="status-badge st-fixed">Fixed</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="module-footer">
+        <span>118 findings across ~80 documents</span>
+        <span class="module-tag">Two-person verification workflow</span>
+      </div>
+    </div>
+
+    <!-- MODULE 3: Entropy Matrix -->
+    <div class="module">
+      <div class="module-header">
+        <div class="module-num">Module 3</div>
+        <div class="module-title">Document Entropy Matrix</div>
+        <div class="module-desc">Cross-reference density heatmap — shows which documents create the most regulatory risk when changed.</div>
+      </div>
+      <div class="module-screen">
+        <div class="matrix-wrap">
+          <table class="matrix">
+            <thead>
+              <tr>
+                <th class="row-h">Document</th>
+                <th>Legislation</th>
+                <th>Cross-refs</th>
+                <th>Versions</th>
+                <th>Findings</th>
+                <th>Entropy</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="row-h">D-001 Statute</td><td class="h2">3</td><td class="h4">12</td><td class="h2">4</td><td class="h1">1</td><td class="h4">8.7</td></tr>
+              <tr><td class="row-h">D-004 Quality Manual</td><td class="h3">5</td><td class="h3">8</td><td class="h3">6</td><td class="h2">3</td><td class="h4">7.9</td></tr>
+              <tr><td class="row-h">D-009 Patient Rights</td><td class="h4">7</td><td class="h2">4</td><td class="h1">2</td><td class="h3">5</td><td class="h3">7.2</td></tr>
+              <tr><td class="row-h">D-012 Expert Policy</td><td class="h2">2</td><td class="h2">3</td><td class="h1">1</td><td class="h1">0</td><td class="h1">3.1</td></tr>
+              <tr><td class="row-h">D-023 Privacy Policy</td><td class="h3">4</td><td class="h1">2</td><td class="h2">3</td><td class="h2">2</td><td class="h2">5.4</td></tr>
+              <tr><td class="row-h">D-028 Medication SOP</td><td class="h4">6</td><td class="h3">6</td><td class="h3">5</td><td class="h4">7</td><td class="h4">9.2</td></tr>
+              <tr><td class="row-h">D-041 Fire Safety</td><td class="h1">1</td><td class="h1">1</td><td class="h2">3</td><td class="h2">2</td><td class="h1">2.8</td></tr>
+              <tr><td class="row-h">D-064 Oversight v2</td><td class="h3">4</td><td class="h3">7</td><td class="h4">8</td><td class="h3">4</td><td class="h4">8.4</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="module-footer">
+        <span>Entropy score = weighted risk of cascading changes</span>
+        <span class="module-tag">Change-impact predictor</span>
+      </div>
+    </div>
+
+    <!-- MODULE 4: Legal Network -->
+    <div class="module">
+      <div class="module-header">
+        <div class="module-num">Module 4</div>
+        <div class="module-title">Legislative Dependency Graph</div>
+        <div class="module-desc">When a law changes, every dependent document lights up. Legislation as configuration.</div>
+      </div>
+      <div class="module-screen">
+        <canvas class="legal-canvas" id="legalCanvas"></canvas>
+      </div>
+      <div class="module-footer">
+        <span>Automatic impact analysis on legislative change</span>
+        <span class="module-tag">Law-change alerts</span>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="disclaimer">All document names, finding descriptions, and data shown are anonymized demonstrations of the VEGA governance architecture. No institutional data is displayed. The system has been deployed in a public-sector compliance audit covering ~80 regulatory documents with 100+ findings.</p>
+</div>
+
+<script>
+const canvas = document.getElementById('legalCanvas');
+const ctx = canvas.getContext('2d');
+
+function resize() {
+  const r = canvas.parentElement.getBoundingClientRect();
+  canvas.width = r.width * 2;
+  canvas.height = 340 * 2;
+  canvas.style.width = r.width + 'px';
+  canvas.style.height = '340px';
+  ctx.scale(2, 2);
+}
+resize();
+
+const style = getComputedStyle(document.documentElement);
+const isDark = window.matchMedia('(prefers-color-scheme:dark)').matches ||
+  document.documentElement.getAttribute('data-theme') === 'dark';
+
+const colors = {
+  law: isDark ? '#60a5fa' : '#1a56db',
+  doc: isDark ? '#2dd4bf' : '#0d9488',
+  alert: isDark ? '#f87171' : '#dc2626',
+  line: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(12,18,34,0.08)',
+  lineActive: isDark ? 'rgba(248,113,113,0.4)' : 'rgba(220,38,38,0.3)',
+  text: isDark ? '#e2e6ef' : '#0c1222',
+  textMuted: isDark ? '#5c6478' : '#7a8599',
+  bg: isDark ? '#0f1424' : '#f7f8fa'
+};
+
+const W = canvas.width / 2;
+const H = 340;
+
+const laws = [
+  { id: 'L1', label: 'Patient Rights Act', x: W * 0.15, y: 50 },
+  { id: 'L2', label: 'Health Services Act', x: W * 0.42, y: 40 },
+  { id: 'L3', label: 'GDPR / Data Protection', x: W * 0.72, y: 55, alert: true },
+  { id: 'L4', label: 'Fire Safety Regulation', x: W * 0.92, y: 45 },
+];
+
+const docs = [
+  { id: 'D1', label: 'D-001', x: W * 0.08, y: 170, links: ['L1'] },
+  { id: 'D2', label: 'D-009', x: W * 0.22, y: 200, links: ['L1', 'L2'] },
+  { id: 'D3', label: 'D-023', x: W * 0.38, y: 175, links: ['L2', 'L3'], alert: true },
+  { id: 'D4', label: 'D-028', x: W * 0.52, y: 210, links: ['L2'] },
+  { id: 'D5', label: 'D-031', x: W * 0.65, y: 180, links: ['L3'], alert: true },
+  { id: 'D6', label: 'D-041', x: W * 0.78, y: 195, links: ['L4'] },
+  { id: 'D7', label: 'D-052', x: W * 0.88, y: 170, links: ['L3', 'L4'], alert: true },
+];
+
+const findings = [
+  { id: 'F1', label: '#003', x: W * 0.18, y: 290, doc: 'D2' },
+  { id: 'F2', label: '#024', x: W * 0.4, y: 300, doc: 'D3' },
+  { id: 'F3', label: '#031', x: W * 0.6, y: 285, doc: 'D5' },
+  { id: 'F4', label: '#058', x: W * 0.78, y: 295, doc: 'D7' },
+];
+
+function drawNode(x, y, r, color, label, isAlert) {
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, Math.PI * 2);
+  if (isAlert) {
+    ctx.fillStyle = colors.alert;
+    ctx.globalAlpha = 0.2;
+    ctx.fill();
+    ctx.globalAlpha = 1;
+    ctx.strokeStyle = colors.alert;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  } else {
+    ctx.fillStyle = color;
+    ctx.globalAlpha = 0.15;
+    ctx.fill();
+    ctx.globalAlpha = 1;
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+  }
+  ctx.fillStyle = isAlert ? colors.alert : colors.text;
+  ctx.font = '11px Segoe UI, system-ui';
+  ctx.textAlign = 'center';
+  ctx.fillText(label, x, y + r + 14);
+}
+
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+
+  laws.forEach(law => {
+    ctx.fillStyle = colors.textMuted;
+    ctx.font = '10px Segoe UI, system-ui';
+    ctx.textAlign = 'center';
+    ctx.fillText(law.label, law.x, law.y - 18);
+  });
+
+  docs.forEach(doc => {
+    doc.links.forEach(lid => {
+      const law = laws.find(l => l.id === lid);
+      ctx.beginPath();
+      ctx.moveTo(law.x, law.y);
+      const cpY = (law.y + doc.y) / 2;
+      ctx.quadraticCurveTo((law.x + doc.x) / 2, cpY - 10, doc.x, doc.y);
+      ctx.strokeStyle = (doc.alert && law.alert) ? colors.lineActive : colors.line;
+      ctx.lineWidth = (doc.alert && law.alert) ? 2 : 1;
+      ctx.stroke();
+    });
+  });
+
+  findings.forEach(f => {
+    const doc = docs.find(d => d.id === f.doc);
+    ctx.beginPath();
+    ctx.setLineDash([4, 4]);
+    ctx.moveTo(doc.x, doc.y);
+    ctx.lineTo(f.x, f.y);
+    ctx.strokeStyle = colors.lineActive;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    ctx.setLineDash([]);
+  });
+
+  laws.forEach(l => drawNode(l.x, l.y, 8, colors.law, '', l.alert));
+  docs.forEach(d => drawNode(d.x, d.y, 10, colors.doc, d.label, d.alert));
+  findings.forEach(f => {
+    ctx.fillStyle = colors.alert;
+    ctx.font = 'bold 10px Segoe UI';
+    ctx.textAlign = 'center';
+    ctx.fillText(f.label, f.x, f.y + 4);
+  });
+
+  // Legend
+  const ly = H - 20;
+  ctx.font = '10px Segoe UI';
+  ctx.textAlign = 'left';
+
+  ctx.beginPath(); ctx.arc(20, ly, 5, 0, Math.PI*2); ctx.fillStyle = colors.law; ctx.globalAlpha=0.3; ctx.fill(); ctx.globalAlpha=1; ctx.strokeStyle = colors.law; ctx.lineWidth=1; ctx.stroke();
+  ctx.fillStyle = colors.textMuted; ctx.fillText('Law', 30, ly + 4);
+
+  ctx.beginPath(); ctx.arc(70, ly, 5, 0, Math.PI*2); ctx.fillStyle = colors.doc; ctx.globalAlpha=0.3; ctx.fill(); ctx.globalAlpha=1; ctx.strokeStyle = colors.doc; ctx.lineWidth=1; ctx.stroke();
+  ctx.fillStyle = colors.textMuted; ctx.fillText('Document', 80, ly + 4);
+
+  ctx.beginPath(); ctx.arc(150, ly, 5, 0, Math.PI*2); ctx.fillStyle = colors.alert; ctx.globalAlpha=0.3; ctx.fill(); ctx.globalAlpha=1; ctx.strokeStyle = colors.alert; ctx.lineWidth=1.5; ctx.stroke();
+  ctx.fillStyle = colors.textMuted; ctx.fillText('Affected by GDPR change', 160, ly + 4);
+}
+
+draw();
+window.addEventListener('resize', () => { resize(); draw(); });
+</script>
