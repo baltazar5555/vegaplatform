@@ -223,6 +223,57 @@ footer a{color:var(--accent);text-decoration:none}
 
 <!-- HERO -->
 <div class="hero">
+  <div style="margin-bottom:24px;">
+    <svg width="280" height="200" viewBox="80 50 440 340" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="hGoldGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#ffa726"/>
+          <stop offset="50%" stop-color="#ffcc02"/>
+          <stop offset="100%" stop-color="#ffa726"/>
+        </linearGradient>
+        <linearGradient id="hShieldGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#1a1a2e"/>
+          <stop offset="100%" stop-color="#16213e"/>
+        </linearGradient>
+        <linearGradient id="hVolGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#e94560" stop-opacity="0"/>
+          <stop offset="30%" stop-color="#e94560" stop-opacity="0.8"/>
+          <stop offset="70%" stop-color="#00c853" stop-opacity="0.8"/>
+          <stop offset="100%" stop-color="#00c853" stop-opacity="0"/>
+        </linearGradient>
+        <filter id="hGlow"><feGaussianBlur stdDeviation="4" result="blur"/><feFlood flood-color="#ffa726" flood-opacity="0.3"/><feComposite in2="blur" operator="in"/><feComposite in="SourceGraphic"/></filter>
+      </defs>
+      <g opacity="0.15">
+        <polyline points="80,200 110,180 130,220 150,160 170,240 190,170 210,210 230,150 250,230 270,180 290,200 310,140 330,250 350,170 370,220 380,190 400,210 420,160 440,230 460,185 480,195 510,200" fill="none" stroke="url(#hVolGrad)" stroke-width="2"/>
+        <polyline points="80,210 110,195 130,230 150,175 170,245 190,185 210,220 230,165 250,240 270,195 290,210 310,155 330,255 350,185 370,230 380,200 400,220 420,175 440,240 460,195 480,205 510,210" fill="none" stroke="url(#hVolGrad)" stroke-width="1.5"/>
+      </g>
+      <path d="M300,65 L375,98 L375,215 Q375,272 300,310 Q225,272 225,215 L225,98 Z" fill="url(#hShieldGrad)" stroke="#ffa726" stroke-width="2" opacity="0.9" filter="url(#hGlow)"/>
+      <path d="M300,80 L362,108 L362,212 Q362,260 300,293 Q238,260 238,212 L238,108 Z" fill="none" stroke="#ffa726" stroke-width="0.5" opacity="0.4"/>
+      <g transform="translate(300, 185)" opacity="0.9">
+        <path d="M0,-85 C-25,-85 -35,-70 -35,-55 C-35,-40 -25,-30 -20,-25 L-15,-20 L-8,-20 L-8,-75 C-8,-80 -4,-83 0,-83 C4,-83 8,-80 8,-75 L8,-20 L15,-20 L20,-25 C25,-30 35,-40 35,-55 C35,-70 25,-85 0,-85Z" fill="#ffa726" opacity="0.8"/>
+        <path d="M0,-83 C0,-98 0,-105 0,-110 C-4,-105 -6,-95 -6,-87 M0,-110 C4,-105 6,-95 6,-87" fill="none" stroke="#e94560" stroke-width="3" opacity="0.7" stroke-linecap="round"/>
+        <ellipse cx="0" cy="-112" rx="3" ry="4" fill="#e94560" opacity="0.8"/>
+        <ellipse cx="0" cy="-15" rx="12" ry="16" fill="#dbb896" opacity="0.6"/>
+        <path d="M-18,0 L-22,5 L-25,40 L-18,45 L-8,42 L0,44 L8,42 L18,45 L25,40 L22,5 L18,0 Z" fill="#ffa726" opacity="0.5"/>
+        <line x1="30" y1="-90" x2="30" y2="70" stroke="#ffa726" stroke-width="2" opacity="0.7"/>
+        <polygon points="30,-95 25,-80 35,-80" fill="#ffa726" opacity="0.7"/>
+        <circle cx="-28" cy="20" r="18" fill="none" stroke="#ffa726" stroke-width="1.5" opacity="0.5"/>
+        <circle cx="-28" cy="20" r="10" fill="none" stroke="#ffa726" stroke-width="0.5" opacity="0.3"/>
+        <line x1="-10" y1="45" x2="-14" y2="80" stroke="#ffa726" stroke-width="2.5" opacity="0.4"/>
+        <line x1="10" y1="45" x2="14" y2="80" stroke="#ffa726" stroke-width="2.5" opacity="0.4"/>
+      </g>
+      <g opacity="0.6">
+        <line x1="140" y1="120" x2="140" y2="180" stroke="#e94560" stroke-width="1"/><rect x="136" y="130" width="8" height="30" fill="#e94560" rx="1"/>
+        <line x1="160" y1="140" x2="160" y2="210" stroke="#e94560" stroke-width="1"/><rect x="156" y="155" width="8" height="40" fill="#e94560" rx="1"/>
+        <line x1="180" y1="160" x2="180" y2="240" stroke="#e94560" stroke-width="1"/><rect x="176" y="175" width="8" height="45" fill="#e94560" rx="1"/>
+        <line x1="420" y1="160" x2="420" y2="240" stroke="#00c853" stroke-width="1"/><rect x="416" y="175" width="8" height="45" fill="#00c853" rx="1"/>
+        <line x1="440" y1="140" x2="440" y2="210" stroke="#00c853" stroke-width="1"/><rect x="436" y="155" width="8" height="40" fill="#00c853" rx="1"/>
+        <line x1="460" y1="120" x2="460" y2="180" stroke="#00c853" stroke-width="1"/><rect x="456" y="130" width="8" height="30" fill="#00c853" rx="1"/>
+      </g>
+      <text x="300" y="370" text-anchor="middle" fill="url(#hGoldGrad)" font-family="'Segoe UI',system-ui,sans-serif" font-size="52" font-weight="800" letter-spacing="18" filter="url(#hGlow)">VEGA</text>
+      <text x="300" y="392" text-anchor="middle" fill="#ffa726" font-family="serif" font-size="14" opacity="0.5" font-style="italic">&#957;</text>
+    </svg>
+  </div>
   <div class="hero-badge">Open Source &middot; AI-Assisted &middot; Multi-Sector</div>
   <h1>Three AI agents review every document.<br><em>Before humans ever see it.</em></h1>
   <p class="hero-sub">VEGA is an open-source compliance platform for public institutions. One codebase covers healthcare, municipalities, pharmacies, social care &mdash; any regulated sector, any EU country.</p>
