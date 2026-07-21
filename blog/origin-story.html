@@ -1,0 +1,711 @@
+<title>The kiln that built VEGA</title>
+<style>
+  @font-face {
+    font-family: 'Newsreader';
+    src: url('data:font/woff2;base64,') format('woff2');
+  }
+  :root {
+    --bg: #FAFAF8;
+    --text: #1A1A18;
+    --text-mid: #5A5A56;
+    --text-light: #8A8A84;
+    --accent: #1D6B4F;
+    --accent-bg: #E8F3EE;
+    --accent-dark: #145039;
+    --rule: #D8D8D2;
+    --card-bg: #FFFFFF;
+    --card-border: #E8E8E2;
+    --pull-bg: #F2F0EA;
+    --pull-border: #C8C4B8;
+    --code-bg: #F0EDE6;
+    --code-text: #6B4F1D;
+    --timeline-line: #D0CEC6;
+    --timeline-dot: #1D6B4F;
+    --timeline-dot-border: #A8D4C0;
+    --stat-value: #1A1A18;
+    --kgr-skeptic: #854F0B;
+    --kgr-skeptic-bg: #FDF5E6;
+    --kgr-optimist: #185FA5;
+    --kgr-optimist-bg: #E6F1FB;
+    --kgr-arbiter: #534AB7;
+    --kgr-arbiter-bg: #EEEDFE;
+    --danger: #A32D2D;
+    --danger-bg: #FCEBEB;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1A1A18;
+      --text: #E8E8E2;
+      --text-mid: #A8A8A2;
+      --text-light: #6A6A64;
+      --accent: #5DCAA5;
+      --accent-bg: #0A2E22;
+      --accent-dark: #9FE1CB;
+      --rule: #333330;
+      --card-bg: #222220;
+      --card-border: #333330;
+      --pull-bg: #252520;
+      --pull-border: #444440;
+      --code-bg: #2A2820;
+      --code-text: #EF9F27;
+      --timeline-line: #444440;
+      --timeline-dot: #5DCAA5;
+      --timeline-dot-border: #1D4A38;
+      --stat-value: #E8E8E2;
+      --kgr-skeptic: #FAC775;
+      --kgr-skeptic-bg: #2A2210;
+      --kgr-optimist: #85B7EB;
+      --kgr-optimist-bg: #0C1E30;
+      --kgr-arbiter: #AFA9EC;
+      --kgr-arbiter-bg: #1A1830;
+      --danger: #F09595;
+      --danger-bg: #2A1515;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1A1A18;
+    --text: #E8E8E2;
+    --text-mid: #A8A8A2;
+    --text-light: #6A6A64;
+    --accent: #5DCAA5;
+    --accent-bg: #0A2E22;
+    --accent-dark: #9FE1CB;
+    --rule: #333330;
+    --card-bg: #222220;
+    --card-border: #333330;
+    --pull-bg: #252520;
+    --pull-border: #444440;
+    --code-bg: #2A2820;
+    --code-text: #EF9F27;
+    --timeline-line: #444440;
+    --timeline-dot: #5DCAA5;
+    --timeline-dot-border: #1D4A38;
+    --stat-value: #E8E8E2;
+    --kgr-skeptic: #FAC775;
+    --kgr-skeptic-bg: #2A2210;
+    --kgr-optimist: #85B7EB;
+    --kgr-optimist-bg: #0C1E30;
+    --kgr-arbiter: #AFA9EC;
+    --kgr-arbiter-bg: #1A1830;
+    --danger: #F09595;
+    --danger-bg: #2A1515;
+  }
+  :root[data-theme="light"] {
+    --bg: #FAFAF8;
+    --text: #1A1A18;
+    --text-mid: #5A5A56;
+    --text-light: #8A8A84;
+    --accent: #1D6B4F;
+    --accent-bg: #E8F3EE;
+    --accent-dark: #145039;
+    --rule: #D8D8D2;
+    --card-bg: #FFFFFF;
+    --card-border: #E8E8E2;
+    --pull-bg: #F2F0EA;
+    --pull-border: #C8C4B8;
+    --code-bg: #F0EDE6;
+    --code-text: #6B4F1D;
+    --timeline-line: #D0CEC6;
+    --timeline-dot: #1D6B4F;
+    --timeline-dot-border: #A8D4C0;
+    --stat-value: #1A1A18;
+    --kgr-skeptic: #854F0B;
+    --kgr-skeptic-bg: #FDF5E6;
+    --kgr-optimist: #185FA5;
+    --kgr-optimist-bg: #E6F1FB;
+    --kgr-arbiter: #534AB7;
+    --kgr-arbiter-bg: #EEEDFE;
+    --danger: #A32D2D;
+    --danger-bg: #FCEBEB;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Georgia', 'Times New Roman', serif;
+    line-height: 1.78;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 4rem;
+  }
+
+  .eyebrow {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    font-size: clamp(28px, 5vw, 38px);
+    font-weight: 400;
+    line-height: 1.25;
+    text-wrap: balance;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+
+  .subtitle {
+    font-size: 19px;
+    color: var(--text-mid);
+    line-height: 1.5;
+    margin-bottom: 2rem;
+    font-style: italic;
+  }
+
+  .meta {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 13px;
+    color: var(--text-light);
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 2.5rem;
+  }
+
+  p {
+    font-size: 17px;
+    margin-bottom: 1.5rem;
+  }
+
+  h2 {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 3rem 0 1.25rem;
+    padding-top: 1rem;
+  }
+
+  h3 {
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .pullquote {
+    margin: 2.5rem 0;
+    padding: 1.5rem 1.75rem;
+    background: var(--pull-bg);
+    border-left: 3px solid var(--pull-border);
+    border-radius: 0 8px 8px 0;
+    font-size: 18px;
+    font-style: italic;
+    color: var(--text-mid);
+    line-height: 1.65;
+  }
+  .pullquote .attr {
+    display: block;
+    font-style: normal;
+    font-size: 13px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: var(--text-light);
+    margin-top: 0.75rem;
+  }
+
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin: 2rem 0;
+  }
+  .stat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    text-align: center;
+  }
+  .stat-card .value {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--stat-value);
+    font-variant-numeric: tabular-nums;
+  }
+  .stat-card .label {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 12px;
+    color: var(--text-light);
+    margin-top: 4px;
+  }
+
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+    margin: 2rem 0;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: var(--timeline-line);
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 1.75rem;
+  }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -2rem;
+    top: 8px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--timeline-dot);
+    border: 3px solid var(--timeline-dot-border);
+    z-index: 1;
+  }
+  .tl-item.tl-danger::before {
+    background: var(--danger);
+    border-color: var(--danger-bg);
+  }
+  .tl-year {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-light);
+    letter-spacing: 0.04em;
+  }
+  .tl-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 2px 0 4px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: var(--text);
+  }
+  .tl-desc {
+    font-size: 15px;
+    color: var(--text-mid);
+    line-height: 1.6;
+  }
+
+  .kgr-council {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 2rem 0;
+  }
+  .kgr-role {
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+  }
+  .kgr-role.skeptic { background: var(--kgr-skeptic-bg); }
+  .kgr-role.optimist { background: var(--kgr-optimist-bg); }
+  .kgr-role.arbiter { background: var(--kgr-arbiter-bg); }
+  .kgr-role .role-name {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .kgr-role.skeptic .role-name { color: var(--kgr-skeptic); }
+  .kgr-role.optimist .role-name { color: var(--kgr-optimist); }
+  .kgr-role.arbiter .role-name { color: var(--kgr-arbiter); }
+  .kgr-role .role-desc {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 13px;
+    color: var(--text-mid);
+    line-height: 1.5;
+  }
+
+  .rule-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    overflow-x: auto;
+    display: block;
+  }
+  .rule-table th, .rule-table td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  .rule-table th {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-light);
+  }
+  .rule-table td:first-child {
+    font-weight: 600;
+    white-space: nowrap;
+    color: var(--accent);
+  }
+  .rule-table .phrase {
+    font-style: italic;
+    color: var(--text-mid);
+    font-size: 13px;
+  }
+
+  .code-inline {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 14px;
+    background: var(--code-bg);
+    color: var(--code-text);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  .section-break {
+    text-align: center;
+    margin: 3rem 0;
+    color: var(--text-light);
+    font-size: 18px;
+    letter-spacing: 0.5em;
+  }
+
+  .postulate-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 1.5rem 0;
+  }
+  .postulate {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+  }
+  .postulate .p-name {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+  .postulate .p-origin {
+    font-size: 13px;
+    color: var(--text-light);
+    line-height: 1.5;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  .postulate.wide {
+    grid-column: 1 / -1;
+  }
+
+  .cta-section {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: var(--accent-bg);
+    border-radius: 12px;
+    text-align: center;
+  }
+  .cta-section h3 {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+  .cta-section p {
+    font-size: 15px;
+    color: var(--text-mid);
+    margin-bottom: 1.25rem;
+  }
+  .cta-section a {
+    display: inline-block;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--card-bg);
+    background: var(--accent);
+    padding: 10px 24px;
+    border-radius: 6px;
+    text-decoration: none;
+  }
+
+  .footnote {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 12px;
+    color: var(--text-light);
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+    line-height: 1.7;
+  }
+
+  @media (max-width: 600px) {
+    .postulate-grid { grid-template-columns: 1fr; }
+    .kgr-council { grid-template-columns: 1fr; }
+    .stat-row { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+
+<article class="container">
+
+  <div class="eyebrow">Origin story</div>
+  <h1>The kiln that built VEGA</h1>
+  <p class="subtitle">How a solo trader's struggle with discipline became a governance platform for regulated industries.</p>
+  <div class="meta">By Leon Cigler &middot; July 2026 &middot; 8 min read</div>
+
+  <p>VEGA did not start as a platform idea. It started as a trading bot that kept breaking itself.</p>
+
+  <p>In 2023, I began building an automated cryptocurrency trading system. One-hour candles, TradingView indicators, a VPS on Oracle Cloud running 24/7. The technical part was straightforward. The hard part was everything around it.</p>
+
+  <p>The bot had a 48% win rate. That means it loses more often than it wins. The math still works because winners are larger than losers. But here is what nobody tells you about a 48% win rate: you will regularly have 5 or 6 consecutive losses. The probability is about 2%. It will happen every few months, like clockwork.</p>
+
+  <p>And every time it happens, the same voice appears: <em>change the parameters.</em></p>
+
+  <h2>Chapter 1</h2>
+  <h3>The optimization trap</h3>
+
+  <p>My parameters had survived Walk-Forward Analysis across 4 years of data, 25 coins, 35,000+ price bars. They were validated. But after 4 losing trades in a row, none of that felt real. The urge to "fix" things was overwhelming.</p>
+
+  <p>I gave in. Multiple times. Every time I changed parameters after a short losing streak, I destroyed the statistical validation that made the strategy viable in the first place. I was not improving the system. I was fitting it to noise.</p>
+
+  <p>The worst version of this happened in early 2026. I added four filter modules over two months. Each one looked good in isolation. When I ran them together, three out of six pairs cancelled each other out. The baseline without any of them performed better. Months of work for negative value.</p>
+
+  <div class="pullquote">
+    The problem was never the bot. The problem was the process by which I made decisions about the bot.
+  </div>
+
+  <h2>Chapter 2</h2>
+  <h3>Three AIs that cannot see each other</h3>
+
+  <p>The solution came from an unlikely place: adversarial review.</p>
+
+  <p>I started sending every proposed change to three different AI models, each with a fixed role and no visibility into what the others said. The protocol was simple: a skeptic looks for statistical flaws, an optimist looks for engineering problems, and an arbiter synthesizes and casts the deciding vote.</p>
+
+  <div class="kgr-council">
+    <div class="kgr-role skeptic">
+      <div class="role-name">Skeptic</div>
+      <div class="role-desc">Hunts overfitting, sample size gaps, confirmation bias</div>
+    </div>
+    <div class="kgr-role optimist">
+      <div class="role-name">Optimist</div>
+      <div class="role-desc">Flags architecture risks, scope creep, missing edge cases</div>
+    </div>
+    <div class="kgr-role arbiter">
+      <div class="role-name">Arbiter</div>
+      <div class="role-desc">Verifies claims against actual code, synthesizes, votes</div>
+    </div>
+  </div>
+
+  <p>I called it KGR: Knowledge Guard Review. The first rule was non-negotiable: <em>verified beats claimed.</em> If any reviewer asserts something about the code, the arbiter checks the production server with <span class="code-inline">grep</span> before accepting it. Logical reasoning is a hypothesis. Code on disk is a verdict.</p>
+
+  <p>In its first month, KGR caught a resource allocation conflict between concurrent decision modules. Two independent subsystems had each built their own sizing logic. Neither knew the other existed. Both could claim the same resources simultaneously. A path to catastrophic failure that no single reviewer would have found.</p>
+
+  <p>No single reviewer would have caught it. The skeptic flagged the statistical anomaly in position sizes. The optimist traced it to the architecture. The arbiter confirmed both codepaths existed on the production server. Three perspectives, one truth.</p>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="value">80+</div>
+      <div class="label">Review rounds</div>
+    </div>
+    <div class="stat-card">
+      <div class="value">5</div>
+      <div class="label">Modules killed</div>
+    </div>
+    <div class="stat-card">
+      <div class="value">>98%</div>
+      <div class="label">Legal accuracy</div>
+    </div>
+    <div class="stat-card">
+      <div class="value">0</div>
+      <div class="label">Overridden verdicts</div>
+    </div>
+  </div>
+
+  <h2>Chapter 3</h2>
+  <h3>Six rules written in losses</h3>
+
+  <p>Over 420+ versions of the bot, a set of immutable rules crystallized. Not from theory, but from specific, documented failures. Each rule has an evidence file with the exact trade, the exact mistake, and the exact loss.</p>
+
+  <table class="rule-table">
+    <thead>
+      <tr><th>Rule</th><th>What it says</th><th>Where it came from</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>R1</td>
+        <td>Never trust a single regime</td>
+        <td><span class="phrase">A strategy that only works in bull markets is not a strategy</span></td>
+      </tr>
+      <tr>
+        <td>R2</td>
+        <td>Verify data integrity first</td>
+        <td><span class="phrase">Missing data the bot cannot detect silently corrupts results</span></td>
+      </tr>
+      <tr>
+        <td>R3</td>
+        <td>Wait for n=30 before concluding</td>
+        <td><span class="phrase">An XLM trade that lost 6.4% looked like a pattern at n=2</span></td>
+      </tr>
+      <tr>
+        <td>R4</td>
+        <td>Never lower a threshold from boredom</td>
+        <td><span class="phrase">When the bot stops trading, the urge to lower the entry bar is not insight</span></td>
+      </tr>
+      <tr>
+        <td>R5</td>
+        <td>If you cannot <span class="code-inline">ls</span> it on production, it does not exist</td>
+        <td><span class="phrase">Code that only lives in backtests is fiction</span></td>
+      </tr>
+      <tr>
+        <td>R6</td>
+        <td>An indicator is a number; a narrative is a wish</td>
+        <td><span class="phrase">Stories about why something should work are not evidence</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>These rules are not guidelines. They are circuit breakers. When I proposed changing parameters after four losses in May 2026, the system blocked me with my own words from three weeks earlier. The bot had logged the date, the evidence, and the exact emotional state I was in when I wrote the rule. It was arguing with a version of myself that was thinking more clearly.</p>
+
+  <div class="section-break">&middot; &middot; &middot;</div>
+
+  <h2>Chapter 4</h2>
+  <h3>The hospital test</h3>
+
+  <p>In June 2026, a colleague at a public-sector institution asked for help. They had approximately 80 internal regulatory documents: governance protocols, standard operating procedures, compliance records. Some of them might reference outdated legislation. Checking manually would take weeks.</p>
+
+  <p>I ran the same KGR protocol on the documents. Three AI reviewers, each examining independently, adversarial verification of every legal reference.</p>
+
+  <p>The result: over 100 compliance findings across multiple departments. One finding was critical: a governance body had expanded its formal remit beyond its original legislative mandate. The relevant authority belonged to a national-level commission, not the institution itself. It was not a typo. It was a jurisdictional anomaly with real legal consequences, buried deep in the document matrix.</p>
+
+  <div class="pullquote">
+    "How long would it have taken you to find this manually across approximately 80 documents?"
+    <span class="attr">The question that changed the project's direction</span>
+  </div>
+
+  <p>That moment clarified something. The KGR protocol was not a trading tool. It was a document governance tool that happened to be born in trading.</p>
+
+  <h2>Chapter 5</h2>
+  <h3>The kiln metaphor</h3>
+
+  <p>There is a moment in ceramics when the sculpture moves from clay to kiln. In clay, you can reshape endlessly. In the kiln, you cannot open the door. If you do, the piece cracks from thermal shock.</p>
+
+  <p>I recognized this pattern in my own work. The transition from backtesting (clay) to live trading (kiln) required a different psychology. The artist in me wanted to keep reshaping. The engineer needed to close the door and wait.</p>
+
+  <div class="pullquote">
+    Kip peče. Ne odpiraj peči.
+    <span class="attr">"The sculpture is firing. Do not open the kiln." &mdash; The mantra that held the freeze</span>
+  </div>
+
+  <p>In June 2026, the bot went into a data-collection freeze. No parameter changes. No new modules. Just collect data and wait for September. During that freeze, the methodology kept working on other problems. The same adversarial review that stopped me from destroying my trading validation was now catching legal anomalies in hospital documents.</p>
+
+  <h2>Chapter 6</h2>
+  <h3>From bot to platform</h3>
+
+  <p>VEGA is the generalization of everything that was built to keep one trading bot honest. Every architectural decision traces back to a real failure:</p>
+
+  <div class="postulate-grid">
+    <div class="postulate">
+      <div class="p-name">Governance immunity</div>
+      <div class="p-origin">From the Anti-Idle Protocol, when AIs proposed "just a small fix" three times during a freeze</div>
+    </div>
+    <div class="postulate">
+      <div class="p-name">Data isolation</div>
+      <div class="p-origin">From the dual-sizer bug, when one strategy did not know the other existed</div>
+    </div>
+    <div class="postulate">
+      <div class="p-name">Pipeline integrity</div>
+      <div class="p-origin">From the sandbox trap, when code existed only in backtests, not production</div>
+    </div>
+    <div class="postulate">
+      <div class="p-name">AI agnosticism</div>
+      <div class="p-origin">From swapping Kimi for DeepSeek and Gemini for GPT-4o without breaking the protocol</div>
+    </div>
+    <div class="postulate">
+      <div class="p-name">Legislation as configuration</div>
+      <div class="p-origin">From the compliance audit, when a law changed and every document needed rechecking</div>
+    </div>
+    <div class="postulate">
+      <div class="p-name">Offline first</div>
+      <div class="p-origin">From Oracle VPS outages that should not stop document processing</div>
+    </div>
+    <div class="postulate wide">
+      <div class="p-name">Auditability</div>
+      <div class="p-origin">From 80+ KGR rounds, each with evidence files, verdicts, and a traceable decision chain</div>
+    </div>
+  </div>
+
+  <p>The module protection system (four tiers from immutable to community-contributed) mirrors the bot architecture where some modules are locked and others are experimental. The document pipeline (upload, OCR, verification, AI review, approved) is the same pipeline that processes trading signals, adapted for regulatory documents. The legislative similarity groups that organize EU countries by legal tradition came from the compliance audit that revealed how differently Slovenia and Germany regulate the same medical procedure.</p>
+
+  <h2>Chapter 7</h2>
+  <h3>The meta-proof</h3>
+
+  <p>In July 2026, the VEGA Platform Specification went through its own KGR review. Round 80. Three independent reviewers examined the specification that defines how reviews should work.</p>
+
+  <p>They found 8 issues. A missing liability disclaimer. Insufficient GDPR data-retention language. A group name with political connotations. An apparent paradox in how "immutable" modules could receive security patches.</p>
+
+  <p>All 8 were fixed. All 3 reviewers ratified unanimously. The specification was improved by the process it describes.</p>
+
+  <div class="pullquote">
+    This page exists because KGR reviewed it first.
+    <span class="attr">The closing line of the VEGA landing page</span>
+  </div>
+
+  <div class="section-break">&middot; &middot; &middot;</div>
+
+  <p>VEGA was not designed on a whiteboard. It was extracted from 420 versions of a trading bot, 80 adversarial review rounds, a compliance audit of approximately 80 institutional documents, 6 rules written in real losses, and one sculptor's metaphor about not opening the kiln.</p>
+
+  <p>The bot is still in the kiln. The methodology is already outside it.</p>
+
+  <div class="timeline">
+    <div class="tl-item tl-danger">
+      <div class="tl-year">Early 2026</div>
+      <div class="tl-title">The overlay disaster</div>
+      <div class="tl-desc">4 modules, each validated alone, cancel each other out when combined. Months of work deleted.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">April 2026</div>
+      <div class="tl-title">KGR protocol matures</div>
+      <div class="tl-desc">AI council self-regulates without human intervention for the first time. 8 review cycles in one session.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">May 2026</div>
+      <div class="tl-title">Core Six rules locked</div>
+      <div class="tl-desc">6 immutable rules, each backed by evidence files. The system can now argue with its creator.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">June 2026</div>
+      <div class="tl-title">Hospital compliance audit</div>
+      <div class="tl-desc">~80 documents, over 100 findings, one critical jurisdictional anomaly. Same protocol, different domain.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">June 2026</div>
+      <div class="tl-title">VEGA Testament ratified</div>
+      <div class="tl-desc">Constitutional document for the ecosystem. Tier 5 protection: unanimous vote of all reviewers required to amend.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">July 2026</div>
+      <div class="tl-title">Platform Specification v1.0</div>
+      <div class="tl-desc">KGR R80. The specification reviewed by its own protocol. 8 issues found, fixed, ratified 3/3.</div>
+    </div>
+  </div>
+
+  <div class="cta-section">
+    <h3>Read the specification</h3>
+    <p>The Platform Specification v1.0 is a Tier 4 reference document,<br>ratified through the process it describes.</p>
+    <a href="https://vegaplatform.com">vegaplatform.com</a>
+  </div>
+
+  <div class="footnote">
+    VEGA is licensed under EUPL v1.2. The KGR protocol is AI-agnostic: roles (skeptic, optimist, arbiter) are fixed; the AI models filling them are interchangeable. The trading bot referenced in this post operates on the author's personal capital only and does not constitute investment advice. All institutional references, document counts, and finding numbers are illustrative and anonymized. Published research: Zenodo DOI 10.5281/zenodo.21213874.
+  </div>
+
+</article>
