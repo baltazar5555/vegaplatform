@@ -711,26 +711,65 @@ footer a{color:var(--accent);text-decoration:none}
 
 <!-- FOOTER -->
 <footer>
-  <p>
-    <strong>VEGA</strong> &mdash; Verified Evidence-based Governance Architecture<br>
-    Open source under EUPL &middot; Built in Slovenia &middot; Designed for Europe<br><br>
-    <a href="https://github.com/baltazar5555/vegaplatform">GitHub</a> &middot;
-    <a href="blog/origin-story.html">Origin Story</a> &middot;
-    <a href="demo/kgr-demo.html">KGR Demo</a> &middot;
-    <a href="mailto:leon.cigler@gmail.com">Contact</a><br><br>
-    <strong style="font-size:12px">Demos:</strong>
-    <a href="demo/document-flow.html">Document Flow</a> &middot;
-    <a href="demo/document-organigram.html">Document Organigram</a> &middot;
-    <a href="demo/kgr_console.html">KGR Console</a> &middot;
-    <a href="demo/governance-showcase.html">Governance Showcase</a> &middot;
-    <a href="demo/document_lifecycle_template.html">Lifecycle Template</a> &middot;
-    <a href="demo/vega_propfirm_mockup.html">Propfirm Mockup</a> &middot;
-    <a href="demo/vega_signal_verify_mockup.html">Signal Verify</a><br>
-    <strong style="font-size:12px">Blog:</strong>
-    <a href="blog/blog_vega_methodology.md">Methodology</a> &middot;
-    <a href="blog/blog_02_gratitude_distortion.txt">Gratitude Distortion</a> &middot;
-    <a href="blog/blog_03_muzzle_command.txt">Muzzle Command</a> &middot;
-    <a href="brand/vega_logo.html">Logo</a><br><br>
-    <span style="font-size:11px">&copy; 2026 Leon Cigler &amp; VEGA Contributors</span>
-  </p>
+  <div style="margin-bottom:12px">
+    <button onclick="setFooterLang('en')" id="btn-en" style="background:var(--accent);color:#fff;border:none;padding:4px 14px;border-radius:6px 0 0 6px;font-size:12px;font-weight:600;cursor:pointer">EN</button><button onclick="setFooterLang('si')" id="btn-si" style="background:var(--bg3);color:var(--text2);border:none;padding:4px 14px;border-radius:0 6px 6px 0;font-size:12px;font-weight:600;cursor:pointer">SI</button>
+  </div>
+  <div id="footer-en">
+    <p>
+      <strong>VEGA</strong> &mdash; Verified Evidence-based Governance Architecture<br>
+      Open source under EUPL &middot; Built in Slovenia &middot; Designed for Europe<br><br>
+      <a href="https://github.com/baltazar5555/vegaplatform">GitHub</a> &middot;
+      <a href="blog/origin-story.html">Origin Story</a> &middot;
+      <a href="demo/kgr-demo.html">KGR Demo</a> &middot;
+      <a href="mailto:leon.cigler@gmail.com">Contact</a><br><br>
+      <strong style="font-size:12px">Demos:</strong>
+      <a href="demo/document-flow.html">Document Flow</a> &middot;
+      <a href="demo/document-organigram.html">Document Organigram</a> &middot;
+      <a href="demo/kgr_console.html">KGR Console</a> &middot;
+      <a href="demo/governance-showcase.html">Governance Showcase</a> &middot;
+      <a href="demo/document_lifecycle_template.html">Lifecycle Template</a> &middot;
+      <a href="demo/vega_propfirm_mockup.html">Propfirm Mockup</a> &middot;
+      <a href="demo/vega_signal_verify_mockup.html">Signal Verify</a><br>
+      <strong style="font-size:12px">Blog:</strong>
+      <a href="blog/blog_vega_methodology.md">Methodology</a> &middot;
+      <a href="blog/blog_02_gratitude_distortion.txt">Gratitude Distortion</a> &middot;
+      <a href="blog/blog_03_muzzle_command.txt">Muzzle Command</a> &middot;
+      <a href="brand/vega_logo.html">Logo</a><br><br>
+      <span style="font-size:11px">&copy; 2026 Leon Cigler &amp; VEGA Contributors</span>
+    </p>
+  </div>
+  <div id="footer-si" style="display:none">
+    <p>
+      <strong>VEGA</strong> &mdash; Verificirana z dokazi podprta governance arhitektura<br>
+      Odprta koda pod EUPL &middot; Zgrajeno v Sloveniji &middot; Zasnovano za Evropo<br><br>
+      <a href="https://github.com/baltazar5555/vegaplatform">GitHub</a> &middot;
+      <a href="blog/origin-story.html">Zgodba o nastanku</a> &middot;
+      <a href="demo/kgr-demo.html">KGR Demo</a> &middot;
+      <a href="mailto:leon.cigler@gmail.com">Kontakt</a><br><br>
+      <strong style="font-size:12px">Predstavitve:</strong>
+      <a href="demo/document-flow.html">Tok dokumentov</a> &middot;
+      <a href="demo/document-organigram.html">Organigram dokumentov</a> &middot;
+      <a href="demo/kgr_console.html">KGR Konzola</a> &middot;
+      <a href="demo/governance-showcase.html">Governance prikaz</a> &middot;
+      <a href="demo/document_lifecycle_template.html">Predloga življenjskega cikla</a> &middot;
+      <a href="demo/vega_propfirm_mockup.html">Propfirm maketa</a> &middot;
+      <a href="demo/vega_signal_verify_mockup.html">Preverjanje signalov</a><br>
+      <strong style="font-size:12px">Blog:</strong>
+      <a href="blog/blog_vega_methodology.md">Metodologija</a> &middot;
+      <a href="blog/blog_02_gratitude_distortion.txt">Izkrivljanje hvaležnosti</a> &middot;
+      <a href="blog/blog_03_muzzle_command.txt">Ukaz nagobčnika</a> &middot;
+      <a href="brand/vega_logo.html">Logotip</a><br><br>
+      <span style="font-size:11px">&copy; 2026 Leon Cigler &amp; VEGA Prispevniki</span>
+    </p>
+  </div>
 </footer>
+<script>
+function setFooterLang(lang){
+  document.getElementById('footer-en').style.display=lang==='en'?'block':'none';
+  document.getElementById('footer-si').style.display=lang==='si'?'block':'none';
+  document.getElementById('btn-en').style.background=lang==='en'?'var(--accent)':'var(--bg3)';
+  document.getElementById('btn-en').style.color=lang==='en'?'#fff':'var(--text2)';
+  document.getElementById('btn-si').style.background=lang==='si'?'var(--accent)':'var(--bg3)';
+  document.getElementById('btn-si').style.color=lang==='si'?'#fff':'var(--text2)';
+}
+</script>
