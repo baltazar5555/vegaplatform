@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VEGA — Document Governance Organigram</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.6.0/tabler-icons.min.css">
+<style>
+:root {
+  --bg: #ffffff;
+  --bg2: #f5f5f0;
+  --bg3: #eeeee8;
+  --text: #1a1a1a;
+  --text2: #666660;
+  --text3: #99998a;
+  --border: rgba(0,0,0,0.12);
+  --border2: rgba(0,0,0,0.06);
+  --purple-bg: #EEEDFE; --purple-text: #3C3489; --purple-border: #AFA9EC;
+  --teal-bg: #E1F5EE; --teal-text: #085041; --teal-border: #5DCAA5;
+  --blue-bg: #E6F1FB; --blue-text: #0C447C; --blue-border: #85B7EB;
+  --amber-bg: #FAEEDA; --amber-text: #633806; --amber-border: #EF9F27;
+  --green-bg: #EAF3DE; --green-text: #27500A; --green-border: #97C459;
+  --red-bg: #FCEBEB; --red-text: #791F1F; --red-border: #F09595;
+  --gray-bg: #F1EFE8; --gray-text: #5F5E5A; --gray-border: #B4B2A9;
+  --coral-bg: #FAECE7; --coral-text: #712B13; --coral-border: #F0997B;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1a1a1a; --bg2: #252520; --bg3: #2c2c28;
+    --text: #e8e8e0; --text2: #99998a; --text3: #666660;
+    --border: rgba(255,255,255,0.12); --border2: rgba(255,255,255,0.06);
+    --purple-bg: #26215C; --purple-text: #CECBF6; --purple-border: #534AB7;
+    --teal-bg: #04342C; --teal-text: #9FE1CB; --teal-border: #0F6E56;
+    --blue-bg: #042C53; --blue-text: #B5D4F4; --blue-border: #185FA5;
+    --amber-bg: #412402; --amber-text: #FAC775; --amber-border: #854F0B;
+    --green-bg: #173404; --green-text: #C0DD97; --green-border: #3B6D11;
+    --red-bg: #501313; --red-text: #F7C1C1; --red-border: #A32D2D;
+    --gray-bg: #2C2C2A; --gray-text: #D3D1C7; --gray-border: #5F5E5A;
+    --coral-bg: #4A1B0C; --coral-text: #F5C4B3; --coral-border: #993C1D;
+  }
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 24px; max-width: 900px; margin: 0 auto; }
+
+.header { text-align: center; padding: 24px; background: var(--bg2); border-radius: 12px; margin-bottom: 20px; }
+.header-logo { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text3); margin-bottom: 4px; }
+.header-title { font-size: 22px; font-weight: 500; margin-bottom: 4px; }
+.header-sub { font-size: 13px; color: var(--text2); }
+.header-date { font-size: 11px; color: var(--text3); margin-top: 8px; }
+
+.stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 20px; }
+.stat { background: var(--bg2); border-radius: 8px; padding: 12px; text-align: center; }
+.stat-num { font-size: 24px; font-weight: 500; }
+.stat-lbl { font-size: 11px; color: var(--text2); }
+.stat-green .stat-num { color: var(--green-text); }
+.stat-amber .stat-num { color: var(--amber-text); }
+.stat-gray .stat-num { color: var(--text3); }
+.stat-blue .stat-num { color: var(--blue-text); }
+
+.progress-wrap { margin-bottom: 20px; }
+.progress-bar { height: 8px; background: var(--bg3); border-radius: 4px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--teal-border), var(--green-border)); transition: width 0.6s ease; }
+.progress-label { font-size: 12px; color: var(--text2); text-align: right; margin-top: 4px; }
+
+.legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 12px; color: var(--text2); margin-bottom: 20px; padding: 10px 16px; background: var(--bg2); border-radius: 8px; }
+.legend span { display: flex; align-items: center; gap: 6px; }
+
+.badge { font-size: 10px; padding: 2px 10px; border-radius: 6px; font-weight: 500; white-space: nowrap; display: inline-block; }
+.b-done { background: var(--green-bg); color: var(--green-text); }
+.b-todo { background: var(--bg3); color: var(--text3); }
+.b-pilot { background: var(--amber-bg); color: var(--amber-text); }
+.b-na { background: transparent; color: var(--text3); border: 1px solid var(--border); }
+.b-progress { background: var(--blue-bg); color: var(--blue-text); }
+
+.node { margin: 4px 0; }
+.node-header { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 8px; cursor: pointer; user-select: none; transition: opacity 0.15s; }
+.node-header:hover { opacity: 0.8; }
+.node-header i.chevron { font-size: 14px; transition: transform 0.2s; min-width: 14px; }
+.node-header i.chevron.open { transform: rotate(90deg); }
+.node-header .icon { font-size: 18px; }
+.node-title { flex: 1; font-weight: 500; font-size: 14px; }
+.node-count { font-size: 11px; color: var(--text3); }
+
+.n-klinika .node-header { background: var(--purple-bg); color: var(--purple-text); }
+.n-sektor .node-header { background: var(--teal-bg); color: var(--teal-text); }
+.n-center .node-header { background: var(--blue-bg); color: var(--blue-text); }
+.n-enota .node-header { background: var(--amber-bg); color: var(--amber-text); }
+.n-empty .node-header { background: var(--gray-bg); color: var(--gray-text); }
+
+.node-body { padding: 6px 0 6px 24px; border-left: 2px solid var(--border); margin-left: 20px; }
+.node-body.collapsed { display: none; }
+
+.doc { display: flex; align-items: center; gap: 10px; padding: 8px 12px; margin: 4px 0; background: var(--bg); border: 1px solid var(--border2); border-radius: 8px; transition: border-color 0.15s; }
+.doc:hover { border-color: var(--border); }
+.doc-icon { font-size: 16px; color: var(--text3); min-width: 20px; text-align: center; }
+.doc-id { font-size: 11px; color: var(--text3); font-family: 'SF Mono', 'Consolas', monospace; min-width: 90px; }
+.doc-name { flex: 1; font-size: 13px; }
+.doc-gov { border-color: var(--purple-border); border-width: 1.5px; }
+.doc-notes { font-size: 11px; color: var(--text3); margin-left: 100px; padding: 0 12px 4px; }
+
+.info { font-size: 12px; color: var(--text3); padding: 6px 12px; font-style: italic; }
+
+.section-divider { margin: 24px 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border); font-weight: 500; font-size: 15px; color: var(--text2); display: flex; align-items: center; gap: 8px; }
+
+.packet-table { width: 100%; border-collapse: collapse; font-size: 12px; margin: 12px 0; }
+.packet-table th { text-align: left; padding: 8px 10px; background: var(--bg2); font-weight: 500; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text2); border-bottom: 1px solid var(--border); }
+.packet-table td { padding: 8px 10px; border-bottom: 1px solid var(--border2); vertical-align: top; }
+.packet-table tr:hover td { background: var(--bg2); }
+.packet-table .mono { font-family: 'SF Mono', 'Consolas', monospace; font-size: 11px; color: var(--text2); }
+.packet-count { text-align: right; color: var(--text3); white-space: nowrap; }
+
+.footer { margin-top: 32px; padding: 16px; background: var(--bg2); border-radius: 8px; font-size: 12px; color: var(--text3); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+
+.print-btn { position: fixed; bottom: 20px; right: 20px; background: var(--purple-bg); color: var(--purple-text); border: 1px solid var(--purple-border); padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 6px; }
+.print-btn:hover { opacity: 0.85; }
+
+.vodilo-banner { background: linear-gradient(135deg, var(--purple-bg), var(--blue-bg)); border: 2px solid var(--purple-border); border-radius: 12px; padding: 16px 20px; margin-bottom: 20px; display: flex; align-items: center; gap: 16px; cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden; }
+.vodilo-banner:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+.vodilo-banner::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: var(--purple-border); }
+.vodilo-icon { font-size: 32px; color: var(--purple-text); flex-shrink: 0; }
+.vodilo-content { flex: 1; }
+.vodilo-tag { display: inline-block; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: var(--purple-text); color: var(--purple-bg); margin-bottom: 4px; }
+.vodilo-title { font-size: 15px; font-weight: 600; color: var(--purple-text); }
+.vodilo-desc { font-size: 12px; color: var(--text2); margin-top: 2px; }
+.vodilo-arrow { font-size: 20px; color: var(--purple-text); flex-shrink: 0; }
+.vodilo-meta { font-size: 10px; color: var(--text3); display: flex; gap: 12px; margin-top: 4px; }
+
+.doc.doc-clickable { cursor: pointer; transition: all 0.15s; }
+.doc.doc-clickable:hover { border-color: var(--green-border); background: var(--green-bg); }
+.doc-open-icon { font-size: 12px; color: var(--green-text); margin-left: auto; }
+
+.export-btn { display: inline-flex; align-items: center; gap: 4px; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 500; cursor: pointer; border: 1px solid var(--blue-border); background: var(--blue-bg); color: var(--blue-text); margin-left: 6px; transition: all 0.15s; white-space: nowrap; font-family: inherit; }
+.export-btn:hover { opacity: 0.8; transform: scale(1.03); }
+.export-btn i { font-size: 13px; }
+
+.export-modal-bg { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.35); z-index: 1000; display: flex; align-items: center; justify-content: center; }
+.export-modal { background: var(--bg); border-radius: 12px; padding: 24px; max-width: 480px; width: 90%; box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
+.export-modal h3 { margin: 0 0 4px; font-size: 16px; color: var(--text); }
+.export-modal .export-sub { font-size: 12px; color: var(--text3); margin-bottom: 16px; }
+.export-modal .export-list { list-style: none; padding: 0; margin: 0 0 16px; }
+.export-modal .export-list li { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 6px; font-size: 13px; border: 1px solid var(--border2); margin-bottom: 4px; }
+.export-modal .export-list li.has-file { background: var(--green-bg); border-color: var(--green-border); transition: all 0.15s; }
+.export-modal .export-list li.has-file:hover { transform: translateX(4px); box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.export-modal .export-list li.no-file { background: var(--bg2); border-color: var(--border); color: var(--text3); }
+.export-modal .export-list .eli-id { font-family: 'SF Mono','Consolas',monospace; font-size: 11px; color: var(--text3); min-width: 80px; }
+.export-modal .export-list .eli-name { flex: 1; }
+.export-modal .export-list .eli-badge { font-size: 10px; padding: 1px 6px; border-radius: 8px; }
+.export-modal .export-list .eli-ok { background: var(--green-text); color: #fff; }
+.export-modal .export-list .eli-miss { background: var(--amber-border); color: #fff; }
+.export-modal .export-btns { display: flex; gap: 8px; justify-content: flex-end; }
+.export-modal .export-btns button { padding: 8px 16px; border-radius: 8px; font-size: 13px; cursor: pointer; font-family: inherit; font-weight: 500; border: 1px solid var(--border); }
+.export-modal .btn-open { background: var(--green-bg); border-color: var(--green-border); color: var(--green-text); }
+.export-modal .btn-open:hover { opacity: 0.85; }
+.export-modal .btn-close { background: var(--bg2); color: var(--text2); }
+.export-modal .btn-close:hover { background: var(--border); }
+.export-modal .eli-prog { background: #e67e22; color: #fff; }
+.export-process { font-size: 12px; color: var(--text2); background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; line-height: 1.6; }
+.export-process i { color: var(--amber-border); margin-right: 4px; }
+
+.filter-tag { display: inline-block; padding: 4px 12px; border-radius: 16px; font-size: 12px; cursor: pointer; border: 1px solid var(--border); color: var(--text3); transition: all 0.15s; user-select: none; }
+.filter-tag:hover { border-color: var(--purple-border); color: var(--purple-text); }
+.filter-tag.active { background: var(--purple-bg); border-color: var(--purple-border); color: var(--purple-text); font-weight: 600; }
+.doc.filter-hidden { display: none; }
+.node.filter-empty .node-header { opacity: 0.35; }
+.node.filter-empty .node-body { display: none; }
+
+@media print {
+  body { padding: 12px; }
+  .print-btn { display: none; }
+  .node-body.collapsed { display: block !important; }
+  .node-header { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-logo">Zdravstveni zavod [DEMO]</div>
+  <div class="header-title">Organigram terapevtskih dogovorov</div>
+  <div class="header-sub">Struktura dokumentov, status priprave in distribucija po enotah</div>
+  <div class="header-sub" style="font-size:11px; margin-top:4px; color:var(--text3);">Organizacijska struktura skladno s Poslovnikom sistema vodenja [zavod], izdaja 11 (27.2.2026)</div>
+  <div class="header-date">Stanje na dan: <span id="currentDate"></span></div>
+</div>
+
+<div style="background:var(--amber-bg); border:1px solid var(--amber-border); border-radius:8px; padding:10px 16px; margin-bottom:16px; font-size:12px; color:var(--amber-text); text-align:center;">
+  <strong>DEMO TEMPLATE</strong> — Ta organigram prikazuje strukturo dokumentov za generični zdravstveni zavod. Dejanske enote in dokumenti se prilagodijo vsaki ustanovi posebej.
+</div>
+
+<div class="vodilo-banner" onclick="openDoc('dashboard.html')">
+  <i class="ti ti-book-2 vodilo-icon"></i>
+  <div class="vodilo-content">
+    <div class="vodilo-tag">neločljivo vodilo</div>
+    <div class="vodilo-title">Analiza in reorganizacija terapevtskih dogovorov [zavod]</div>
+    <div class="vodilo-desc">Celovita dokumentacija: analiza podvajanja (55%), KGR verdict (APPROVE), 3-nivojska struktura, 6 načel governance, entropy matrika, implementacijski načrt</div>
+    <div class="vodilo-meta">
+      <span><i class="ti ti-file-analytics"></i> TD_analiza_in_predlog.md</span>
+      <span><i class="ti ti-layout-dashboard"></i> Dashboard s pipeline + entropy</span>
+      <span><i class="ti ti-calendar"></i> Junij 2026</span>
+      <span><i class="ti ti-gavel"></i> KGR: Kimi + Gemini APPROVE</span>
+    </div>
+  </div>
+  <i class="ti ti-external-link vodilo-arrow"></i>
+</div>
+
+<div style="display:flex; gap:8px; margin-bottom:16px;">
+  <button onclick="openDoc('TD_analiza_in_predlog.md')" style="flex:1; padding:8px 12px; border:1px solid var(--border); border-radius:8px; background:var(--bg2); color:var(--text2); cursor:pointer; font-size:12px; display:flex; align-items:center; gap:6px; font-family:inherit;">
+    <i class="ti ti-file-text"></i> Odpri analizo (.md)
+  </button>
+  <button onclick="openDoc('dashboard.html')" style="flex:1; padding:8px 12px; border:1px solid var(--purple-border); border-radius:8px; background:var(--purple-bg); color:var(--purple-text); cursor:pointer; font-size:12px; display:flex; align-items:center; gap:6px; font-family:inherit; font-weight:600;">
+    <i class="ti ti-layout-dashboard"></i> Odpri dashboard (pipeline + entropy + dokumenti)
+  </button>
+</div>
+
+<div class="stats" id="statsRow">
+  <div class="stat stat-green"><div class="stat-num" id="s-done">6</div><div class="stat-lbl">Narejeno</div></div>
+  <div class="stat stat-amber"><div class="stat-num" id="s-pilot">0</div><div class="stat-lbl">Pilot</div></div>
+  <div class="stat stat-blue"><div class="stat-num" id="s-prog">1</div><div class="stat-lbl">V pripravi</div></div>
+  <div class="stat stat-gray"><div class="stat-num" id="s-todo">7</div><div class="stat-lbl">Za narediti</div></div>
+  <div class="stat"><div class="stat-num" id="s-total">14</div><div class="stat-lbl">Skupaj</div></div>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:43%"></div></div>
+  <div class="progress-label" id="progressLabel">6 / 14 dokumentov (43%)</div>
+</div>
+
+<div class="legend" id="filterBar">
+  <span class="filter-tag active" data-filter="all">vse</span>
+  <span class="filter-tag" data-filter="done">narejeno</span>
+  <span class="filter-tag" data-filter="progress">v pripravi</span>
+  <span class="filter-tag" data-filter="pilot">pilot</span>
+  <span class="filter-tag" data-filter="todo">za narediti</span>
+  <span class="filter-tag" data-filter="na">ni TD</span>
+</div>
+
+<!-- TREE -->
+<div id="tree"></div>
+
+<!-- KOMISIJE ZA ODOBRITEV -->
+<div class="section-divider"><i class="ti ti-gavel"></i> Pot do odobritve (Poslovnik SV, izdaja 11)</div>
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px;">
+  <div style="background:var(--bg2); border-radius:8px; padding:14px; border-left:3px solid var(--green-border);">
+    <div style="font-size:13px; font-weight:500; margin-bottom:6px; color:var(--green-text);"><i class="ti ti-checkbox" aria-hidden="true"></i> Komisija za kakovost</div>
+    <div style="font-size:12px; color:var(--text2);">Izvršilni organ za kakovost. Analizira poročila sektorjev, predlaga ukrepe, spremlja izvedbo. <strong>Mora odobriti TD kot del sistema kakovosti.</strong></div>
+    <div style="font-size:11px; color:var(--text3); margin-top:4px;">Ref: Poslovnik SV, poglavje 5.2</div>
+  </div>
+  <div style="background:var(--bg2); border-radius:8px; padding:14px; border-left:3px solid var(--blue-border);">
+    <div style="font-size:13px; font-weight:500; margin-bottom:6px; color:var(--blue-text);"><i class="ti ti-file-check" aria-hidden="true"></i> Komisija za revizijo zdrav. dokumentacije</div>
+    <div style="font-size:12px; color:var(--text2);">Preverja popolnost, pravilnost, zaupnost dokumentacije. Preverja <strong>pisne izjave o informiranem soglasju</strong> — TD je del tega.</div>
+    <div style="font-size:11px; color:var(--text3); margin-top:4px;">Ref: Poslovnik SV, poglavje 5.2</div>
+  </div>
+  <div style="background:var(--bg2); border-radius:8px; padding:14px; border-left:3px solid var(--purple-border);">
+    <div style="font-size:13px; font-weight:500; margin-bottom:6px; color:var(--purple-text);"><i class="ti ti-shield-check" aria-hidden="true"></i> Odbor za kakovost in varnost pacientov</div>
+    <div style="font-size:12px; color:var(--text2);">Najvišji organ kakovosti. Poroča MZ RS in Svetu zavoda. <strong>Končna odobritev pred uvedbo.</strong></div>
+    <div style="font-size:11px; color:var(--text3); margin-top:4px;">Ref: Poslovnik SV, poglavje 5.2</div>
+  </div>
+  <div style="background:var(--bg2); border-radius:8px; padding:14px; border-left:3px solid var(--amber-border);">
+    <div style="font-size:13px; font-weight:500; margin-bottom:6px; color:var(--amber-text);"><i class="ti ti-file-text" aria-hidden="true"></i> Skrbnica dokumentacije sistema vodenja</div>
+    <div style="font-size:12px; color:var(--text2);">Obvladovanje in nadzor nad dokumentacijo. Zagotavlja <strong>sistem označevanja</strong> (OB-TD-xx) in objavo na intranetu.</div>
+    <div style="font-size:11px; color:var(--text3); margin-top:4px;">Ref: Poslovnik SV, poglavje 5.2; PR 001</div>
+  </div>
+</div>
+<div style="background:var(--bg2); border-radius:8px; padding:12px 16px; margin-bottom:20px; font-size:12px; color:var(--text2);">
+  <strong style="color:var(--text);">Predlagani postopek odobritve:</strong>
+  <span style="display:inline-flex; align-items:center; gap:6px; flex-wrap:wrap; margin-top:4px;">
+    <span class="badge b-progress">1. [avtor] predloži</span> →
+    <span class="badge b-progress">2. Skrbnica dokumentacije (PR 001)</span> →
+    <span class="badge b-progress">3. Komisija za revizijo zdrav. dok.</span> →
+    <span class="badge b-progress">4. Komisija za kakovost</span> →
+    <span class="badge b-done">5. Odbor za kakovost in varnost</span> →
+    <span class="badge b-pilot">6. Pilot na EMH</span>
+  </span>
+</div>
+
+<!-- PACKET TABLE -->
+<div class="section-divider"><i class="ti ti-package"></i> Kaj dobi pacient na posamezni enoti</div>
+<table class="packet-table">
+  <thead>
+    <tr><th style="width:30%">Enota / oddelek</th><th style="width:50%">Dokumenti ki jih prejme</th><th style="width:20%" class="packet-count">Skupaj</th></tr>
+  </thead>
+  <tbody id="packetBody"></tbody>
+</table>
+
+<div class="footer">
+  <span>Predlog: [avtor predloga], junij 2026</span>
+  <span>Metodologija: Protokol upravljanja (OB-TD-GOV)</span>
+  <span>Org. struktura: Poslovnik SV [zavod], izdaja 11 (27.2.2026)</span>
+  <span>Kakovost: Strategija VKV v2 (1.12.2025), odobrila: [odgovorne osebe]</span>
+  <span>Status: OSNUTEK</span>
+</div>
+
+<button class="print-btn" onclick="window.print()"><i class="ti ti-printer"></i> Natisni</button>
+
+<script>
+document.getElementById('currentDate').textContent = new Date().toLocaleDateString('sl-SI');
+
+var inTD = location.pathname.replace(/\\/g,'/').indexOf('/TD/') !== -1;
+var basePath = inTD ? '' : 'TD/';
+function openDoc(f){ window.open(basePath + f, '_blank'); }
+
+function findPathToDoc(node, docId, path) {
+  path = path || [];
+  var cur = path.concat([node]);
+  if (node.docs) {
+    for (var i = 0; i < node.docs.length; i++) {
+      if (node.docs[i].id === docId) return cur;
+    }
+  }
+  if (node.children) {
+    for (var j = 0; j < node.children.length; j++) {
+      var r = findPathToDoc(node.children[j], docId, cur);
+      if (r) return r;
+    }
+  }
+  return null;
+}
+
+function getPackageDocs(docId) {
+  var path = findPathToDoc(DATA, docId);
+  if (!path) return [];
+  var docs = [], seen = {};
+  for (var i = 0; i < path.length; i++) {
+    if (path[i].docs) {
+      for (var j = 0; j < path[i].docs.length; j++) {
+        var d = path[i].docs[j];
+        if (!seen[d.id] && !d.internal) {
+          docs.push(d);
+          seen[d.id] = true;
+        }
+      }
+    }
+  }
+  return docs;
+}
+
+function exportPackage(docId, ev) {
+  ev.stopPropagation();
+  var docs = getPackageDocs(docId);
+  if (!docs.length) return;
+  var ready = docs.filter(function(d){ return d.file; });
+  var missing = docs.filter(function(d){ return !d.file; });
+  var statusLabel = { done: 'narejeno', progress: 'v pripravi', todo: 'še ni', pilot: 'pilot' };
+  var statusCls = { done: 'eli-ok', progress: 'eli-prog', todo: 'eli-miss', pilot: 'eli-prog' };
+  var processInfo = {
+    'todo': 'Postopek sprejetja: (1) Claude pripravi osnutek iz obstoječe dokumentacije, (2) pregled Službe za informatiko, (3) usklajevanje s predstojnikom centra/enote, (4) obravnava na Strokovnem svetu, (5) podpis odgovorne osebe.',
+    'progress': 'Osnutek obstaja in je pripravljen na pregled. Naslednji korak: usklajevanje s predstojnikom centra/enote in obravnava na Strokovnem svetu.'
+  };
+  var html = '<div class="export-modal-bg" onclick="closeExportModal()">';
+  html += '<div class="export-modal" onclick="event.stopPropagation()">';
+  html += '<h3><i class="ti ti-package"></i> Paket dokumentov za enoto</h3>';
+  html += '<div class="export-sub">' + ready.length + ' od ' + docs.length + ' dokumentov pripravljenih za odprtje</div>';
+  html += '<ul class="export-list">';
+  var hasProcess = false;
+  for (var i = 0; i < docs.length; i++) {
+    var d = docs[i];
+    var st = d.status || 'todo';
+    var has = d.file ? 'has-file' : 'no-file';
+    var liClick = d.file ? ' onclick="openDoc(\'' + d.file + '\')" style="cursor:pointer"' : '';
+    html += '<li class="' + has + '"' + liClick + '>';
+    html += '<span class="eli-id">' + d.id + '</span>';
+    html += '<span class="eli-name">' + d.name + '</span>';
+    if (d.file) html += '<i class="ti ti-external-link" style="font-size:12px;color:#888;margin-left:auto"></i>';
+    if (st === 'done' && d.file) html += '<span class="eli-badge eli-ok">✓</span>';
+    else if (st === 'progress' && d.file) html += '<span class="eli-badge eli-prog">osnutek</span>';
+    else if (st === 'progress') html += '<span class="eli-badge eli-prog">v pripravi</span>';
+    else { html += '<span class="eli-badge eli-miss">še ni</span>'; hasProcess = true; }
+    html += '</li>';
+  }
+  html += '</ul>';
+  if (hasProcess || missing.length > 0) {
+    html += '<div class="export-process"><i class="ti ti-info-circle"></i> ';
+    html += '<strong>Zakaj manjka?</strong> Dokument še ni bil pripravljen ali sprejet. ';
+    html += processInfo['todo'];
+    html += '<br><strong>Vključene službe:</strong> predstojnik centra, Služba za informatiko, Služba za razvoj in kakovost, Strokovni svet [zavod].';
+    html += '</div>';
+  }
+  html += '<div class="export-btns">';
+  html += '<button class="btn-close" onclick="closeExportModal()">Zapri</button>';
+  if (ready.length > 0) {
+    window._pkgDocs = ready.map(function(d){ return {id:d.id,name:d.name,file:d.file}; });
+    html += '<button class="btn-open" onclick="openCombinedPackage()"><i class="ti ti-file-stack"></i> Odpri vse (' + ready.length + ')</button>';
+  }
+  html += '</div></div></div>';
+  var div = document.createElement('div');
+  div.id = 'exportModal';
+  div.innerHTML = html;
+  document.body.appendChild(div);
+}
+
+function closeExportModal() {
+  var m = document.getElementById('exportModal');
+  if (m) m.remove();
+}
+
+function openCombinedPackage() {
+  var docs = window._pkgDocs;
+  if (!docs || !docs.length) return;
+  if (docs.length === 1) { openDoc(docs[0].file); closeExportModal(); return; }
+  openDoc('paket_czopd.html');
+  closeExportModal();
+}
+
+var DATA = {
+  id: 'zavod', title: 'Zdravstveni zavod [DEMO]', type: 'klinika', icon: 'ti-building-hospital', open: true,
+  docs: [
+    { id: 'OB-TD-KL', name: 'Krovni list terapevtskega dogovora', status: 'done', gov: true, file: 'OB-TD-KL.html' },
+    { id: 'OB-TD-01', name: 'Osnovni terapevtski dogovor (16 klavzul)', status: 'done', gov: true, file: 'OB-TD-01.html' },
+    { id: 'OB-TD-GOV', name: 'Protokol upravljanja dokumentov', status: 'done', gov: true, internal: true, file: 'OB-TD-GOV.html' },
+    { id: 'KGR-R32', name: 'Pravna utemeljitev sprememb (KGR R32)', status: 'done', gov: true, internal: true, file: 'pravna_utemeljitev.html' }
+  ],
+  children: [
+    {
+      id: 'zs', title: 'Zdravstveni sektor', type: 'sektor', icon: 'ti-heart-rate-monitor', open: false,
+      docs: [
+        { id: 'OB-TD-02a', name: 'Specializirana priloga — Zdravstveni sektor', status: 'progress', file: 'OB-TD-02a.html', notes: 'OSNUTEK iz compliance audita (79 dok). 14 klavzul: sprejem, dnevni red, obiski, SPN, posebnosti po enotah. Čaka pregled strokovnega sveta.' }
+      ],
+      children: [
+        {
+          id: 'cip', title: 'Center za klinično ambulantno dejavnost (CIP)', type: 'center', icon: 'ti-building',
+          docs: [],
+          info: 'Ambulantna dejavnost — OB-TD-01 + OB-TD-02a (Poslovnik SV: OP 007)',
+          children: [
+            { id: 'spec-amb', title: 'Specialistične ambulante', type: 'enota', icon: 'ti-stethoscope', docs: [], info: 'OB-TD-01 + OB-TD-02a' },
+            { id: 'urg-amb', title: 'Urgentna ambulanta', type: 'enota', icon: 'ti-ambulance', docs: [], info: 'OB-TD-01 + OB-TD-02a' }
+          ]
+        },
+        {
+          id: 'ckp', title: 'Center za klinično zdravljenje', type: 'center', icon: 'ti-building',
+          docs: [],
+          children: [
+            { id: 'eop', title: 'EO P — Enota za gerontologijo', type: 'enota', icon: 'ti-old', docs: [], info: 'OB-TD-01 + OB-TD-02a' },
+            { id: 'eppt', title: 'EPPT — Enota za intenzivno klinično obravnavo', type: 'enota', icon: 'ti-alert-triangle', docs: [], info: 'OB-TD-01 + OB-TD-02a' },
+            { id: 'ept', title: 'EPT — Enota za podaljšano terapijo', type: 'enota', icon: 'ti-clock', docs: [], info: 'OB-TD-01 + OB-TD-02a' },
+            { id: 'ere', title: 'ERE — Enota za rehabilitacijo', type: 'enota', icon: 'ti-stretching', docs: [], info: 'OB-TD-01 + OB-TD-02a' },
+            {
+              id: 'mame', title: 'Enota za mame in dojenčke', type: 'enota', icon: 'ti-baby-carriage',
+              docs: [
+                { id: 'OB-TD-03a1', name: 'Dodatek — Enota za mame in dojenčke', status: 'todo', notes: 'Skrb za dojenčka, adaptirano mleko, sterilizator, oblačila' }
+              ]
+            }
+          ]
+        },
+        {
+          id: 'czopd', title: 'Center za zdravljenje odvisnih od prepovedanih drog (CZOPD)', type: 'center', icon: 'ti-shield-check',
+          docs: [
+            { id: 'OB-TD-02c', name: 'Specializirana priloga — CZOPD (skupno jedro)', status: 'done', file: 'OB-TD-02c.html', notes: 'KGR R35 RATIFY. Abstinenca, denar, obiski, telefon, intimni odnosi, rehabilitacija' }
+          ],
+          children: [
+            {
+              id: 'czopd-odd1', title: 'Oddelek 1 — Sprejemni oddelek (stabilizacija)', type: 'enota', icon: 'ti-door-enter',
+              docs: [{ id: 'OB-TD-03c1', name: 'Dodatek — Oddelka 1 in 2 (sprejem + detoksikacija)', status: 'done', file: 'OB-TD-03c1.html', notes: 'KGR R35 RATIFY. Denar v trezor 45€/teden, obiski po 3 tednih, telefonski klici, 3+ tedne' }]
+            },
+            {
+              id: 'czopd-odd2', title: 'Oddelek 2 — Oddelek za detoksikacijo', type: 'enota', icon: 'ti-droplet-off',
+              docs: [], info: 'Isti dodatek kot Odd 1: OB-TD-03c1 (6 tednov detoks)'
+            },
+            {
+              id: 'czopd-razori', title: 'Oddelek za intenzivno podaljšano zdravljenje (Razori)', type: 'enota', icon: 'ti-trees',
+              docs: [{ id: 'OB-TD-03c2', name: 'Dodatek — Program rehabilitacije Razori', status: 'todo', notes: '8-tedenski program, svojci (max 3), telesni stiki = prekinitev' }]
+            },
+            {
+              id: 'czopd-dnevni', title: 'Dnevni oddelek CZOPD', type: 'enota', icon: 'ti-sun',
+              docs: [{ id: 'OB-TD-03c3', name: 'Dodatek — Dnevni oddelek', status: 'todo', notes: 'Spodrsljaj = učna izkušnja, ponavljajoč vzorec → prekinitev' }]
+            },
+            {
+              id: 'czopd-pod', title: 'Podporni dnevni oddelek CZOPD', type: 'enota', icon: 'ti-sun-low',
+              docs: [{ id: 'OB-TD-03c4', name: 'Dodatek — Podporni dnevni oddelek', status: 'todo', notes: 'Dnevnik substanc, cilj zdravljenja, ambulantni pacienti' }]
+            },
+            {
+              id: 'czopd-mlad', title: 'Oddelek za mladostnike, ki uporabljajo psihoaktivne snovi', type: 'enota', icon: 'ti-school',
+              docs: [{ id: 'OB-TD-03c5', name: 'Dodatek — Mladostniki', status: 'todo', notes: 'Soglasje staršev, 10€/teden, mobilni telefon, pisma, 24ur obvestilo' }]
+            },
+            {
+              id: 'czopd-alk', title: 'Zdravljenje odvisnosti od alkohola (tablet ali odvisniškega vedenja)', type: 'enota', icon: 'ti-glass-off',
+              docs: [{ id: 'OB-TD-03c6', name: 'Dodatek — Odvisnost od alkohola', status: 'todo', notes: 'Literatura, načrt sprememb, KZA/AA, 4-tedensko zdravljenje' }]
+            }
+          ]
+        },
+        {
+          id: 'cmz', title: 'Center za mentalno zdravje (CMZ)', type: 'center', icon: 'ti-brain',
+          docs: [
+            { id: 'OB-TD-02b', name: 'Specializirana priloga — CMZ', status: 'todo', notes: 'Psihoterapevtski okvir, premeščanje sob, uvajalna doba 2 tedna' }
+          ],
+          children: [
+            {
+              id: 'cmz-mh', title: 'EMH — Enota za motnje hranjenja', type: 'enota', icon: 'ti-salad',
+              docs: [{ id: 'OB-TD-03b2', name: 'Dodatek — EMH Motnje hranjenja', status: 'progress', file: 'OB-TD-03b2.html', notes: '25 klavzul (H1-H25): prehrana, tehtanje, telesna aktivnost, terapevtski program, terapevtska skupnost, bivanje, intenzivna enota, zdravila' }]
+            },
+            { id: 'cmz-eap', title: 'EAP — Enota za adolescentno klinično obravnavo', type: 'enota', icon: 'ti-mood-kid',
+              docs: [{ id: 'OB-TD-03b3', name: 'Dodatek — EAP Adolescentna klinična obravnava', status: 'progress', file: 'OB-TD-03b3.html', notes: '14 klavzul (A1-A14): sprejem, abstinenca, dnevni red, bolnišnična šola, obiski, pravice mladoletnikov (zakon o pacientovih pravicah 35-38)' }]
+            },
+            { id: 'cmz-eki', title: 'EKI — Enota za krizne intervencije', type: 'enota', icon: 'ti-alert-circle',
+              docs: [{ id: 'OB-TD-03b5', name: 'Dodatek — EKI Krizne intervencije', status: 'progress', file: 'OB-TD-03b5.html', notes: '13 klavzul (K1-K13): krizna obravnava, skupinska psihoterapija, enosmerno ogledalo, izhodi' }]
+            },
+            { id: 'cmz-ep', title: 'EP — Enota za psihoterapijo', type: 'enota', icon: 'ti-message-heart',
+              docs: [{ id: 'OB-TD-03b6', name: 'Dodatek — EP Psihoterapija (EPP + EPN)', status: 'progress', file: 'OB-TD-03b6.html', notes: '16 klavzul (P1-P16): dva programa (psihoze + nevroze), 2-mesečno zdravljenje, vikendi doma' }]
+            },
+            { id: 'cmz-eoap', title: 'EOAP — Enota za klinično obravnavo otrok in adolescentov', type: 'enota', icon: 'ti-friends',
+              docs: [{ id: 'OB-TD-03b4', name: 'Dodatek — EOAP Intenzivna otroška klinična obravnava', status: 'progress', file: 'OB-TD-03b4.html', notes: '12 klavzul (IO1-IO12): zaprti tip, brez elektronike, obiski samo skrbniki, pravice mladoletnikov (zakon o pacientovih pravicah 35-38)' }]
+            },
+            { id: 'cmz-ezoa', title: 'EZOA — Enota za zdravljenje odvisnosti od alkohola', type: 'enota', icon: 'ti-bottle', docs: [], info: 'OB-TD-01 + OB-TD-02b (+ morebitni OB-TD-03c6?)' },
+            { id: 'cmz-kard', title: 'Oddelek za osebe s kardinalnimi in drugimi motnjami', type: 'enota', icon: 'ti-heart-broken', docs: [], info: 'OB-TD-01 + OB-TD-02b' }
+          ]
+        }
+      ]
+    },
+    { id: 'szn', title: 'Sektor zdravstvene nege', type: 'empty', icon: 'ti-stethoscope', docs: [], info: 'Ni lastnih TD — ZN osebje izvaja TD enot (Poslovnik SV: poglavje 5.1)' },
+    { id: 'si', title: 'Sektor za izobraževanje', type: 'empty', icon: 'ti-school', docs: [], info: 'Ni terapevtskih dogovorov (Poslovnik SV: OP 036)' },
+    { id: 'srd', title: 'Sektor za raziskovalno dejavnost', type: 'empty', icon: 'ti-microscope', docs: [], children: [
+      { id: 'skp', title: 'Služba za klinično psihologijo', type: 'empty', icon: 'ti-brain', docs: [] },
+      { id: 'spsd', title: 'Služba za socialno delo', type: 'empty', icon: 'ti-users', docs: [] },
+      { id: 'sdt', title: 'Služba za delovno terapijo', type: 'empty', icon: 'ti-palette', docs: [] },
+      { id: 'sr', title: 'Služba za rehabilitacijo', type: 'empty', icon: 'ti-stretching', docs: [] },
+      { id: 'sps', title: 'Služba za preprečevanje samomora', type: 'empty', icon: 'ti-heart-handshake', docs: [] },
+      { id: 'bl', title: 'Bolnišnična lekarna', type: 'empty', icon: 'ti-pill', docs: [] }
+    ]},
+    { id: 'szno', title: 'Sektor za zdravstveno nego in oskrbo', type: 'empty', icon: 'ti-stethoscope', docs: [], children: [
+      { id: 'zn-oe', title: 'Zdravstvena nega v strokovnih OE', type: 'empty', icon: 'ti-nurse', docs: [] },
+      { id: 'zo-oe', title: 'Zdravstvena oskrba v strokovnih OE', type: 'empty', icon: 'ti-first-aid-kit', docs: [] },
+      { id: 'za', title: 'Zdravstvena administracija', type: 'empty', icon: 'ti-clipboard', docs: [] }
+    ]},
+    { id: 'skz', title: 'Sektor za kadrovske in splošne zadeve', type: 'empty', icon: 'ti-users-group', docs: [], children: [
+      { id: 'skpz', title: 'Služba za kadrovske in pravne zadeve', type: 'empty', icon: 'ti-gavel', docs: [] },
+      { id: 'ssz', title: 'Služba za splošne zadeve', type: 'empty', icon: 'ti-settings', docs: [] },
+      { id: 'sap', title: 'Služba za analizo in plan', type: 'empty', icon: 'ti-chart-line', docs: [] },
+      { id: 'sra', title: 'Služba za računovodstvo', type: 'empty', icon: 'ti-calculator', docs: [] },
+      { id: 'skom', title: 'Služba za komercialne zadeve', type: 'empty', icon: 'ti-shopping-cart', docs: [] }
+    ]},
+    { id: 'sef', title: 'Sektor za ekonomiko in finance', type: 'empty', icon: 'ti-report-money', docs: [], children: [
+      { id: 'srk', title: 'Služba za razvoj in kakovost', type: 'empty', icon: 'ti-award', docs: [] },
+      { id: 'sinf', title: 'Služba za informatiko', type: 'empty', icon: 'ti-device-desktop', docs: [] },
+      { id: 'stv', title: 'Služba za tehnično vzdrževanje', type: 'empty', icon: 'ti-tool', docs: [] },
+      { id: 'sinv', title: 'Služba za investicije', type: 'empty', icon: 'ti-building-bank', docs: [] },
+      { id: 'spr', title: 'Služba za prehrano', type: 'empty', icon: 'ti-chef-hat', docs: [] }
+    ]}
+  ]
+};
+
+var PACKETS = [
+  { unit: 'CIP — Specialistične ambulante', docs: 'KL + OB-TD-01 (ambulantna oblika)', count: 2 },
+  { unit: 'CIP — Urgentna ambulanta', docs: 'KL + OB-TD-01 (ambulantna oblika)', count: 2 },
+  { unit: 'CKP — EO P Gerontologija', docs: 'KL + OB-TD-01 + OB-TD-02a', count: 3 },
+  { unit: 'CKP — EPPT Intenzivna klinična obravnava', docs: 'KL + OB-TD-01 + OB-TD-02a', count: 3 },
+  { unit: 'CKP — EPT Podaljšana terapija', docs: 'KL + OB-TD-01 + OB-TD-02a', count: 3 },
+  { unit: 'CKP — ERE Rehabilitacija', docs: 'KL + OB-TD-01 + OB-TD-02a', count: 3 },
+  { unit: 'CKP — Mame in dojenčki', docs: 'KL + OB-TD-01 + OB-TD-02a + OB-TD-03a1', count: 4 },
+  { unit: 'CMZ — EAP Adolescentna klinična obravnava', docs: 'KL + OB-TD-01 + OB-TD-02b + OB-TD-03b3', count: 4 },
+  { unit: 'CMZ — EKI Krizne intervencije', docs: 'KL + OB-TD-01 + OB-TD-02b + OB-TD-03b5', count: 4 },
+  { unit: 'CMZ — EP Psihoterapija', docs: 'KL + OB-TD-01 + OB-TD-02b + OB-TD-03b6', count: 4 },
+  { unit: 'CMZ — EMH Motnje hranjenja', docs: 'KL + OB-TD-01 + OB-TD-02b + OB-TD-03b2', count: 4 },
+  { unit: 'CMZ — EOAP Otroci in adolescenti', docs: 'KL + OB-TD-01 + OB-TD-02b + OB-TD-03b4', count: 4 },
+  { unit: 'CMZ — EZOA Odvisnost od alkohola', docs: 'KL + OB-TD-01 + OB-TD-02b', count: 3 },
+  { unit: 'CMZ — Kardinalne in druge motnje', docs: 'KL + OB-TD-01 + OB-TD-02b', count: 3 },
+  { unit: 'CZOPD — Odd 1 Sprejem (stabilizacija)', docs: 'KL + OB-TD-01 + OB-TD-02c + OB-TD-03c1', count: 4 },
+  { unit: 'CZOPD — Odd 2 Detoksikacija', docs: 'KL + OB-TD-01 + OB-TD-02c + OB-TD-03c1', count: 4 },
+  { unit: 'CZOPD — Razori (rehabilitacija)', docs: 'KL + OB-TD-01 + OB-TD-02c + OB-TD-03c2', count: 4 },
+  { unit: 'CZOPD — Dnevni oddelek', docs: 'KL + OB-TD-01 + OB-TD-02c + OB-TD-03c3', count: 4 },
+  { unit: 'CZOPD — Podporni dnevni oddelek', docs: 'KL + OB-TD-01 + OB-TD-02c + OB-TD-03c4', count: 4 },
+  { unit: 'CZOPD — Mladostniki', docs: 'KL + OB-TD-01 + OB-TD-02c + OB-TD-03c5', count: 4 },
+  { unit: 'CZOPD — Odvisnost od alkohola', docs: 'KL + OB-TD-01 + OB-TD-02c + OB-TD-03c6', count: 4 }
+];
+
+function statusBadge(s) {
+  var map = { done: 'b-done', todo: 'b-todo', pilot: 'b-pilot', progress: 'b-progress' };
+  var labels = { done: 'narejeno', todo: 'za narediti', pilot: 'pilot', progress: 'v pripravi' };
+  return '<span class="badge ' + (map[s]||'b-todo') + '">' + (labels[s]||s) + '</span>';
+}
+
+function renderNode(node, depth) {
+  var type = node.type || 'center';
+  var cls = 'n-' + (type === 'empty' ? 'empty' : type) + (type === 'empty' ? ' node-na' : '');
+  var hasChildren = (node.children && node.children.length > 0) || (node.docs && node.docs.length > 0) || node.info;
+  var isOpen = node.open || false;
+  var html = '<div class="node ' + cls + '">';
+  html += '<div class="node-header" onclick="toggleNode(this)">';
+  if (hasChildren) {
+    html += '<i class="ti ti-chevron-right chevron' + (isOpen ? ' open' : '') + '" aria-hidden="true"></i>';
+  } else {
+    html += '<span style="min-width:14px"></span>';
+  }
+  html += '<i class="ti ' + (node.icon || 'ti-folder') + ' icon" aria-hidden="true"></i>';
+  html += '<span class="node-title">' + node.title + '</span>';
+  if (type === 'empty') html += '<span class="badge b-na" style="margin-left:auto">ni TD</span>';
+  var docCount = countDocs(node);
+  if (docCount > 0 && type !== 'klinika') html += '<span class="node-count">' + docCount + ' dok.</span>';
+  html += '</div>';
+
+  if (hasChildren) {
+    html += '<div class="node-body' + (isOpen ? '' : ' collapsed') + '">';
+    if (node.docs) {
+      for (var i = 0; i < node.docs.length; i++) {
+        var d = node.docs[i];
+        var clickable = d.file ? ' doc-clickable' : '';
+        var onclick = d.file ? ' onclick="if(event.target.closest(\'.export-btn\'))return;openDoc(\'' + d.file + '\')"' : '';
+        html += '<div class="doc' + (d.gov ? ' doc-gov' : '') + clickable + '" data-status="' + (d.status||'todo') + '"' + onclick + '>';
+        html += '<i class="ti ti-file-text doc-icon" aria-hidden="true"></i>';
+        html += '<span class="doc-id">' + d.id + '</span>';
+        html += '<span class="doc-name">' + d.name + '</span>';
+        html += statusBadge(d.status);
+        if (d.status === 'done' && depth > 0) html += '<button class="export-btn" onclick="exportPackage(\'' + d.id + '\',event)" title="Izvozi celoten paket za to enoto"><i class="ti ti-package"></i> paket</button>';
+        if (d.file) html += '<i class="ti ti-external-link doc-open-icon" title="Odpri dokument"></i>';
+        html += '</div>';
+        if (d.notes) html += '<div class="doc-notes">' + d.notes + '</div>';
+      }
+    }
+    if (node.info) html += '<div class="info">' + node.info + '</div>';
+    if (node.children) {
+      for (var j = 0; j < node.children.length; j++) {
+        html += renderNode(node.children[j], depth + 1);
+      }
+    }
+    html += '</div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+function countDocs(node) {
+  var c = (node.docs ? node.docs.length : 0);
+  if (node.children) {
+    for (var i = 0; i < node.children.length; i++) c += countDocs(node.children[i]);
+  }
+  return c;
+}
+
+function toggleNode(el) {
+  var body = el.nextElementSibling;
+  if (!body || !body.classList.contains('node-body')) return;
+  body.classList.toggle('collapsed');
+  var chev = el.querySelector('.chevron');
+  if (chev) chev.classList.toggle('open');
+}
+
+document.getElementById('tree').innerHTML = renderNode(DATA, 0);
+
+var pbody = '';
+for (var p = 0; p < PACKETS.length; p++) {
+  pbody += '<tr>';
+  pbody += '<td>' + PACKETS[p].unit + '</td>';
+  pbody += '<td class="mono">' + PACKETS[p].docs + '</td>';
+  pbody += '<td class="packet-count">' + PACKETS[p].count + ' dokumenti</td>';
+  pbody += '</tr>';
+}
+document.getElementById('packetBody').innerHTML = pbody;
+
+// Filter logic
+var activeFilter = 'all';
+document.getElementById('filterBar').addEventListener('click', function(e) {
+  var tag = e.target.closest('.filter-tag');
+  if (!tag) return;
+  var filter = tag.dataset.filter;
+  if (filter === activeFilter) { filter = 'all'; }
+  activeFilter = filter;
+  document.querySelectorAll('.filter-tag').forEach(function(t) { t.classList.toggle('active', t.dataset.filter === filter); });
+  applyFilter(filter);
+});
+
+function applyFilter(filter) {
+  document.querySelectorAll('.doc[data-status]').forEach(function(doc) {
+    if (filter === 'all') { doc.classList.remove('filter-hidden'); }
+    else { doc.classList.toggle('filter-hidden', doc.dataset.status !== filter); }
+    var notes = doc.nextElementSibling;
+    if (notes && notes.classList.contains('doc-notes')) {
+      notes.style.display = doc.classList.contains('filter-hidden') ? 'none' : '';
+    }
+  });
+  document.querySelectorAll('.node-na').forEach(function(node) {
+    if (filter === 'all' || filter === 'na') { node.style.display = ''; }
+    else { node.style.display = 'none'; }
+  });
+  document.querySelectorAll('.node').forEach(function(node) {
+    if (node.classList.contains('node-na')) return;
+    var hasVisible = node.querySelectorAll('.doc[data-status]:not(.filter-hidden)').length > 0
+      || node.querySelectorAll('.node-na').length > 0 && filter === 'na';
+    var hasChildNodes = node.querySelectorAll('.node:not(.node-na)').length > 0;
+    if (filter === 'all') { node.classList.remove('filter-empty'); }
+    else { node.classList.toggle('filter-empty', !hasVisible && !hasChildNodes); }
+  });
+  // Expand all when filtering, collapse when back to all
+  if (filter !== 'all') {
+    document.querySelectorAll('.node-body.collapsed').forEach(function(b) {
+      b.classList.remove('collapsed');
+      var chev = b.previousElementSibling.querySelector('.chevron');
+      if (chev) chev.classList.add('open');
+    });
+  }
+}
+</script>
+
+</body>
+</html>

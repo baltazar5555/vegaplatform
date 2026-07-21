@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vega Signal Verify — Independent Signal Provider Certification</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0a0a0f; color: #e0e0e0; }
+
+.header {
+  background: linear-gradient(135deg, #1a1a2e 0%, #0d2137 100%);
+  padding: 16px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 2px solid #4fc3f7;
+}
+.header h1 { font-size: 22px; color: #4fc3f7; }
+.header .subtitle { font-size: 12px; color: #888; margin-top: 2px; }
+.header .badge { background: #4fc3f7; color: #0a0a0f; padding: 4px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+
+.tabs {
+  display: flex; background: #111; border-bottom: 1px solid #333;
+}
+.tab {
+  padding: 12px 24px; cursor: pointer; font-size: 13px; color: #888;
+  border-bottom: 2px solid transparent; transition: all 0.2s;
+}
+.tab:hover { color: #ccc; }
+.tab.active { color: #4fc3f7; border-bottom-color: #4fc3f7; }
+
+.screen { display: none; padding: 20px; }
+.screen.active { display: block; }
+
+/* Trust Score Ring */
+.trust-ring {
+  width: 140px; height: 140px; position: relative; margin: 0 auto;
+}
+.trust-ring svg { transform: rotate(-90deg); }
+.trust-ring .score-text {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  text-align: center;
+}
+.trust-ring .score-number { font-size: 36px; font-weight: 800; }
+.trust-ring .score-label { font-size: 10px; color: #888; }
+
+/* Provider Cards */
+.provider-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px;
+}
+.provider-card {
+  background: #1a1a2e; border: 1px solid #333; border-radius: 12px;
+  padding: 20px; transition: all 0.2s; cursor: pointer;
+}
+.provider-card:hover { border-color: #4fc3f7; }
+.provider-header {
+  display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;
+}
+.provider-name { font-size: 16px; font-weight: 700; }
+.provider-type { font-size: 11px; padding: 2px 8px; border-radius: 10px; }
+.provider-type.crypto { background: #ffa726; color: #000; }
+.provider-type.forex { background: #4fc3f7; color: #000; }
+.provider-type.stocks { background: #66bb6a; color: #000; }
+
+.provider-stats {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; font-size: 12px;
+}
+.provider-stats .stat-label { color: #888; }
+.provider-stats .stat-val { font-weight: 600; }
+
+.verified-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;
+}
+.verified-badge.gold { background: rgba(255,167,38,0.2); color: #ffa726; border: 1px solid #ffa726; }
+.verified-badge.silver { background: rgba(176,190,197,0.2); color: #b0bec5; border: 1px solid #b0bec5; }
+.verified-badge.bronze { background: rgba(161,136,127,0.2); color: #a1887f; border: 1px solid #a1887f; }
+.verified-badge.failed { background: rgba(233,69,96,0.2); color: #e94560; border: 1px solid #e94560; }
+
+/* Screen 2: Verification Engine */
+.verify-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 16px;
+}
+.verify-panel {
+  background: #1a1a2e; border-radius: 12px; padding: 20px; border: 1px solid #333;
+}
+.verify-panel h3 { font-size: 14px; color: #4fc3f7; margin-bottom: 16px; }
+
+.check-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px; margin-bottom: 6px; border-radius: 8px; background: #16213e;
+}
+.check-icon { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+.check-icon.pass { background: rgba(0,200,83,0.2); color: #00c853; }
+.check-icon.fail { background: rgba(233,69,96,0.2); color: #e94560; }
+.check-icon.warn { background: rgba(255,193,7,0.2); color: #ffc107; }
+.check-text { font-size: 12px; }
+.check-text .title { font-weight: 600; }
+.check-text .detail { color: #888; margin-top: 2px; }
+
+.fraud-indicators {
+  margin-top: 16px;
+}
+.fraud-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px; margin-bottom: 6px; border-radius: 8px;
+  border-left: 3px solid #e94560; background: rgba(233,69,96,0.05);
+}
+.fraud-item.clean {
+  border-left-color: #00c853; background: rgba(0,200,83,0.05);
+}
+.fraud-item .label { font-size: 12px; }
+
+/* Screen 3: Marketplace */
+.marketplace-header {
+  display: flex; gap: 12px; margin-bottom: 20px;
+  align-items: center;
+}
+.filter-chip {
+  padding: 6px 14px; border-radius: 20px; border: 1px solid #333;
+  background: #16213e; color: #888; font-size: 12px; cursor: pointer;
+}
+.filter-chip.active { border-color: #4fc3f7; color: #4fc3f7; }
+.search-box {
+  margin-left: auto; padding: 8px 16px; border-radius: 8px;
+  border: 1px solid #333; background: #16213e; color: #e0e0e0; font-size: 13px; width: 250px;
+}
+
+.leaderboard {
+  width: 100%; border-collapse: collapse;
+}
+.leaderboard th {
+  background: #16213e; padding: 12px; font-size: 12px; color: #888;
+  text-align: left; border-bottom: 1px solid #333;
+}
+.leaderboard td {
+  padding: 12px; font-size: 13px; border-bottom: 1px solid #1a1a2e;
+}
+.leaderboard tr:hover { background: rgba(79,195,247,0.05); }
+.rank-1 { color: #ffa726; font-weight: 700; }
+.rank-2 { color: #b0bec5; font-weight: 700; }
+.rank-3 { color: #a1887f; font-weight: 700; }
+
+.consistency-bar {
+  width: 80px; height: 6px; background: #333; border-radius: 3px; display: inline-block; vertical-align: middle;
+}
+.consistency-fill {
+  height: 100%; border-radius: 3px;
+}
+
+/* Screen 4: Provider Detail */
+.detail-header {
+  display: flex; gap: 24px; align-items: center;
+  background: #1a1a2e; padding: 24px; border-radius: 12px; margin-bottom: 20px;
+}
+.detail-info h2 { font-size: 20px; }
+.detail-info .meta { font-size: 12px; color: #888; margin-top: 4px; }
+
+.detail-grid {
+  display: grid; grid-template-columns: 2fr 1fr; gap: 20px;
+}
+.equity-panel {
+  background: #1a1a2e; border-radius: 12px; padding: 20px; border: 1px solid #333;
+}
+.equity-panel h3 { font-size: 13px; color: #888; margin-bottom: 12px; }
+
+.metrics-panel {
+  background: #1a1a2e; border-radius: 12px; padding: 20px; border: 1px solid #333;
+}
+.metric-row {
+  display: flex; justify-content: space-between; padding: 8px 0;
+  border-bottom: 1px solid #16213e; font-size: 13px;
+}
+.metric-row .label { color: #888; }
+
+.regime-mini {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 16px;
+}
+.regime-mini-card {
+  background: #16213e; border-radius: 8px; padding: 10px; text-align: center; font-size: 12px;
+}
+.regime-mini-card .val { font-size: 18px; font-weight: 700; margin-bottom: 2px; }
+.regime-mini-card .val.green { color: #00c853; }
+.regime-mini-card .val.red { color: #e94560; }
+.regime-mini-card .val.yellow { color: #ffc107; }
+
+svg text { font-family: 'Segoe UI', system-ui, sans-serif; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>VEGA Signal Verify</h1>
+    <div class="subtitle">Independent Signal Provider Certification — Trust Through Transparency</div>
+  </div>
+  <div class="badge">B2B PLATFORM</div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="switchTab(0)">1. Provider Submit</div>
+  <div class="tab" onclick="switchTab(1)">2. Verification Engine</div>
+  <div class="tab" onclick="switchTab(2)">3. Marketplace</div>
+  <div class="tab" onclick="switchTab(3)">4. Provider Detail</div>
+</div>
+
+<!-- SCREEN 1: Provider Submit -->
+<div class="screen active" id="screen0">
+  <h2 style="font-size:16px; margin-bottom:4px;">Prijavi Strategijo za Neodvisno Verifikacijo</h2>
+  <p style="font-size:12px; color:#888; margin-bottom:20px;">Vega verificira tvoje signale skozi WFA, rezimsko analizo in fraud detection. Investitorji vidijo samo verificirane ponudnike.</p>
+
+  <div class="verify-grid">
+    <div class="verify-panel">
+      <h3>1. Nalozi Track Record</h3>
+      <div style="border:2px dashed #333; border-radius:8px; padding:30px; text-align:center; margin-bottom:16px;">
+        <div style="font-size:36px; margin-bottom:8px;">&#128200;</div>
+        <p style="font-size:13px;">CSV trade log, API povezava, ali Myfxbook/TradingView link</p>
+        <div style="display:flex; gap:8px; justify-content:center; margin-top:12px;">
+          <button style="padding:8px 16px; border-radius:6px; border:1px solid #333; background:#16213e; color:#e0e0e0; cursor:pointer; font-size:12px;">CSV Upload</button>
+          <button style="padding:8px 16px; border-radius:6px; border:1px solid #333; background:#16213e; color:#e0e0e0; cursor:pointer; font-size:12px;">API Connect</button>
+          <button style="padding:8px 16px; border-radius:6px; border:1px solid #333; background:#16213e; color:#e0e0e0; cursor:pointer; font-size:12px;">Myfxbook Link</button>
+        </div>
+      </div>
+
+      <h3 style="margin-top:20px;">2. Strategija Info</h3>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:8px;">
+        <div>
+          <label style="font-size:11px; color:#888;">Ime Strategije</label>
+          <input style="width:100%; padding:8px; background:#16213e; border:1px solid #333; border-radius:6px; color:#e0e0e0; margin-top:4px;" value="AlphaWave Crypto Signals">
+        </div>
+        <div>
+          <label style="font-size:11px; color:#888;">Trg</label>
+          <select style="width:100%; padding:8px; background:#16213e; border:1px solid #333; border-radius:6px; color:#e0e0e0; margin-top:4px;">
+            <option>Crypto</option><option>Forex</option><option>Stocks</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:11px; color:#888;">Timeframe</label>
+          <select style="width:100%; padding:8px; background:#16213e; border:1px solid #333; border-radius:6px; color:#e0e0e0; margin-top:4px;">
+            <option>1H</option><option>4H</option><option>1D</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:11px; color:#888;">Min Track Record</label>
+          <input style="width:100%; padding:8px; background:#16213e; border:1px solid #333; border-radius:6px; color:#e0e0e0; margin-top:4px;" value="6 mesecev" disabled>
+        </div>
+      </div>
+
+      <button style="margin-top:20px; width:100%; padding:12px; background:#4fc3f7; border:none; border-radius:8px; color:#0a0a0f; font-weight:700; font-size:14px; cursor:pointer;" onclick="switchTab(1)">ZACNI VERIFIKACIJO</button>
+    </div>
+
+    <div class="verify-panel">
+      <h3>Kaj Verificiramo</h3>
+      <div class="check-item">
+        <div class="check-icon pass">&#10003;</div>
+        <div class="check-text">
+          <div class="title">WFA Walk-Forward Analiza</div>
+          <div class="detail">5-fold cross-validation cez razlicne tržne rezime</div>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon pass">&#10003;</div>
+        <div class="check-text">
+          <div class="title">Regime Robustnost</div>
+          <div class="detail">Ali signali delujejo v bull, bear IN sideways?</div>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon pass">&#10003;</div>
+        <div class="check-text">
+          <div class="title">Drawdown Stress Test</div>
+          <div class="detail">Monte Carlo simulacija 1000 scenarijev najslabsega primera</div>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon pass">&#10003;</div>
+        <div class="check-text">
+          <div class="title">Fraud Detection</div>
+          <div class="detail">Detekcija manipuliranih trade logov, survivorship bias, cherry-picking</div>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon pass">&#10003;</div>
+        <div class="check-text">
+          <div class="title">Cost-Adjusted Returns</div>
+          <div class="detail">Realni donosi po fees, slippage in funding (ne bruto iluzija)</div>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon pass">&#10003;</div>
+        <div class="check-text">
+          <div class="title">Consistency Score</div>
+          <div class="detail">Mesecna stabilnost donosov vs "en velik trade" efekt</div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px; padding:12px; background:#16213e; border-radius:8px;">
+        <div style="font-size:12px; color:#4fc3f7; font-weight:600; margin-bottom:4px;">Verifikacijski Nivoji</div>
+        <div style="font-size:12px; color:#888; line-height:2;">
+          <span style="color:#ffa726;">&#9733; GOLD</span> — WFA 5/5, vsi rezimi PASS, n>500, 12mo+ track<br>
+          <span style="color:#b0bec5;">&#9733; SILVER</span> — WFA 4/5, vecina rezimov PASS, n>200, 6mo+<br>
+          <span style="color:#a1887f;">&#9733; BRONZE</span> — WFA 3/5, osnovni testi PASS, n>100, 3mo+<br>
+          <span style="color:#e94560;">&#10007; FAILED</span> — WFA &lt;3/5, fraud indicators, ali premalo podatkov
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN 2: Verification Engine -->
+<div class="screen" id="screen1">
+  <h2 style="font-size:16px; margin-bottom:4px;">Verifikacija: AlphaWave Crypto Signals</h2>
+  <p style="font-size:12px; color:#888; margin-bottom:20px;">Neodvisna analiza 847 tradov cez 14 mesecev (avg 2.0 tradov/dan)</p>
+
+  <div style="display:flex; gap:24px; align-items:flex-start;">
+    <div class="trust-ring">
+      <svg width="140" height="140" viewBox="0 0 140 140">
+        <circle cx="70" cy="70" r="60" fill="none" stroke="#333" stroke-width="10"/>
+        <circle cx="70" cy="70" r="60" fill="none" stroke="#4fc3f7" stroke-width="10"
+                stroke-dasharray="301.6" stroke-dashoffset="75.4" stroke-linecap="round"/>
+      </svg>
+      <div class="score-text">
+        <div class="score-number" style="color:#4fc3f7;">7.2</div>
+        <div class="score-label">TRUST SCORE</div>
+      </div>
+    </div>
+    <div style="flex:1;">
+      <div style="display:flex; gap:8px; margin-bottom:12px;">
+        <span class="verified-badge silver">&#9733; SILVER VERIFIED</span>
+        <span style="font-size:12px; color:#888; padding-top:4px;">Izdano: 28.5.2026 | Veljavno: 6 mesecev</span>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:12px;">
+        <div style="text-align:center;"><div style="font-size:22px; font-weight:700; color:#00c853;">4/5</div><div style="font-size:10px; color:#888;">WFA Folds</div></div>
+        <div style="text-align:center;"><div style="font-size:22px; font-weight:700;">847</div><div style="font-size:10px; color:#888;">Tradov</div></div>
+        <div style="text-align:center;"><div style="font-size:22px; font-weight:700; color:#00c853;">1.64</div><div style="font-size:10px; color:#888;">PF (net)</div></div>
+        <div style="text-align:center;"><div style="font-size:22px; font-weight:700; color:#ffc107;">-11.2%</div><div style="font-size:10px; color:#888;">Max DD</div></div>
+        <div style="text-align:center;"><div style="font-size:22px; font-weight:700;">14mo</div><div style="font-size:10px; color:#888;">Track Record</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="verify-grid" style="margin-top:20px;">
+    <div class="verify-panel">
+      <h3>Verifikacijski Testi</h3>
+      <div class="check-item">
+        <div class="check-icon pass">&#10003;</div>
+        <div class="check-text">
+          <div class="title">WFA Walk-Forward: 4/5 PASS</div>
+          <div class="detail">Fold 3 (2024 Q1) MARGINAL — PF 1.08 v sideways rezime</div>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon pass">&#10003;</div>
+        <div class="check-text">
+          <div class="title">Bull Rezim: PF 1.92, WR 54%</div>
+          <div class="detail">Mocna performance v rastocih trgih</div>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon pass">&#10003;</div>
+        <div class="check-text">
+          <div class="title">Bear Rezim: PF 1.41, WR 46%</div>
+          <div class="detail">Pozitivna performance tudi v padajocih trgih</div>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon warn">!</div>
+        <div class="check-text">
+          <div class="title">Sideways Rezim: PF 1.08, WR 43%</div>
+          <div class="detail">Minimalen edge v mirnih trgih — glavna slabost</div>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon pass">&#10003;</div>
+        <div class="check-text">
+          <div class="title">Cost-Adjusted: Bruto PF 1.82 -> Neto PF 1.64</div>
+          <div class="detail">Fees in slippage pojejo 10% edge, ampak ostane profitabilen</div>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-icon pass">&#10003;</div>
+        <div class="check-text">
+          <div class="title">Consistency: 10/14 mesecev profitabilnih</div>
+          <div class="detail">71% mesecna konzistentnost — nad pragom 60%</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="verify-panel">
+      <h3>Fraud Detection Rezultati</h3>
+      <div class="fraud-item clean">
+        <div class="label"><strong style="color:#00c853;">CLEAN</strong> — Casovni zapisi konsistentni (ni zakasnelih vnosov)</div>
+      </div>
+      <div class="fraud-item clean">
+        <div class="label"><strong style="color:#00c853;">CLEAN</strong> — Win/loss distribucija normalna (ni cherry-picking vzorca)</div>
+      </div>
+      <div class="fraud-item clean">
+        <div class="label"><strong style="color:#00c853;">CLEAN</strong> — Position sizing konsistenten (ni martingale po izgubah)</div>
+      </div>
+      <div class="fraud-item">
+        <div class="label"><strong style="color:#ffc107;">FLAG</strong> — 3 tradov z entry tocno na low/high svecke (mozni limit fills ali post-hoc editing). Verjetnost: 12% (pod pragom za fail).</div>
+      </div>
+      <div class="fraud-item clean">
+        <div class="label"><strong style="color:#00c853;">CLEAN</strong> — Ni survivorship bias (vsi instrumenti vkljuceni, tudi delisted)</div>
+      </div>
+      <div class="fraud-item clean">
+        <div class="label"><strong style="color:#00c853;">CLEAN</strong> — Drawdown krivulja realisticna (ni "perfect recovery" vzorca)</div>
+      </div>
+
+      <div style="margin-top:16px; padding:12px; background:#16213e; border-radius:8px; font-size:12px;">
+        <strong>Fraud Score: 8/100</strong> (nizji = cistejsi)<br>
+        <span style="color:#888;">Prag za FAIL: 40+. Prag za manual review: 25+.</span><br>
+        <span style="color:#00c853;">Rezultat: CLEAN — ni znakov manipulacije.</span>
+      </div>
+
+      <div style="margin-top:16px; padding:12px; background:rgba(79,195,247,0.1); border-radius:8px; border:1px solid #4fc3f7; font-size:12px;">
+        <strong style="color:#4fc3f7;">SILVER CERTIFICATION</strong><br>
+        <span style="color:#888;">Razlog za Silver (ne Gold): WFA 4/5 (ne 5/5) + n=847 (potrebno 500+, ampak track record 14mo &lt; 24mo za Gold).</span><br>
+        <span style="color:#888; margin-top:4px; display:block;">Upgrade do Gold: se 10 mesecev track record + izboljsaj sideways performance.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN 3: Marketplace -->
+<div class="screen" id="screen2">
+  <h2 style="font-size:16px; margin-bottom:16px;">Verificiran Signal Marketplace</h2>
+
+  <div class="marketplace-header">
+    <div class="filter-chip active">Vsi</div>
+    <div class="filter-chip">Crypto</div>
+    <div class="filter-chip">Forex</div>
+    <div class="filter-chip">Stocks</div>
+    <div class="filter-chip">Gold Only</div>
+    <input class="search-box" placeholder="Isci ponudnika ali strategijo...">
+  </div>
+
+  <table class="leaderboard">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Ponudnik</th>
+        <th>Certifikat</th>
+        <th>Trust Score</th>
+        <th>PF (net)</th>
+        <th>WR</th>
+        <th>Max DD</th>
+        <th>Tradov</th>
+        <th>Konzistentnost</th>
+        <th>Mesecna Cena</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="rank-1">1</td>
+        <td><strong>SteadyEdge Pro</strong><br><span style="font-size:11px; color:#888;">Crypto 1H | 24mo track</span></td>
+        <td><span class="verified-badge gold">&#9733; GOLD</span></td>
+        <td style="font-weight:700; color:#ffa726;">9.1</td>
+        <td style="color:#00c853;">2.14</td>
+        <td>52.8%</td>
+        <td style="color:#00c853;">-6.4%</td>
+        <td>2,847</td>
+        <td><div class="consistency-bar"><div class="consistency-fill" style="width:92%; background:#00c853;"></div></div> 92%</td>
+        <td>$149</td>
+      </tr>
+      <tr>
+        <td class="rank-2">2</td>
+        <td><strong>AlphaWave Crypto</strong><br><span style="font-size:11px; color:#888;">Crypto 1H | 14mo track</span></td>
+        <td><span class="verified-badge silver">&#9733; SILVER</span></td>
+        <td style="font-weight:700; color:#4fc3f7;">7.2</td>
+        <td style="color:#00c853;">1.64</td>
+        <td>49.1%</td>
+        <td style="color:#ffc107;">-11.2%</td>
+        <td>847</td>
+        <td><div class="consistency-bar"><div class="consistency-fill" style="width:71%; background:#4fc3f7;"></div></div> 71%</td>
+        <td>$79</td>
+      </tr>
+      <tr>
+        <td class="rank-3">3</td>
+        <td><strong>FX Sentinel</strong><br><span style="font-size:11px; color:#888;">Forex 4H | 18mo track</span></td>
+        <td><span class="verified-badge silver">&#9733; SILVER</span></td>
+        <td style="font-weight:700; color:#4fc3f7;">6.8</td>
+        <td style="color:#00c853;">1.48</td>
+        <td>55.2%</td>
+        <td style="color:#ffc107;">-9.8%</td>
+        <td>1,240</td>
+        <td><div class="consistency-bar"><div class="consistency-fill" style="width:67%; background:#4fc3f7;"></div></div> 67%</td>
+        <td>$99</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td><strong>MomentumX</strong><br><span style="font-size:11px; color:#888;">Crypto 1H | 8mo track</span></td>
+        <td><span class="verified-badge bronze">&#9733; BRONZE</span></td>
+        <td style="font-weight:700; color:#a1887f;">5.4</td>
+        <td style="color:#ffc107;">1.22</td>
+        <td>47.3%</td>
+        <td style="color:#e94560;">-14.7%</td>
+        <td>412</td>
+        <td><div class="consistency-bar"><div class="consistency-fill" style="width:54%; background:#ffc107;"></div></div> 54%</td>
+        <td>$49</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td><strong style="color:#888;">CryptoKing420</strong><br><span style="font-size:11px; color:#888;">Crypto 15m | 3mo track</span></td>
+        <td><span class="verified-badge failed">&#10007; FAILED</span></td>
+        <td style="font-weight:700; color:#e94560;">1.8</td>
+        <td style="color:#e94560;">0.87</td>
+        <td>38.1%</td>
+        <td style="color:#e94560;">-42.3%</td>
+        <td>89</td>
+        <td><div class="consistency-bar"><div class="consistency-fill" style="width:22%; background:#e94560;"></div></div> 22%</td>
+        <td><span style="color:#e94560; text-decoration:line-through;">$199</span></td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td><strong style="color:#888;">10xGains Bot</strong><br><span style="font-size:11px; color:#888;">Crypto 5m | 2mo track</span></td>
+        <td><span class="verified-badge failed">&#10007; FAILED</span></td>
+        <td style="font-weight:700; color:#e94560;">0.4</td>
+        <td style="color:#e94560;">0.61</td>
+        <td>31.2%</td>
+        <td style="color:#e94560;">-67.8%</td>
+        <td>34</td>
+        <td><div class="consistency-bar"><div class="consistency-fill" style="width:8%; background:#e94560;"></div></div> 8%</td>
+        <td><span style="color:#e94560; text-decoration:line-through;">$299</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top:20px; padding:16px; background:#1a1a2e; border-radius:12px; border:1px solid #333; display:flex; justify-content:space-between; align-items:center;">
+    <div>
+      <div style="font-size:14px; font-weight:600;">Investitorji: Zakaj Vega Verify?</div>
+      <div style="font-size:12px; color:#888; margin-top:4px;">67% signal ponudnikov na trgu ne bi preslo nasega WFA testa. Placujes samo za verificirane signale.</div>
+    </div>
+    <div style="text-align:right;">
+      <div style="font-size:24px; font-weight:800; color:#e94560;">67%</div>
+      <div style="font-size:11px; color:#888;">ponudnikov FAIL</div>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN 4: Provider Detail -->
+<div class="screen" id="screen3">
+  <div class="detail-header">
+    <div class="trust-ring" style="width:100px; height:100px;">
+      <svg width="100" height="100" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="40" fill="none" stroke="#333" stroke-width="8"/>
+        <circle cx="50" cy="50" r="40" fill="none" stroke="#ffa726" stroke-width="8"
+                stroke-dasharray="251.3" stroke-dashoffset="22.6" stroke-linecap="round"/>
+      </svg>
+      <div class="score-text">
+        <div class="score-number" style="font-size:28px; color:#ffa726;">9.1</div>
+        <div class="score-label" style="font-size:9px;">TRUST</div>
+      </div>
+    </div>
+    <div class="detail-info">
+      <h2>SteadyEdge Pro <span class="verified-badge gold" style="vertical-align:middle;">&#9733; GOLD VERIFIED</span></h2>
+      <div class="meta">Crypto | 1H Timeframe | Mean Reversion + Trend Filter | Aktiven od Jan 2024</div>
+      <div class="meta">Narocnikov: 342 | Povp. mesecni donos narocnikov: +4.2% (po fees)</div>
+    </div>
+  </div>
+
+  <div class="detail-grid">
+    <div class="equity-panel">
+      <h3>Equity Krivulja (24 mesecev verificiranih tradov)</h3>
+      <svg width="100%" height="200" viewBox="0 0 600 200">
+        <defs>
+          <linearGradient id="eqGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#ffa726" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#ffa726" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <!-- Grid -->
+        <line x1="40" y1="20" x2="40" y2="180" stroke="#222" stroke-width="1"/>
+        <line x1="40" y1="180" x2="580" y2="180" stroke="#222" stroke-width="1"/>
+        <line x1="40" y1="100" x2="580" y2="100" stroke="#222" stroke-dasharray="4,4"/>
+        <line x1="40" y1="60" x2="580" y2="60" stroke="#222" stroke-dasharray="4,4"/>
+
+        <!-- Equity area -->
+        <path d="M40,170 L80,165 120,158 160,162 200,150 240,142 280,138 320,130 360,125 400,118 440,108 480,95 520,82 560,68 580,58 580,180 40,180Z" fill="url(#eqGrad)"/>
+        <polyline points="40,170 80,165 120,158 160,162 200,150 240,142 280,138 320,130 360,125 400,118 440,108 480,95 520,82 560,68 580,58" fill="none" stroke="#ffa726" stroke-width="2.5"/>
+
+        <!-- DD periods -->
+        <rect x="150" y="155" width="40" height="25" fill="rgba(233,69,96,0.15)" rx="2"/>
+        <rect x="320" y="125" width="30" height="15" fill="rgba(233,69,96,0.15)" rx="2"/>
+
+        <text x="5" y="65" fill="#666" font-size="9">+80%</text>
+        <text x="5" y="105" fill="#666" font-size="9">+40%</text>
+        <text x="5" y="175" fill="#666" font-size="9">0%</text>
+        <text x="40" y="195" fill="#666" font-size="9">Jan 24</text>
+        <text x="280" y="195" fill="#666" font-size="9">Jul 24</text>
+        <text x="520" y="195" fill="#666" font-size="9">Jan 25</text>
+      </svg>
+
+      <div class="regime-mini">
+        <div class="regime-mini-card">
+          <div class="val green">PF 2.31</div>
+          <div style="color:#888;">Bull Regime</div>
+        </div>
+        <div class="regime-mini-card">
+          <div class="val green">PF 1.78</div>
+          <div style="color:#888;">Bear Regime</div>
+        </div>
+        <div class="regime-mini-card">
+          <div class="val yellow">PF 1.34</div>
+          <div style="color:#888;">Sideways</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="metrics-panel">
+      <h3 style="font-size:13px; color:#888; margin-bottom:12px;">Podrobne Metrike</h3>
+      <div class="metric-row"><span class="label">WFA Status</span><span style="color:#00c853; font-weight:600;">5/5 PASS</span></div>
+      <div class="metric-row"><span class="label">Skupaj Tradov</span><span>2,847</span></div>
+      <div class="metric-row"><span class="label">Win Rate</span><span>52.8%</span></div>
+      <div class="metric-row"><span class="label">Profit Factor (bruto)</span><span>2.41</span></div>
+      <div class="metric-row"><span class="label">Profit Factor (neto)</span><span style="color:#00c853;">2.14</span></div>
+      <div class="metric-row"><span class="label">Max Drawdown</span><span style="color:#00c853;">-6.4%</span></div>
+      <div class="metric-row"><span class="label">Sharpe Ratio</span><span>1.82</span></div>
+      <div class="metric-row"><span class="label">Povp. Trade</span><span>+0.38%</span></div>
+      <div class="metric-row"><span class="label">Povp. Holding</span><span>18.4h</span></div>
+      <div class="metric-row"><span class="label">Konzistentnost</span><span style="color:#00c853;">92%</span></div>
+      <div class="metric-row"><span class="label">Fraud Score</span><span style="color:#00c853;">3/100</span></div>
+      <div class="metric-row"><span class="label">Korelacija z BTC</span><span>0.34</span></div>
+
+      <div style="margin-top:16px; padding:12px; background:#16213e; border-radius:8px;">
+        <div style="font-size:12px; color:#ffa726; font-weight:600;">GOLD VERIFICATION</div>
+        <div style="font-size:11px; color:#888; margin-top:4px;">
+          WFA 5/5 &#10003; | n>500 &#10003; | 24mo+ &#10003; | Vsi rezimi PASS &#10003; | Fraud &lt;10 &#10003;
+        </div>
+      </div>
+
+      <button style="margin-top:12px; width:100%; padding:12px; background:#ffa726; border:none; border-radius:8px; color:#0a0a0f; font-weight:700; font-size:14px; cursor:pointer;">
+        NAROČI SE — $149/mesec
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+function switchTab(n) {
+  document.querySelectorAll('.tab').forEach((t,i) => {
+    t.classList.toggle('active', i===n);
+  });
+  document.querySelectorAll('.screen').forEach((s,i) => {
+    s.classList.toggle('active', i===n);
+  });
+}
+</script>
+
+</body>
+</html>

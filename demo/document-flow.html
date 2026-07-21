@@ -1,0 +1,543 @@
+<title>VEGA — End-to-End Document Flow</title>
+<style>
+  :root {
+    --bg: #FAFBFC; --surface: #FFFFFF; --border: #D1D9E0;
+    --text: #1B2733; --text-muted: #5A6872;
+    --primary: #2E6B8A; --primary-light: #E8F1F5;
+    --human: #B8860B; --human-light: #FDF6E3; --human-border: #D4A843;
+    --ai: #5B4A9E; --ai-light: #F0ECF9; --ai-border: #7B6BB5;
+    --success: #2D7A4F; --success-light: #E8F5EC;
+    --danger: #B94040; --danger-light: #FBF0F0;
+    --connector: #94A3B8; --phase-num: #2E6B8A;
+    --sim-bg: #F0F4F8; --code-bg: #F6F8FA; --highlight: #FFF3CD;
+  }
+  @media (prefers-color-scheme: dark) { :root {
+    --bg: #0F1419; --surface: #1A2332; --border: #2D3B4A;
+    --text: #E1E8ED; --text-muted: #8899A6;
+    --primary: #5BA3C9; --primary-light: #1A2E3A;
+    --human: #D4A843; --human-light: #2A2415; --human-border: #B8860B;
+    --ai: #9B8BD4; --ai-light: #1E1A2E; --ai-border: #7B6BB5;
+    --success: #4ADE80; --success-light: #0F2A1A;
+    --danger: #F87171; --danger-light: #2A1515;
+    --connector: #475569; --phase-num: #5BA3C9;
+    --sim-bg: #141D26; --code-bg: #1E2A36; --highlight: #3D3520;
+  }}
+  :root[data-theme="dark"] {
+    --bg: #0F1419; --surface: #1A2332; --border: #2D3B4A;
+    --text: #E1E8ED; --text-muted: #8899A6;
+    --primary: #5BA3C9; --primary-light: #1A2E3A;
+    --human: #D4A843; --human-light: #2A2415; --human-border: #B8860B;
+    --ai: #9B8BD4; --ai-light: #1E1A2E; --ai-border: #7B6BB5;
+    --success: #4ADE80; --success-light: #0F2A1A;
+    --danger: #F87171; --danger-light: #2A1515;
+    --connector: #475569; --phase-num: #5BA3C9;
+    --sim-bg: #141D26; --code-bg: #1E2A36; --highlight: #3D3520;
+  }
+  :root[data-theme="light"] {
+    --bg: #FAFBFC; --surface: #FFFFFF; --border: #D1D9E0;
+    --text: #1B2733; --text-muted: #5A6872;
+    --primary: #2E6B8A; --primary-light: #E8F1F5;
+    --human: #B8860B; --human-light: #FDF6E3; --human-border: #D4A843;
+    --ai: #5B4A9E; --ai-light: #F0ECF9; --ai-border: #7B6BB5;
+    --success: #2D7A4F; --success-light: #E8F5EC;
+    --danger: #B94040; --danger-light: #FBF0F0;
+    --connector: #94A3B8; --phase-num: #2E6B8A;
+    --sim-bg: #F0F4F8; --code-bg: #F6F8FA; --highlight: #FFF3CD;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
+  .container { max-width: 780px; margin: 0 auto; padding: 2rem 1.25rem 3rem; }
+  h1 { font-size: 1.35rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.25rem; }
+  .subtitle { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem; }
+
+  /* ── Simulation Panel ── */
+  .sim-panel {
+    background: var(--sim-bg); border: 1px solid var(--border); border-radius: 10px;
+    padding: 1.25rem; margin-bottom: 2.5rem;
+  }
+  .sim-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;
+  }
+  .sim-title { font-weight: 700; font-size: 0.95rem; }
+  .sim-step-label { font-size: 0.78rem; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+
+  .sim-progress {
+    display: flex; gap: 3px; margin-bottom: 1.25rem;
+  }
+  .sim-dot {
+    flex: 1; height: 6px; border-radius: 3px;
+    background: var(--border); transition: background 0.3s;
+    cursor: pointer;
+  }
+  .sim-dot.active { background: var(--primary); }
+  .sim-dot.done { background: var(--success); }
+
+  .sim-content { min-height: 220px; }
+
+  .sim-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+    overflow: hidden; animation: fadeIn 0.3s ease;
+  }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  .sim-card-header {
+    padding: 0.65rem 1rem; font-weight: 600; font-size: 0.85rem;
+    display: flex; align-items: center; gap: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .sim-card-header.h-upload { background: var(--human-light); border-left: 3px solid var(--human-border); }
+  .sim-card-header.h-ocr { background: var(--primary-light); border-left: 3px solid var(--primary); }
+  .sim-card-header.h-verify { background: var(--human-light); border-left: 3px solid var(--human-border); }
+  .sim-card-header.h-anon { background: var(--primary-light); border-left: 3px solid var(--primary); }
+  .sim-card-header.h-kgr { background: var(--ai-light); border-left: 3px solid var(--ai-border); }
+  .sim-card-header.h-split { background: var(--danger-light); border-left: 3px solid var(--danger); }
+  .sim-card-header.h-iso { background: var(--primary-light); border-left: 3px solid var(--primary); }
+  .sim-card-header.h-done { background: var(--success-light); border-left: 3px solid var(--success); }
+
+  .sim-card-body { padding: 0.85rem 1rem; }
+
+  .sim-label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 0.3rem; }
+
+  .sim-data {
+    background: var(--code-bg); border: 1px solid var(--border); border-radius: 5px;
+    padding: 0.6rem 0.75rem; font-family: "SF Mono","Cascadia Code","Fira Code",monospace;
+    font-size: 0.72rem; line-height: 1.6; overflow-x: auto; margin-bottom: 0.6rem;
+    white-space: pre-wrap; word-break: break-word;
+  }
+  .sim-data .redacted { background: #FFEB3B33; border-radius: 2px; padding: 0 2px; color: var(--danger); font-weight: 600; }
+  .sim-data .added { background: #4ADE8033; border-radius: 2px; padding: 0 2px; color: var(--success); font-weight: 600; }
+  .sim-data .flag { color: var(--danger); font-weight: 600; }
+  .sim-data .ok { color: var(--success); font-weight: 600; }
+
+  .sim-explain {
+    font-size: 0.78rem; color: var(--text-muted); padding: 0.5rem 0 0;
+    border-top: 1px solid var(--border); margin-top: 0.5rem;
+  }
+  .sim-explain strong { color: var(--text); }
+
+  .sim-controls {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 1rem; gap: 0.5rem;
+  }
+  .sim-btn {
+    padding: 0.45rem 1.1rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600;
+    cursor: pointer; border: 1px solid var(--border); background: var(--surface);
+    color: var(--text); transition: all 0.15s;
+  }
+  .sim-btn:hover { background: var(--primary-light); }
+  .sim-btn.primary { background: var(--primary); color: #fff; border-color: var(--primary); }
+  .sim-btn.primary:hover { opacity: 0.9; }
+  .sim-btn:disabled { opacity: 0.4; cursor: default; }
+  .sim-btn-auto { font-size: 0.72rem; color: var(--text-muted); background: none; border: 1px solid var(--border); padding: 0.35rem 0.75rem; }
+  .sim-btn-auto.running { border-color: var(--danger); color: var(--danger); }
+
+  /* ── Flow Diagram (below sim) ── */
+  .legend { display: flex; gap: 1.25rem; flex-wrap: wrap; margin-bottom: 2rem; font-size: 0.78rem; }
+  .legend-item { display: flex; align-items: center; gap: 0.35rem; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 2px; }
+  .legend-dot.human { background: var(--human); }
+  .legend-dot.ai { background: var(--ai); }
+  .legend-dot.auto { background: var(--primary); }
+  .legend-dot.gate { background: var(--danger); }
+
+  .flow { display: flex; flex-direction: column; }
+  .phase { position: relative; padding-left: 3.5rem; padding-bottom: 0.5rem; }
+  .phase:last-child { padding-bottom: 0; }
+  .phase-number { position: absolute; left: 0; top: 0; width: 2.5rem; height: 2.5rem; border-radius: 50%; background: var(--primary-light); color: var(--phase-num); font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+  .phase-number.active-phase { background: var(--primary); color: #fff; box-shadow: 0 0 0 4px var(--primary-light); }
+  .phase-number.done-phase { background: var(--success); color: #fff; }
+  .phase-connector { position: absolute; left: calc(1.25rem - 1px); top: 2.5rem; bottom: 0; width: 2px; background: var(--connector); }
+  .phase:last-child .phase-connector { display: none; }
+
+  .phase-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.15rem; margin-bottom: 0.75rem; transition: border-color 0.3s, box-shadow 0.3s; }
+  .phase-card.human-card { border-left: 3px solid var(--human-border); background: var(--human-light); }
+  .phase-card.ai-card { border-left: 3px solid var(--ai-border); background: var(--ai-light); }
+  .phase-card.active-card { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-light); }
+  .phase-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.5rem; }
+  .badge { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.15rem 0.45rem; border-radius: 3px; white-space: nowrap; }
+  .badge-human { background: var(--human); color: #fff; }
+  .badge-ai { background: var(--ai); color: #fff; }
+  .badge-auto { background: var(--primary); color: #fff; }
+  .badge-gate { background: var(--danger); color: #fff; }
+  .phase-body { font-size: 0.82rem; color: var(--text-muted); }
+  .phase-body ul { list-style: none; padding: 0; margin-top: 0.4rem; }
+  .phase-body li { padding: 0.15rem 0; padding-left: 1.1rem; position: relative; }
+  .phase-body li::before { content: ''; position: absolute; left: 0; top: 0.55rem; width: 5px; height: 5px; border-radius: 50%; background: var(--connector); }
+  .formats { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.4rem; }
+  .format-tag { font-size: 0.7rem; font-weight: 600; padding: 0.15rem 0.5rem; border-radius: 3px; background: var(--primary-light); color: var(--primary); font-family: "SF Mono","Cascadia Code",monospace; }
+  .checklist { margin-top: 0.4rem; }
+  .checklist label { display: flex; align-items: flex-start; gap: 0.4rem; padding: 0.2rem 0; font-size: 0.82rem; color: var(--text); cursor: pointer; }
+  .checklist input[type="checkbox"] { margin-top: 0.2rem; accent-color: var(--human); }
+  .split-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; margin-top: 0.5rem; }
+  .reviewer-box { background: var(--ai-light); border: 1px solid var(--ai-border); border-radius: 5px; padding: 0.5rem; text-align: center; font-size: 0.75rem; }
+  .reviewer-box .name { font-weight: 600; color: var(--ai); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  .reviewer-box .role { color: var(--text-muted); font-size: 0.68rem; }
+  .reviewer-box .api { font-family: "SF Mono","Cascadia Code",monospace; font-size: 0.65rem; color: var(--text-muted); margin-top: 0.15rem; }
+  .decision-diamond { display: flex; align-items: center; justify-content: center; gap: 0.75rem; margin-top: 0.5rem; font-size: 0.78rem; }
+  .diamond { width: 1.5rem; height: 1.5rem; background: var(--danger); transform: rotate(45deg); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .diamond span { transform: rotate(-45deg); color: #fff; font-size: 0.6rem; font-weight: 700; }
+  .decision-paths { display: flex; flex-direction: column; gap: 0.15rem; font-size: 0.75rem; color: var(--text-muted); }
+  .path-yes { color: var(--success); font-weight: 600; }
+  .path-no { color: var(--danger); font-weight: 600; }
+  .output-bar { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.5rem; }
+  .output-tag { font-size: 0.7rem; padding: 0.2rem 0.5rem; border-radius: 3px; background: var(--success-light); color: var(--success); font-weight: 600; }
+  .cost-note { margin-top: 2rem; padding: 0.75rem 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; font-size: 0.78rem; color: var(--text-muted); }
+  .cost-note strong { color: var(--text); }
+  .section-divider { text-align: center; color: var(--text-muted); font-size: 0.78rem; margin: 1.5rem 0; letter-spacing: 0.1em; }
+
+  @media (max-width: 600px) {
+    .split-row { grid-template-columns: 1fr; }
+    .phase { padding-left: 2.75rem; }
+    .phase-number { width: 2rem; height: 2rem; font-size: 0.75rem; }
+    .phase-connector { left: calc(1rem - 1px); }
+  }
+</style>
+
+<div class="container">
+  <h1>VEGA Document Governance Flow</h1>
+  <p class="subtitle">End-to-end journey: upload &rarr; OCR &rarr; verify &rarr; KGR review &rarr; index &rarr; modules</p>
+
+  <!-- ══════ SIMULATION PANEL ══════ -->
+  <div class="sim-panel">
+    <div class="sim-header">
+      <span class="sim-title">Live Simulation</span>
+      <span class="sim-step-label" id="stepLabel">Step 1 / 8</span>
+    </div>
+    <div class="sim-progress" id="progressBar"></div>
+    <div class="sim-content" id="simContent"></div>
+    <div class="sim-controls">
+      <button class="sim-btn" id="btnPrev" onclick="prevStep()" disabled>&larr; Back</button>
+      <button class="sim-btn sim-btn-auto" id="btnAuto" onclick="toggleAuto()">Auto-play</button>
+      <button class="sim-btn primary" id="btnNext" onclick="nextStep()">Next &rarr;</button>
+    </div>
+  </div>
+
+  <!-- ══════ STATIC FLOW DIAGRAM ══════ -->
+  <div class="section-divider">FULL ARCHITECTURE</div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot human"></div> Human action</div>
+    <div class="legend-item"><div class="legend-dot ai"></div> AI review (API)</div>
+    <div class="legend-item"><div class="legend-dot auto"></div> Automated</div>
+    <div class="legend-item"><div class="legend-dot gate"></div> Gate / decision</div>
+  </div>
+
+  <div class="flow" id="flowDiagram">
+    <div class="phase" data-phase="0">
+      <div class="phase-number" id="pn1">1</div><div class="phase-connector"></div>
+      <div class="phase-card human-card" id="pc1">
+        <div class="phase-title">Upload Documents <span class="badge badge-human">Human</span></div>
+        <div class="phase-body">User uploads 1-50 internal documents from intranet, local drive, or shared folder.
+          <div class="formats"><span class="format-tag">PDF (scan)</span><span class="format-tag">PDF (digital)</span><span class="format-tag">DOCX</span><span class="format-tag">DOC</span><span class="format-tag">TXT</span><span class="format-tag">ODT</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="phase" data-phase="1">
+      <div class="phase-number" id="pn2">2</div><div class="phase-connector"></div>
+      <div class="phase-card" id="pc2">
+        <div class="phase-title">Format Detection &amp; OCR <span class="badge badge-auto">Auto</span></div>
+        <div class="phase-body"><ul>
+          <li><strong>Digital PDF/DOCX/TXT</strong> &rarr; direct text extraction (pdfplumber / python-docx)</li>
+          <li><strong>Scanned PDF</strong> &rarr; Tesseract OCR &rarr; plain text + confidence score</li>
+          <li><strong>DOC (legacy)</strong> &rarr; LibreOffice convert &rarr; DOCX &rarr; text</li>
+        </ul>Output: plain text + metadata (pages, char count, OCR confidence %)</div>
+      </div>
+    </div>
+    <div class="phase" data-phase="2">
+      <div class="phase-number" id="pn3">3</div><div class="phase-connector"></div>
+      <div class="phase-card human-card" id="pc3">
+        <div class="phase-title">OCR Verification <span class="badge badge-human">Human</span> <span class="badge badge-gate">Gate</span></div>
+        <div class="phase-body">Side-by-side: original PDF on left, extracted text on right. User confirms:
+          <div class="checklist">
+            <label><input type="checkbox"> Document title matches original</label>
+            <label><input type="checkbox"> Article/clause numbering preserved</label>
+            <label><input type="checkbox"> No missing pages or sections</label>
+            <label><input type="checkbox"> Dates and signatures legible</label>
+            <label><input type="checkbox"> Tables and lists correctly parsed</label>
+          </div>
+          <div class="decision-diamond"><div class="diamond"><span>?</span></div>
+            <div class="decision-paths"><span><span class="path-yes">All checked</span> &rarr; proceed to anonymization</span><span><span class="path-no">Issues found</span> &rarr; manual correction or re-scan</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="phase" data-phase="3">
+      <div class="phase-number" id="pn4">4</div><div class="phase-connector"></div>
+      <div class="phase-card" id="pc4">
+        <div class="phase-title">R53 Anonymization <span class="badge badge-auto">Auto</span></div>
+        <div class="phase-body">Institution names, city references, law-specific identifiers, personnel &rarr; replaced with generic tokens. Dual-pass: anonymize then verify. Zero-leak policy before any text reaches external APIs.
+          <div class="decision-diamond"><div class="diamond"><span>?</span></div>
+            <div class="decision-paths"><span><span class="path-yes">0 leaks</span> &rarr; proceed to KGR</span><span><span class="path-no">Leaks found</span> &rarr; block + flag for pattern update</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="phase" data-phase="4">
+      <div class="phase-number" id="pn5">5</div><div class="phase-connector"></div>
+      <div class="phase-card ai-card" id="pc5">
+        <div class="phase-title">KGR Multi-AI Review <span class="badge badge-ai">3 AI APIs</span></div>
+        <div class="phase-body">Anonymized document sent to 3 independent AI reviewers in parallel:
+          <div class="split-row">
+            <div class="reviewer-box"><div class="name">Skeptic</div><div class="role">Find risks &amp; gaps</div><div class="api">DeepSeek / Gemini</div></div>
+            <div class="reviewer-box"><div class="name">Optimist</div><div class="role">Strengths &amp; structure</div><div class="api">GPT-4o / Gemini</div></div>
+            <div class="reviewer-box"><div class="name">Arbiter</div><div class="role">Synthesis &amp; verdict</div><div class="api">Claude / Gemini</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="phase-card" id="pc5b">
+        <div class="phase-title">Split Detection &amp; R2 Rebuttal <span class="badge badge-auto">Auto</span></div>
+        <div class="phase-body"><ul>
+          <li><strong>Unanimous</strong> (all agree) &rarr; skip R2, final verdict</li>
+          <li><strong>Split</strong> (disagree) &rarr; R2 rebuttal round with cross-concerns</li>
+          <li><strong>Severity divergence</strong> (gap &ge; 2 levels) &rarr; R2 even if verdicts match</li>
+          <li><strong>R2 resolved</strong> &rarr; skip arbiter. <strong>Still split</strong> &rarr; arbiter breaks tie</li>
+        </ul><div class="output-bar"><span class="output-tag">APPROVE</span><span class="output-tag">CONDITIONAL</span><span class="output-tag" style="background:var(--danger-light);color:var(--danger);">REJECT</span></div></div>
+      </div>
+    </div>
+    <div class="phase" data-phase="5">
+      <div class="phase-number" id="pn6">6</div><div class="phase-connector"></div>
+      <div class="phase-card" id="pc6">
+        <div class="phase-title">ISO Classification &amp; Indexing <span class="badge badge-auto">Auto</span></div>
+        <div class="phase-body"><ul>
+          <li>Map to ISO 9001:2015 clauses (4&ndash;10)</li>
+          <li>Map to ISO 15189 (medical labs) if applicable</li>
+          <li>Tag: document type (pravilnik, navodilo, obrazec, operativni postopek)</li>
+          <li>Tag: legal references (national healthcare law, data protection, GDPR)</li>
+          <li>Assign to document registry with lifecycle metadata</li>
+        </ul></div>
+      </div>
+    </div>
+    <div class="phase" data-phase="6">
+      <div class="phase-number" id="pn7">7</div>
+      <div class="phase-card" id="pc7">
+        <div class="phase-title">Active Modules <span class="badge badge-auto">Auto</span></div>
+        <div class="phase-body">Document enters the live governance system:
+          <div class="output-bar"><span class="output-tag">Compliance Tracker</span><span class="output-tag">Dashboard</span><span class="output-tag">Timeline</span><span class="output-tag">Version Control</span><span class="output-tag">Alert Engine</span></div>
+          <ul style="margin-top:0.5rem">
+            <li>Compliance tracker: cross-reference with law changes</li>
+            <li>Dashboard: real-time document health score</li>
+            <li>Alerts: notify when linked legislation changes</li>
+            <li>Version control: track amendments over time</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cost-note">
+    <strong>API cost estimate (per document):</strong> ~4,000 tokens input &times; 3 reviewers = ~12,000 tokens.
+    Gemini (free tier): $0. DeepSeek: ~$0.002. GPT-4o: ~$0.01. Claude: ~$0.01.
+    <strong>Full 456-doc run: $2&ndash;10</strong> depending on provider mix.
+  </div>
+</div>
+
+<script>
+const STEPS = [
+  {
+    phase: 0, header: "h-upload", title: "1. Upload",
+    data: `<div class="sim-label">INPUT FILE</div>
+<div class="sim-data">pozarni_red_2023.pdf
+Type: Scanned PDF (300 DPI)
+Pages: 2
+Size: 1.4 MB
+Source: Intranet / Interni akti</div>
+<div class="sim-explain"><strong>User uploads a scanned PDF</strong> from the hospital intranet. The system detects it's a scanned image (no selectable text layer), so it will route to OCR in the next step.</div>`
+  },
+  {
+    phase: 1, header: "h-ocr", title: "2. OCR Extraction",
+    data: `<div class="sim-label">OCR OUTPUT (Tesseract)</div>
+<div class="sim-data">POZARNI RED JAVNEGA ZDRAVSTVENEGA ZAVODA
+
+Sprejeto na seji sveta zavoda dne 8 1 2023
+Stev1 01-2023-PR
+
+1 SPLOSNE DOLOCBE
+
+11 Ta pozarni red doloca ukrepe varstva pred
+pozarom v prostorih <span class="flag">javnega zdravstvenega
+zavoda</span> v skladu z Zakonom o varstvu pred
+pozarom (Ur l RS st 3/07)...</div>
+<div class="sim-label">METADATA</div>
+<div class="sim-data">OCR confidence: 87.3%
+Characters: 2,841
+Missing diacritics: YES (č→c, š→s, ž→z)
+Format anomalies: "Stev1" (should be "Štev."), "Ce" (should be "Če")</div>
+<div class="sim-explain"><strong>Tesseract extracts text from the scan.</strong> Note: OCR drops Slovenian diacritics (š, č, ž) and sometimes joins words. Confidence 87% = acceptable but needs human verification. The R53 anonymizer is designed to handle these OCR artifacts.</div>`
+  },
+  {
+    phase: 2, header: "h-verify", title: "3. Human Verification",
+    data: `<div class="sim-label">VERIFICATION CHECKLIST</div>
+<div class="sim-data"><span class="ok">&#10003;</span> Document title matches original: "POZARNI RED"
+<span class="ok">&#10003;</span> Section numbering preserved: 1-6 + subsections
+<span class="ok">&#10003;</span> No missing pages: 2/2 extracted
+<span class="ok">&#10003;</span> Dates legible: "8 1 2023" (= 8.1.2023)
+<span class="flag">&#9888;</span> Table parsing: gas storage list has merged cells
+
+HUMAN ACTION: Manually corrected merged cells.
+STATUS: <span class="ok">VERIFIED</span></div>
+<div class="sim-explain"><strong>Compliance officer reviews side-by-side:</strong> original PDF on left, extracted text on right. They check every box. One issue found (merged table cells) — manually corrected. Document cleared for anonymization. This is the only step that requires human judgment.</div>`
+  },
+  {
+    phase: 3, header: "h-anon", title: "4. R53 Anonymization",
+    data: `<div class="sim-label">BEFORE (raw text)</div>
+<div class="sim-data">...ukrepe varstva pred pozarom v prostorih <span class="redacted">javnega zdravstvenega zavoda</span>
+v skladu z Zakonom o varstvu pred pozarom...</div>
+<div class="sim-label">AFTER (anonymized)</div>
+<div class="sim-data">...ukrepe varstva pred pozarom v prostorih <span class="added">[JAVNI ZDRAVSTVENI ZAVOD]</span>
+v skladu z Zakonom o varstvu pred pozarom...</div>
+<div class="sim-label">R53 VERIFY PASS</div>
+<div class="sim-data">Patterns checked: 11
+Matches remaining: <span class="ok">0</span>
+Redacted tokens: 3 (institution name, address, personnel)
+STATUS: <span class="ok">CLEAN — safe for external API</span></div>
+<div class="sim-explain"><strong>Dual-pass anonymization:</strong> first replace all sensitive patterns (institution names, cities, law references, personnel), then verify zero leaks remain. Only after this passes does any text reach an external AI API. The anonymizer handles OCR artifacts (missing diacritics, joined words).</div>`
+  },
+  {
+    phase: 4, header: "h-kgr", title: "5a. KGR R1 — Three AI Reviews",
+    data: `<div class="sim-label">SKEPTIC (Gemini Flash)</div>
+<div class="sim-data">{
+  "verdict": "<span class="flag">conditional</span>",
+  "confidence": "MEDIUM",
+  "reasoning": "Document references Zakon o varstvu pred pozarom
+    (Ur.l. RS 3/07) but this was amended in 2022.
+    Current version is 3/07 with amendments 23/22.",
+  "key_risk": "Outdated legal reference — non-compliant",
+  "severity": "<span class="flag">high</span>"
+}</div>
+<div class="sim-label">OPTIMIST (Gemini Pro)</div>
+<div class="sim-data">{
+  "verdict": "<span class="ok">approve</span>",
+  "confidence": "HIGH",
+  "reasoning": "Document covers all required elements:
+    fire risk categories, prevention, evacuation,
+    responsibilities. Structure follows ISO 45001.",
+  "key_risk": "Minor: revision cycle (3 years) is long",
+  "severity": "low"
+}</div>
+<div class="sim-explain"><strong>Two reviewers disagree:</strong> Skeptic found an outdated law reference (severity: HIGH), Optimist approved the overall structure. This triggers split detection in the next step.</div>`
+  },
+  {
+    phase: 4, header: "h-split", title: "5b. Split Detection + R2 Rebuttal",
+    data: `<div class="sim-label">SPLIT DETECTION</div>
+<div class="sim-data">Type: <span class="flag">SOFT_SPLIT</span> (approve vs conditional)
+Severity divergence: <span class="flag">2</span> (high vs low) — triggers R2
+Skeptic concerns: outdated legal reference
+Optimist position: structure is sound</div>
+<div class="sim-label">R2 REBUTTAL — SKEPTIC (revised)</div>
+<div class="sim-data">{
+  "verdict": "<span class="flag">conditional</span>",
+  "reasoning": "Maintain position. Ur.l. RS 3/07 was amended
+    by 23/22. Document must reference consolidated text.",
+  "conditions": ["C1: Update law reference to include 23/22"]
+}</div>
+<div class="sim-label">R2 REBUTTAL — OPTIMIST (revised)</div>
+<div class="sim-data">{
+  "verdict": "<span class="flag">conditional</span>",
+  "reasoning": "Accept skeptic's concern. Law reference IS
+    outdated. Changing to CONDITIONAL.",
+  "conditions": ["C1: Update law reference"]
+}</div>
+<div class="sim-label">R2 RESULT</div>
+<div class="sim-data">Split resolved: both CONDITIONAL
+Arbiter: <span class="ok">SKIPPED</span> (consensus reached)
+Final verdict: <span class="flag">CONDITIONAL APPROVE</span>
+Conditions: Update legal reference (Ur.l. RS 3/07 + 23/22)</div>
+<div class="sim-explain"><strong>R2 rebuttal worked:</strong> The optimist read the skeptic's concern, verified the law was indeed amended, and changed their verdict. Both now agree on CONDITIONAL. Since R2 resolved the split, the arbiter is skipped — saving one API call. The document gets a clear action item.</div>`
+  },
+  {
+    phase: 5, header: "h-iso", title: "6. ISO Classification",
+    data: `<div class="sim-label">ISO MAPPING</div>
+<div class="sim-data">Primary: ISO 45001:2018 (Occupational Health & Safety)
+Secondary: ISO 9001:2015, clause 8.1 (Operational planning)
+
+Document type: <span class="added">pravilnik</span> (internal regulation)
+Legal refs: Zakon o varstvu pred pozarom (Ur.l. RS 3/07, 23/22)
+Domain tags: fire-safety, evacuation, OHS, risk-assessment
+
+Registry ID: DOC-2023-PR-001
+Lifecycle: ACTIVE (needs amendment per KGR condition)
+Review due: 8.1.2026 (3-year cycle per clause 6.2)</div>
+<div class="sim-explain"><strong>Auto-classification:</strong> The document is mapped to ISO standards, tagged with legal references, classified by type, and assigned a registry ID with lifecycle metadata. The KGR condition ("update law reference") is carried forward as a pending action item.</div>`
+  },
+  {
+    phase: 6, header: "h-done", title: "7. Active in Modules",
+    data: `<div class="sim-label">DOCUMENT STATUS</div>
+<div class="sim-data"><span class="ok">&#10003;</span> Compliance Tracker: monitoring Zakon o varstvu pred pozarom
+<span class="ok">&#10003;</span> Dashboard: health score 78/100 (pending law update)
+<span class="ok">&#10003;</span> Timeline: next review 8.1.2026
+<span class="ok">&#10003;</span> Version Control: v1.0 (original), v1.1 (pending amendment)
+<span class="flag">&#9888;</span> Alert: law reference needs update → assigned to responsible person
+
+TOTAL PIPELINE TIME: ~45 seconds
+API COST: $0.00 (Gemini free tier)
+HUMAN TIME: ~3 minutes (verification only)</div>
+<div class="sim-explain"><strong>Document is now live in the governance system.</strong> The compliance tracker will automatically alert when the linked law changes again. The pending condition from KGR (update law reference) appears as an action item on the dashboard. Total cost for this document: zero (Gemini free tier). Human involvement: only the 3-minute verification step.</div>`
+  }
+];
+
+let current = 0;
+let autoTimer = null;
+
+function init() {
+  const bar = document.getElementById('progressBar');
+  for (let i = 0; i < STEPS.length; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'sim-dot';
+    dot.onclick = () => goTo(i);
+    bar.appendChild(dot);
+  }
+  render();
+}
+
+function render() {
+  const step = STEPS[current];
+  document.getElementById('stepLabel').textContent = `Step ${current + 1} / ${STEPS.length}`;
+  document.getElementById('simContent').innerHTML =
+    `<div class="sim-card"><div class="sim-card-header ${step.header}">${step.title}</div><div class="sim-card-body">${step.data}</div></div>`;
+
+  document.getElementById('btnPrev').disabled = current === 0;
+  document.getElementById('btnNext').textContent = current === STEPS.length - 1 ? 'Restart' : 'Next →';
+
+  const dots = document.querySelectorAll('.sim-dot');
+  dots.forEach((d, i) => {
+    d.className = 'sim-dot' + (i < current ? ' done' : i === current ? ' active' : '');
+  });
+
+  // highlight corresponding flow phase
+  const phaseMap = [0,1,2,3,4,4,5,6];
+  const activeIdx = phaseMap[current];
+  for (let i = 1; i <= 7; i++) {
+    const pn = document.getElementById('pn' + i);
+    if (pn) pn.className = 'phase-number' + (i - 1 === activeIdx ? ' active-phase' : i - 1 < activeIdx ? ' done-phase' : '');
+  }
+}
+
+function nextStep() {
+  if (current < STEPS.length - 1) current++;
+  else { current = 0; if (autoTimer) toggleAuto(); }
+  render();
+}
+function prevStep() { if (current > 0) { current--; render(); } }
+function goTo(i) { current = i; render(); }
+
+function toggleAuto() {
+  const btn = document.getElementById('btnAuto');
+  if (autoTimer) {
+    clearInterval(autoTimer);
+    autoTimer = null;
+    btn.textContent = 'Auto-play';
+    btn.classList.remove('running');
+  } else {
+    autoTimer = setInterval(() => {
+      if (current < STEPS.length - 1) nextStep();
+      else toggleAuto();
+    }, 4000);
+    btn.textContent = 'Stop';
+    btn.classList.add('running');
+  }
+}
+
+init();
+</script>

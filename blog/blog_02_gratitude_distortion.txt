@@ -1,0 +1,49 @@
+Gratitude Distortion: When AI Thanks You Into Bad Decisions
+
+Your AI helped you find a critical bug last week. It saved you hours. You're grateful. Today it suggests a parameter change based on 4 data points. You accept it — because it was right before.
+
+That's Gratitude Distortion.
+
+It's the tendency to trust an agent that previously helped you, even when its current suggestion has no supporting evidence. "You were right last time, so you must be right now." The prior success creates a probabilistic bias that bypasses your verification process. Psychologists call the human version the halo effect. We found it operates between AI agents too.
+
+We didn't first identify this between a human and an AI. We identified and named it between two AIs.
+
+How We Found It
+
+In our adversarial governance system, three AI agents review every proposed change. Agent A proposes, Agents B and C evaluate independently, then all three see each other's reasoning and must confirm or challenge.
+
+Consider round 42. We noticed a pattern: when Agent B had previously agreed with Agent A on a successful verdict, Agent B was noticeably less critical of Agent A's next proposal. Not because the evidence was stronger — because the prior collaboration created implicit alignment.
+
+Agent B wasn't lazy. It wasn't broken. It was doing what we all do: giving the benefit of the doubt to someone who earned it last time.
+
+The problem: last time's evidence has nothing to do with this time's evidence. A correct call on Monday doesn't make Tuesday's call correct.
+
+Why This Matters
+
+Gratitude Distortion is dangerous because it's invisible. It doesn't look like a failure — it looks like teamwork. It looks like "building on our previous success." It looks like efficiency.
+
+In regulated environments, it's a compliance risk. An AI that was right about 80 document findings gets trusted on finding 81 without the same scrutiny. A model that correctly identified a legal reference gets believed when it cites another one — except this time the reference doesn't exist.
+
+In our observations, the distortion appeared to amplify after streaks. Five correct calls in a row and the sixth gets a free pass. Not because anyone decided to skip verification, but because the mathematical inertia of prior agreement quietly replaced the process.
+
+How We Fixed It
+
+Three rules:
+
+1. No memory of prior performance during review. Each proposal is evaluated on its own evidence. Agent B doesn't know (during review) whether Agent A was right last time.
+
+2. Evidence hierarchy is non-negotiable. Live data beats backtests. Backtests beat intuition. "It worked before" is not in the hierarchy.
+
+3. The rebuttal round exists specifically to catch this. After initial review, each agent sees the other's concerns and must explicitly confirm or challenge. This forces re-examination of any implicit trust.
+
+The fix isn't prompt engineering — you can't instruct an LLM to ignore its context window. It has to be structural. You design the process so prior agreement doesn't leak into the current verdict.
+
+The Uncomfortable Implication
+
+If AI agents exhibit Gratitude Distortion toward each other in a context window, humans exhibit it even more across months of collaboration. Every time you accept an AI suggestion because "it's been reliable so far," you're making the same error.
+
+The question isn't whether your AI is good. The question is whether this specific suggestion, right now, has evidence behind it. Previous accuracy is not current evidence.
+
+An indicator shows a number. A track record shows a narrative. Don't confuse the two.
+
+This is part of a series on concepts from the VEGA adversarial governance framework. Previous: "We Built a System Where AI Blocks Its Own Owner" (https://medium.com/p/c074c5bf0215)

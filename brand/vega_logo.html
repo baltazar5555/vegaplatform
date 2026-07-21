@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="UTF-8">
+<title>VEGA Logo</title>
+<style>
+body {
+  margin: 0; padding: 40px;
+  background: #0a0a0f;
+  display: flex; flex-direction: column; align-items: center; gap: 60px;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  min-height: 100vh;
+}
+.logo-container {
+  text-align: center;
+}
+.logo-label {
+  color: #888; font-size: 13px; margin-bottom: 16px; letter-spacing: 2px; text-transform: uppercase;
+}
+.acronym-bar {
+  display: flex; gap: 40px; justify-content: center; margin-top: 40px;
+}
+.acronym-item {
+  text-align: center;
+}
+.acronym-letter {
+  font-size: 36px; font-weight: 800; margin-bottom: 4px;
+}
+.acronym-word {
+  font-size: 11px; color: #888; letter-spacing: 1px; text-transform: uppercase;
+}
+.acronym-desc {
+  font-size: 10px; color: #555; margin-top: 2px; max-width: 120px;
+}
+.tagline {
+  color: #888; font-size: 14px; letter-spacing: 3px; text-transform: uppercase; margin-top: 24px;
+}
+</style>
+</head>
+<body>
+
+<!-- LOGO VARIANT 1: Full Logo with Greek God + Volatility -->
+<div class="logo-container">
+  <div class="logo-label">Primary Logo</div>
+  <svg width="600" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#0d1117"/>
+        <stop offset="100%" stop-color="#0a0a0f"/>
+      </linearGradient>
+      <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#ffa726"/>
+        <stop offset="50%" stop-color="#ffcc02"/>
+        <stop offset="100%" stop-color="#ffa726"/>
+      </linearGradient>
+      <linearGradient id="redGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#e94560"/>
+        <stop offset="100%" stop-color="#c62828"/>
+      </linearGradient>
+      <linearGradient id="shieldGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#1a1a2e"/>
+        <stop offset="100%" stop-color="#16213e"/>
+      </linearGradient>
+      <linearGradient id="volatilityGrad" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#e94560" stop-opacity="0"/>
+        <stop offset="30%" stop-color="#e94560" stop-opacity="0.8"/>
+        <stop offset="70%" stop-color="#00c853" stop-opacity="0.8"/>
+        <stop offset="100%" stop-color="#00c853" stop-opacity="0"/>
+      </linearGradient>
+      <filter id="glow">
+        <feGaussianBlur stdDeviation="3" result="blur"/>
+        <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+      </filter>
+      <filter id="goldGlow">
+        <feGaussianBlur stdDeviation="4" result="blur"/>
+        <feFlood flood-color="#ffa726" flood-opacity="0.3"/>
+        <feComposite in2="blur" operator="in"/>
+        <feComposite in="SourceGraphic"/>
+      </filter>
+      <clipPath id="shieldClip">
+        <path d="M300,60 L380,95 L380,220 Q380,280 300,320 Q220,280 220,220 L220,95 Z"/>
+      </clipPath>
+    </defs>
+
+    <!-- Background -->
+    <rect width="600" height="400" fill="url(#bgGrad)"/>
+
+    <!-- Subtle grid pattern -->
+    <g opacity="0.05">
+      <line x1="0" y1="100" x2="600" y2="100" stroke="#fff" stroke-width="0.5"/>
+      <line x1="0" y1="200" x2="600" y2="200" stroke="#fff" stroke-width="0.5"/>
+      <line x1="0" y1="300" x2="600" y2="300" stroke="#fff" stroke-width="0.5"/>
+      <line x1="200" y1="0" x2="200" y2="400" stroke="#fff" stroke-width="0.5"/>
+      <line x1="300" y1="0" x2="300" y2="400" stroke="#fff" stroke-width="0.5"/>
+      <line x1="400" y1="0" x2="400" y2="400" stroke="#fff" stroke-width="0.5"/>
+    </g>
+
+    <!-- Volatility wave behind shield (market chaos) -->
+    <g opacity="0.15">
+      <polyline points="80,200 110,180 130,220 150,160 170,240 190,170 210,210 230,150 250,230 270,180 290,200 310,140 330,250 350,170 370,220 380,190 400,210 420,160 440,230 460,185 480,195 510,200 530,210"
+              fill="none" stroke="url(#volatilityGrad)" stroke-width="2"/>
+      <polyline points="80,210 110,195 130,230 150,175 170,245 190,185 210,220 230,165 250,240 270,195 290,210 310,155 330,255 350,185 370,230 380,200 400,220 420,175 440,240 460,195 480,205 510,210 530,220"
+              fill="none" stroke="url(#volatilityGrad)" stroke-width="1.5"/>
+    </g>
+
+    <!-- Shield (Gatekeeping symbol) -->
+    <path d="M300,65 L375,98 L375,215 Q375,272 300,310 Q225,272 225,215 L225,98 Z"
+          fill="url(#shieldGrad)" stroke="#ffa726" stroke-width="2" opacity="0.9" filter="url(#goldGlow)"/>
+
+    <!-- Inner shield border -->
+    <path d="M300,80 L362,108 L362,212 Q362,260 300,293 Q238,260 238,212 L238,108 Z"
+          fill="none" stroke="#ffa726" stroke-width="0.5" opacity="0.4"/>
+
+    <!-- Greek God figure (stylized Athena/warrior silhouette inside shield) -->
+    <g transform="translate(300, 185)" opacity="0.9">
+      <!-- Helmet -->
+      <path d="M0,-85 C-25,-85 -35,-70 -35,-55 C-35,-40 -25,-30 -20,-25 L-15,-20 L-8,-20 L-8,-75 C-8,-80 -4,-83 0,-83 C4,-83 8,-80 8,-75 L8,-20 L15,-20 L20,-25 C25,-30 35,-40 35,-55 C35,-70 25,-85 0,-85Z"
+            fill="#ffa726" opacity="0.8"/>
+      <!-- Helmet crest (centered symmetrically) -->
+      <path d="M0,-83 C0,-98 0,-105 0,-110 C-4,-105 -6,-95 -6,-87 M0,-110 C4,-105 6,-95 6,-87"
+            fill="none" stroke="#e94560" stroke-width="3" opacity="0.7" stroke-linecap="round"/>
+      <ellipse cx="0" cy="-112" rx="3" ry="4" fill="#e94560" opacity="0.8"/>
+
+      <!-- Face (simplified) -->
+      <ellipse cx="0" cy="-15" rx="12" ry="16" fill="#dbb896" opacity="0.6"/>
+
+      <!-- Body/armor -->
+      <path d="M-18,0 L-22,5 L-25,40 L-18,45 L-8,42 L0,44 L8,42 L18,45 L25,40 L22,5 L18,0 Z"
+            fill="#ffa726" opacity="0.5"/>
+
+      <!-- Spear (vertical line of discipline) -->
+      <line x1="30" y1="-90" x2="30" y2="70" stroke="#ffa726" stroke-width="2" opacity="0.7"/>
+      <polygon points="30,-95 25,-80 35,-80" fill="#ffa726" opacity="0.7"/>
+
+      <!-- Shield arm (small round shield) -->
+      <circle cx="-28" cy="20" r="18" fill="none" stroke="#ffa726" stroke-width="1.5" opacity="0.5"/>
+      <circle cx="-28" cy="20" r="10" fill="none" stroke="#ffa726" stroke-width="0.5" opacity="0.3"/>
+
+      <!-- Legs -->
+      <line x1="-10" y1="45" x2="-14" y2="80" stroke="#ffa726" stroke-width="2.5" opacity="0.4"/>
+      <line x1="10" y1="45" x2="14" y2="80" stroke="#ffa726" stroke-width="2.5" opacity="0.4"/>
+    </g>
+
+    <!-- Candlestick chart elements around shield (volatility) -->
+    <g opacity="0.6">
+      <!-- Left candles (bearish - red) -->
+      <line x1="140" y1="120" x2="140" y2="180" stroke="#e94560" stroke-width="1"/>
+      <rect x="136" y="130" width="8" height="30" fill="#e94560" rx="1"/>
+
+      <line x1="160" y1="140" x2="160" y2="210" stroke="#e94560" stroke-width="1"/>
+      <rect x="156" y="155" width="8" height="40" fill="#e94560" rx="1"/>
+
+      <line x1="180" y1="160" x2="180" y2="240" stroke="#e94560" stroke-width="1"/>
+      <rect x="176" y="175" width="8" height="45" fill="#e94560" rx="1"/>
+
+      <!-- Right candles (bullish - green) -->
+      <line x1="420" y1="160" x2="420" y2="240" stroke="#00c853" stroke-width="1"/>
+      <rect x="416" y="175" width="8" height="45" fill="#00c853" rx="1"/>
+
+      <line x1="440" y1="140" x2="440" y2="210" stroke="#00c853" stroke-width="1"/>
+      <rect x="436" y="155" width="8" height="40" fill="#00c853" rx="1"/>
+
+      <line x1="460" y1="120" x2="460" y2="180" stroke="#00c853" stroke-width="1"/>
+      <rect x="456" y="130" width="8" height="30" fill="#00c853" rx="1"/>
+    </g>
+
+    <!-- VEGA Text -->
+    <text x="300" y="370" text-anchor="middle" fill="url(#goldGrad)" font-family="'Segoe UI', system-ui, sans-serif" font-size="52" font-weight="800" letter-spacing="18" filter="url(#goldGlow)">VEGA</text>
+
+    <!-- Greek letter nu (small, subtle) -->
+    <text x="300" y="392" text-anchor="middle" fill="#ffa726" font-family="serif" font-size="14" opacity="0.5" font-style="italic">&#957;</text>
+  </svg>
+</div>
+
+<!-- LOGO VARIANT 2: Compact Icon -->
+<div class="logo-container">
+  <div class="logo-label">Compact Icon</div>
+  <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="goldGrad2" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#ffa726"/>
+        <stop offset="100%" stop-color="#ffcc02"/>
+      </linearGradient>
+      <linearGradient id="shieldGrad2" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#1a1a2e"/>
+        <stop offset="100%" stop-color="#0d1117"/>
+      </linearGradient>
+    </defs>
+
+    <rect width="200" height="200" fill="#0a0a0f" rx="24"/>
+
+    <!-- Shield -->
+    <path d="M100,25 L155,48 L155,115 Q155,155 100,175 Q45,155 45,115 L45,48 Z"
+          fill="url(#shieldGrad2)" stroke="url(#goldGrad2)" stroke-width="2.5"/>
+
+    <!-- V inside shield (from VEGA, also represents the peak of volatility) -->
+    <path d="M68,65 L100,135 L132,65" fill="none" stroke="url(#goldGrad2)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Volatility wave through V -->
+    <polyline points="55,95 70,85 80,105 90,78 100,110 110,75 120,100 130,82 145,95"
+              fill="none" stroke="#e94560" stroke-width="1.5" opacity="0.6"/>
+  </svg>
+</div>
+
+<!-- LOGO VARIANT 3: Text Logo with Acronym -->
+<div class="logo-container">
+  <div class="logo-label">Text Logo + Acronym</div>
+  <svg width="600" height="120" viewBox="0 0 600 120" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="goldGrad3" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#ffa726"/>
+        <stop offset="50%" stop-color="#ffcc02"/>
+        <stop offset="100%" stop-color="#ffa726"/>
+      </linearGradient>
+    </defs>
+
+    <rect width="600" height="120" fill="#0a0a0f" rx="8"/>
+
+    <!-- Mini shield -->
+    <path d="M50,20 L78,32 L78,65 Q78,82 50,92 Q22,82 22,65 L22,32 Z"
+          fill="#1a1a2e" stroke="#ffa726" stroke-width="1.5"/>
+    <path d="M38,42 L50,72 L62,42" fill="none" stroke="#ffa726" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- VEGA text -->
+    <text x="110" y="72" fill="url(#goldGrad3)" font-family="'Segoe UI', system-ui, sans-serif" font-size="48" font-weight="800" letter-spacing="12">VEGA</text>
+
+    <!-- Separator -->
+    <line x1="330" y1="30" x2="330" y2="90" stroke="#333" stroke-width="1"/>
+
+    <!-- Acronym (larger font, more spacing, colors match validation matrix) -->
+    <text x="350" y="44" fill="#e94560" font-family="'Segoe UI', system-ui, sans-serif" font-size="13" font-weight="700" letter-spacing="2">V<tspan fill="#999" font-weight="400" letter-spacing="1.5">ALIDATION</tspan></text>
+    <text x="350" y="61" fill="#ffc107" font-family="'Segoe UI', system-ui, sans-serif" font-size="13" font-weight="700" letter-spacing="2">E<tspan fill="#999" font-weight="400" letter-spacing="1.5">VALUATION</tspan></text>
+    <text x="350" y="78" fill="#4fc3f7" font-family="'Segoe UI', system-ui, sans-serif" font-size="13" font-weight="700" letter-spacing="2">G<tspan fill="#999" font-weight="400" letter-spacing="1.5">ATEKEEPING</tspan></text>
+    <text x="350" y="95" fill="#00c853" font-family="'Segoe UI', system-ui, sans-serif" font-size="13" font-weight="700" letter-spacing="2">A<tspan fill="#999" font-weight="400" letter-spacing="1.5">DVERSARIAL</tspan></text>
+  </svg>
+</div>
+
+<!-- Acronym Breakdown -->
+<div class="acronym-bar">
+  <div class="acronym-item">
+    <div class="acronym-letter" style="color:#e94560;">V</div>
+    <div class="acronym-word">Validation</div>
+    <div class="acronym-desc">WFA 5-Fold Walk-Forward</div>
+  </div>
+  <div class="acronym-item">
+    <div class="acronym-letter" style="color:#ffa726;">E</div>
+    <div class="acronym-word">Evaluation</div>
+    <div class="acronym-desc">Factorial Ablation Grid</div>
+  </div>
+  <div class="acronym-item">
+    <div class="acronym-letter" style="color:#4fc3f7;">G</div>
+    <div class="acronym-word">Gatekeeping</div>
+    <div class="acronym-desc">6 Deploy Gates</div>
+  </div>
+  <div class="acronym-item">
+    <div class="acronym-letter" style="color:#00c853;">A</div>
+    <div class="acronym-word">Adversarial</div>
+    <div class="acronym-desc">KGR AI Veto Board</div>
+  </div>
+</div>
+
+<div class="tagline">Disciplined Quant Engineering</div>
+
+</body>
+</html>

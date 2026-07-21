@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VEGA — Document Lifecycle Template</title>
+<style>
+:root {
+  --bg: #0f172a; --bg2: #1e293b; --bg3: #334155;
+  --text: #e2e8f0; --text2: #94a3b8; --text3: #64748b;
+  --accent: #3b82f6; --accent2: #8b5cf6;
+  --border: rgba(255,255,255,0.08);
+  --shadow: 0 2px 8px rgba(0,0,0,0.3);
+  --step1: #3b82f6; --step2: #8b5cf6; --step3: #06b6d4;
+  --step4: #10b981; --step5: #f59e0b; --step6: #ef4444;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', -apple-system, system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+.header { background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%); padding: 40px; text-align: center; border-bottom: 1px solid var(--border); }
+.header-badge { display: inline-block; font-size: 10px; text-transform: uppercase; letter-spacing: 2.5px; padding: 4px 16px; border: 1px solid rgba(139,92,246,0.4); border-radius: 16px; margin-bottom: 12px; color: var(--accent2); background: rgba(139,92,246,0.1); }
+.header h1 { font-size: 28px; font-weight: 300; }
+.header h1 strong { font-weight: 700; color: #a78bfa; }
+.header-sub { font-size: 13px; color: var(--text2); margin-top: 6px; }
+
+.container { max-width: 1000px; margin: 0 auto; padding: 32px 24px; }
+
+.template-notice { background: rgba(139,92,246,0.08); border: 1px solid rgba(139,92,246,0.25); border-radius: 12px; padding: 20px 24px; margin-bottom: 32px; }
+.template-notice h2 { font-size: 15px; color: #a78bfa; margin-bottom: 6px; }
+.template-notice p { font-size: 13px; color: var(--text2); }
+.template-notice .customize { margin-top: 12px; background: var(--bg2); border-radius: 8px; padding: 12px 16px; font-size: 12px; color: var(--text2); }
+.template-notice .customize strong { color: var(--text); }
+
+/* Pipeline */
+.pipeline { display: flex; flex-direction: column; gap: 0; position: relative; }
+.pipeline::before { content: ''; position: absolute; left: 28px; top: 36px; bottom: 36px; width: 2px; background: linear-gradient(to bottom, var(--step1), var(--step2), var(--step3), var(--step4), var(--step5), var(--step6)); opacity: 0.5; }
+
+.step { display: flex; gap: 16px; position: relative; padding: 6px 0; }
+.step-marker { width: 56px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; z-index: 1; }
+.step-num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; color: white; }
+.step-line { font-size: 8px; color: var(--text3); margin-top: 3px; text-transform: uppercase; letter-spacing: 1px; }
+
+.step-card { flex: 1; background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; cursor: pointer; transition: border-color 0.2s; }
+.step-card:hover { border-color: rgba(255,255,255,0.15); }
+.step-card.expanded .step-details { display: block; }
+.step-title { font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+.step-desc { font-size: 12px; color: var(--text2); margin-top: 3px; }
+.step-customize { font-size: 11px; color: var(--accent2); margin-top: 6px; font-style: italic; }
+
+.step-details { display: none; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); }
+.detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.detail-box { background: var(--bg); border-radius: 8px; padding: 12px; }
+.detail-box h4 { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text3); margin-bottom: 6px; }
+.detail-box ul { list-style: none; }
+.detail-box li { font-size: 12px; padding: 2px 0; color: var(--text2); }
+.detail-box li::before { content: '→ '; color: var(--text3); }
+.detail-box .placeholder { color: var(--accent2); font-style: italic; }
+
+.step-expand { font-size: 10px; color: var(--text3); margin-top: 6px; }
+.step-card.expanded .step-expand { display: none; }
+
+/* Rules */
+.rules { margin-top: 36px; }
+.rules h2 { font-size: 17px; margin-bottom: 14px; color: #a78bfa; }
+.rule-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.rule { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
+.rule-num { font-size: 10px; font-weight: 700; color: var(--accent2); margin-bottom: 3px; }
+.rule-title { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+.rule-desc { font-size: 11px; color: var(--text2); }
+
+/* Checklist */
+.checklist { margin-top: 36px; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; }
+.checklist h2 { font-size: 17px; margin-bottom: 14px; color: #a78bfa; }
+.check-item { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+.check-item:last-child { border-bottom: none; }
+.check-box { width: 18px; height: 18px; border: 2px solid var(--text3); border-radius: 4px; flex-shrink: 0; margin-top: 2px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+.check-box.checked { background: var(--accent2); border-color: var(--accent2); }
+.check-box.checked::after { content: '✓'; color: white; font-size: 12px; font-weight: 700; }
+.check-label { color: var(--text2); }
+.check-label strong { color: var(--text); }
+
+.footer { text-align: center; padding: 24px; font-size: 11px; color: var(--text3); margin-top: 36px; border-top: 1px solid var(--border); }
+.footer a { color: var(--accent2); text-decoration: none; }
+
+@media (max-width: 768px) { .detail-grid, .rule-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-badge">VEGA Framework · Template</div>
+  <h1>Document <strong>Lifecycle</strong> Protocol</h1>
+  <div class="header-sub">Univerzalni postopek za upravljanje dokumentov v zdravstvenih ustanovah</div>
+</div>
+
+<div class="container">
+
+<div class="template-notice">
+  <h2>📋 To je template</h2>
+  <p>Generična verzija Document Lifecycle Protocol za prilagoditev novi ustanovi. Vsak korak vsebuje placeholder-je ki jih zamenjate z vašimi specifičnimi orodji, mapami in postopki.</p>
+  <div class="customize">
+    <strong>Prilagoditev:</strong> Zamenjajte <em style="color:#a78bfa;">[USTANOVA]</em> z imenom vaše ustanove, <em style="color:#a78bfa;">[ORODJE]</em> z vašimi orodji, <em style="color:#a78bfa;">[MAPA]</em> z vašimi potmi do datotek. Odstranite korake ki niso relevantni za vaš workflow.
+  </div>
+</div>
+
+<div class="pipeline">
+
+  <!-- STEP 1 -->
+  <div class="step">
+    <div class="step-marker">
+      <div class="step-num" style="background:var(--step1)">1</div>
+      <div class="step-line">Vnos</div>
+    </div>
+    <div class="step-card" onclick="this.classList.toggle('expanded')">
+      <div class="step-title"><span>📥</span> Vnos dokumenta</div>
+      <div class="step-desc">Dokument pride v sistem — definirati vhodne kanale</div>
+      <div class="step-customize">Prilagodite: kanali vnosa, formati, vhodna mapa</div>
+      <div class="step-expand">▸ klikni za podrobnosti</div>
+      <div class="step-details">
+        <div class="detail-grid">
+          <div class="detail-box">
+            <h4>Kanali vnosa</h4>
+            <ul>
+              <li><span class="placeholder">[Ročni vnos — sken, tipkanje]</span></li>
+              <li><span class="placeholder">[Avtomatski — download mapa, intranet]</span></li>
+              <li><span class="placeholder">[DMZ / pre-screening zona]</span></li>
+              <li><span class="placeholder">[E-pošta, zunanji sistemi]</span></li>
+            </ul>
+          </div>
+          <div class="detail-box">
+            <h4>Vhodni formati</h4>
+            <ul>
+              <li>.txt (plain text)</li>
+              <li>.docx (Word)</li>
+              <li>.pdf (skenirani → OCR)</li>
+              <li>.html (digitalni)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step">
+    <div class="step-marker">
+      <div class="step-num" style="background:var(--step2)">2</div>
+      <div class="step-line">OCR</div>
+    </div>
+    <div class="step-card" onclick="this.classList.toggle('expanded')">
+      <div class="step-title"><span>🔍</span> Digitalizacija</div>
+      <div class="step-desc">OCR obdelava, ekstrakcija besedila, quality check</div>
+      <div class="step-customize">Prilagodite: OCR orodje, quality pragovi, popravki</div>
+      <div class="step-expand">▸ klikni za podrobnosti</div>
+      <div class="step-details">
+        <div class="detail-grid">
+          <div class="detail-box">
+            <h4>Orodja</h4>
+            <ul>
+              <li><span class="placeholder">[OCR orodje za batch procesiranje]</span></li>
+              <li><span class="placeholder">[Quality check skripta]</span></li>
+              <li><span class="placeholder">[Popravek diakritičnih znakov]</span></li>
+              <li><span class="placeholder">[Gradnja digitalne knjižnice]</span></li>
+            </ul>
+          </div>
+          <div class="detail-box">
+            <h4>Quality gate</h4>
+            <ul>
+              <li>OCR confidence ≥ 85% = PASS</li>
+              <li>70-85% = REVIEW (ročni pregled)</li>
+              <li>&lt; 70% = FAIL (ponovi)</li>
+              <li>Diakritice: avtomatska + ročna korekcija</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step">
+    <div class="step-marker">
+      <div class="step-num" style="background:var(--step3)">3</div>
+      <div class="step-line">Indeks</div>
+    </div>
+    <div class="step-card" onclick="this.classList.toggle('expanded')">
+      <div class="step-title"><span>🗂️</span> Indeksiranje</div>
+      <div class="step-desc">Registracija v centralnem registru z metapodatki</div>
+      <div class="step-customize">Prilagodite: register format, ID shema, metapodatki</div>
+      <div class="step-expand">▸ klikni za podrobnosti</div>
+      <div class="step-details">
+        <div class="detail-grid">
+          <div class="detail-box">
+            <h4>Register</h4>
+            <ul>
+              <li><span class="placeholder">[Centralni register — JSON/Excel/DB]</span></li>
+              <li><span class="placeholder">[Podatkovni array za module]</span></li>
+              <li><span class="placeholder">[Digitalna knjižnica — vsebine]</span></li>
+              <li><span class="placeholder">[Berljiv indeks dokumentov]</span></li>
+            </ul>
+          </div>
+          <div class="detail-box">
+            <h4>Metapodatki</h4>
+            <ul>
+              <li><strong>ID:</strong> <span class="placeholder">[prefix_številka]</span></li>
+              <li><strong>Tip:</strong> <span class="placeholder">[obrazec, protokol, SOP...]</span></li>
+              <li><strong>Pravna domena:</strong> <span class="placeholder">[zakoni ki se nanašajo]</span></li>
+              <li><strong>Sektor/enota:</strong> <span class="placeholder">[organizacijska umestitev]</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="step">
+    <div class="step-marker">
+      <div class="step-num" style="background:var(--step4)">4</div>
+      <div class="step-line">Razvrstitev</div>
+    </div>
+    <div class="step-card" onclick="this.classList.toggle('expanded')">
+      <div class="step-title"><span>🏷️</span> Klasifikacija</div>
+      <div class="step-desc">Umestitev v pravno mrežo, preslikava na zakonodajo</div>
+      <div class="step-customize">Prilagodite: relevantni zakoni, klasifikacijska shema</div>
+      <div class="step-expand">▸ klikni za podrobnosti</div>
+      <div class="step-details">
+        <div class="detail-grid">
+          <div class="detail-box">
+            <h4>Pravna umestitev</h4>
+            <ul>
+              <li>Keyword matching → pravne domene</li>
+              <li>Ekstrakcija sklicev na zakonske člene</li>
+              <li>Vsebinska analiza → podobnost</li>
+              <li><span class="placeholder">[Zapis v pravno mrežo]</span></li>
+            </ul>
+          </div>
+          <div class="detail-box">
+            <h4>Organizacijska umestitev</h4>
+            <ul>
+              <li>Tip → raven v hierarhiji</li>
+              <li><span class="placeholder">[Sektor / oddelek / enota]</span></li>
+              <li><span class="placeholder">[Specifična enota če relevantno]</span></li>
+              <li><span class="placeholder">[Zapis v hierarhijo aktov]</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5 -->
+  <div class="step">
+    <div class="step-marker">
+      <div class="step-num" style="background:var(--step5)">5</div>
+      <div class="step-line">Gate</div>
+    </div>
+    <div class="step-card" onclick="this.classList.toggle('expanded')">
+      <div class="step-title"><span>⚖️</span> Review Gate (pogojno)</div>
+      <div class="step-desc">Strukturne spremembe rabijo review — vsebinski vnos gre mimo</div>
+      <div class="step-customize">Prilagodite: review postopek, pragovi, odločevalci</div>
+      <div class="step-expand">▸ klikni za podrobnosti</div>
+      <div class="step-details">
+        <div class="detail-grid">
+          <div class="detail-box">
+            <h4>Review je potreben če</h4>
+            <ul>
+              <li>Nov nivo v hierarhiji dokumentov</li>
+              <li>Vpliv na &gt;1 organizacijsko enoto</li>
+              <li>Dotik zakonodaje ali pravic pacientov</li>
+              <li>Sprememba univerzalnega dokumenta</li>
+              <li>Sprememba governance protokola</li>
+            </ul>
+          </div>
+          <div class="detail-box">
+            <h4>Review ni potreben za</h4>
+            <ul>
+              <li>Enota-specifične vsebine</li>
+              <li>Analiza brez strukturne spremembe</li>
+              <li>Vizualizacije, tracking, dashboard</li>
+              <li>Jezikovne popravke, prevodi</li>
+              <li>Indeksiranje brez nove strukture</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 6 -->
+  <div class="step">
+    <div class="step-marker">
+      <div class="step-num" style="background:var(--step6)">6</div>
+      <div class="step-line">Sync</div>
+    </div>
+    <div class="step-card" onclick="this.classList.toggle('expanded')">
+      <div class="step-title"><span>🔄</span> Sinhronizacija</div>
+      <div class="step-desc">Posodobitev vseh modulov ki prikazujejo podatke iz korpusa</div>
+      <div class="step-customize">Prilagodite: sync mehanizem, manifest, distribucija</div>
+      <div class="step-expand">▸ klikni za podrobnosti</div>
+      <div class="step-details">
+        <div class="detail-grid">
+          <div class="detail-box">
+            <h4>Sync mehanizem</h4>
+            <ul>
+              <li><span class="placeholder">[Centralni verzijski token]</span></li>
+              <li><span class="placeholder">[Manifest z consumers]</span></li>
+              <li><span class="placeholder">[Avtomatska posodobitev modulov]</span></li>
+              <li><span class="placeholder">[Distribucija na končne uporabnike]</span></li>
+            </ul>
+          </div>
+          <div class="detail-box">
+            <h4>Drift detection</h4>
+            <ul>
+              <li>Modul.count ≠ manifest.count → STALE</li>
+              <li>Avtomatski popravek (manifest wins)</li>
+              <li>Log vseh sinhronizacij</li>
+              <li><span class="placeholder">[Alerting pri neskladju]</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- PRAVILA -->
+<div class="rules">
+  <h2>📐 Univerzalna pravila</h2>
+  <div class="rule-grid">
+    <div class="rule">
+      <div class="rule-num">P1</div>
+      <div class="rule-title">Enotna identifikacija</div>
+      <div class="rule-desc">Vsak dokument dobi unikaten ID. ID se nikoli ne spremeni ali reciklira. Prefix določa tip dokumenta.</div>
+    </div>
+    <div class="rule">
+      <div class="rule-num">P2</div>
+      <div class="rule-title">Single Source of Truth</div>
+      <div class="rule-desc">En centralni objekt za vse števce. Moduli nikoli ne hardkodirajo — vedno berejo iz centralnega vira.</div>
+    </div>
+    <div class="rule">
+      <div class="rule-num">P3</div>
+      <div class="rule-title">Avtomatska sinhronizacija</div>
+      <div class="rule-desc">Ob vnosu novega dokumenta se vsi moduli posodobijo avtomatsko. Človek ne sme biti bottleneck za sync.</div>
+    </div>
+    <div class="rule">
+      <div class="rule-num">P4</div>
+      <div class="rule-title">Manifest tracking</div>
+      <div class="rule-desc">Manifest beleži vse deljene podatke, kdo jih uporablja in trenutne vrednosti. Drift = avtomatski popravek.</div>
+    </div>
+    <div class="rule">
+      <div class="rule-num">P5</div>
+      <div class="rule-title">Gate = samo strukturno</div>
+      <div class="rule-desc">Review je za strukturne spremembe. Vsebinski vnos brez strukturne spremembe ne rabi review-a.</div>
+    </div>
+    <div class="rule">
+      <div class="rule-num">P6</div>
+      <div class="rule-title">Idempotentnost</div>
+      <div class="rule-desc">Isti dokument dvakrat skozi pipeline = isti rezultat. Duplikati se zaznajo in zavrnejo v koraku 3.</div>
+    </div>
+  </div>
+</div>
+
+<!-- IMPLEMENTATION CHECKLIST -->
+<div class="checklist">
+  <h2>✅ Implementacijski checklist</h2>
+  <div class="check-item" onclick="this.querySelector('.check-box').classList.toggle('checked')">
+    <div class="check-box"></div>
+    <div class="check-label"><strong>Definirati vhodne kanale</strong> — od kod prihajajo dokumenti (ročno, intranet, e-pošta, sken)</div>
+  </div>
+  <div class="check-item" onclick="this.querySelector('.check-box').classList.toggle('checked')">
+    <div class="check-box"></div>
+    <div class="check-label"><strong>Vzpostaviti OCR pipeline</strong> — orodje za digitalizacijo, quality pragovi, popravki</div>
+  </div>
+  <div class="check-item" onclick="this.querySelector('.check-box').classList.toggle('checked')">
+    <div class="check-box"></div>
+    <div class="check-label"><strong>Definirati ID shemo</strong> — prefix konvencija, številčenje, metapodatki</div>
+  </div>
+  <div class="check-item" onclick="this.querySelector('.check-box').classList.toggle('checked')">
+    <div class="check-box"></div>
+    <div class="check-label"><strong>Vzpostaviti centralni register</strong> — JSON/Excel/DB z vsemi dokumenti in metapodatki</div>
+  </div>
+  <div class="check-item" onclick="this.querySelector('.check-box').classList.toggle('checked')">
+    <div class="check-box"></div>
+    <div class="check-label"><strong>Preslikati relevantno zakonodajo</strong> — kateri zakoni se nanašajo na vaše dokumente</div>
+  </div>
+  <div class="check-item" onclick="this.querySelector('.check-box').classList.toggle('checked')">
+    <div class="check-box"></div>
+    <div class="check-label"><strong>Definirati review gate</strong> — kaj je strukturna sprememba, kdo odloča, postopek</div>
+  </div>
+  <div class="check-item" onclick="this.querySelector('.check-box').classList.toggle('checked')">
+    <div class="check-box"></div>
+    <div class="check-label"><strong>Vzpostaviti sync mehanizem</strong> — verzijski token, manifest, avtomatska posodobitev</div>
+  </div>
+  <div class="check-item" onclick="this.querySelector('.check-box').classList.toggle('checked')">
+    <div class="check-box"></div>
+    <div class="check-label"><strong>Testirati end-to-end</strong> — nov dokument od vnosa do vidnosti v vseh modulih</div>
+  </div>
+</div>
+
+</div>
+
+<div class="footer">
+  VEGA Document Lifecycle Template v1.0 · julij 2026<br>
+  Del <a href="vega_governance_console.html">VEGA Governance Framework</a> · Porting Guide: <a href="#">PORTING_GUIDE.md</a>
+</div>
+
+</body>
+</html>
