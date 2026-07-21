@@ -235,18 +235,8 @@ footer a{color:var(--accent);text-decoration:none}
           <stop offset="0%" stop-color="#1a1a2e"/>
           <stop offset="100%" stop-color="#16213e"/>
         </linearGradient>
-        <linearGradient id="hVolGrad" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stop-color="#e94560" stop-opacity="0"/>
-          <stop offset="30%" stop-color="#e94560" stop-opacity="0.8"/>
-          <stop offset="70%" stop-color="#00c853" stop-opacity="0.8"/>
-          <stop offset="100%" stop-color="#00c853" stop-opacity="0"/>
-        </linearGradient>
         <filter id="hGlow"><feGaussianBlur stdDeviation="4" result="blur"/><feFlood flood-color="#ffa726" flood-opacity="0.3"/><feComposite in2="blur" operator="in"/><feComposite in="SourceGraphic"/></filter>
       </defs>
-      <g opacity="0.15">
-        <polyline points="80,200 110,180 130,220 150,160 170,240 190,170 210,210 230,150 250,230 270,180 290,200 310,140 330,250 350,170 370,220 380,190 400,210 420,160 440,230 460,185 480,195 510,200" fill="none" stroke="url(#hVolGrad)" stroke-width="2"/>
-        <polyline points="80,210 110,195 130,230 150,175 170,245 190,185 210,220 230,165 250,240 270,195 290,210 310,155 330,255 350,185 370,230 380,200 400,220 420,175 440,240 460,195 480,205 510,210" fill="none" stroke="url(#hVolGrad)" stroke-width="1.5"/>
-      </g>
       <path d="M300,65 L375,98 L375,215 Q375,272 300,310 Q225,272 225,215 L225,98 Z" fill="url(#hShieldGrad)" stroke="#ffa726" stroke-width="2" opacity="0.9" filter="url(#hGlow)"/>
       <path d="M300,80 L362,108 L362,212 Q362,260 300,293 Q238,260 238,212 L238,108 Z" fill="none" stroke="#ffa726" stroke-width="0.5" opacity="0.4"/>
       <g transform="translate(300, 185)" opacity="0.9">
@@ -262,13 +252,70 @@ footer a{color:var(--accent);text-decoration:none}
         <line x1="-10" y1="45" x2="-14" y2="80" stroke="#ffa726" stroke-width="2.5" opacity="0.4"/>
         <line x1="10" y1="45" x2="14" y2="80" stroke="#ffa726" stroke-width="2.5" opacity="0.4"/>
       </g>
+      <!-- LEFT: chaotic documents falling in -->
+      <g opacity="0.55">
+        <!-- doc 1 - tilted, messy -->
+        <g transform="translate(120,130) rotate(-25)">
+          <rect width="28" height="36" fill="#1a1a2e" stroke="#e94560" stroke-width="1.2" rx="2"/>
+          <line x1="5" y1="10" x2="23" y2="10" stroke="#e94560" stroke-width="1" opacity="0.5"/>
+          <line x1="5" y1="16" x2="20" y2="16" stroke="#e94560" stroke-width="1" opacity="0.4"/>
+          <line x1="5" y1="22" x2="18" y2="22" stroke="#e94560" stroke-width="1" opacity="0.3"/>
+          <text x="14" y="8" text-anchor="middle" fill="#e94560" font-size="6" opacity="0.7">?</text>
+        </g>
+        <!-- doc 2 - falling, rotated other way -->
+        <g transform="translate(155,160) rotate(18)">
+          <rect width="26" height="34" fill="#1a1a2e" stroke="#e94560" stroke-width="1.2" rx="2"/>
+          <line x1="5" y1="10" x2="21" y2="10" stroke="#e94560" stroke-width="1" opacity="0.5"/>
+          <line x1="5" y1="15" x2="17" y2="15" stroke="#e94560" stroke-width="1" opacity="0.4"/>
+          <line x1="5" y1="20" x2="19" y2="20" stroke="#e94560" stroke-width="1" opacity="0.3"/>
+          <text x="13" y="8" text-anchor="middle" fill="#e94560" font-size="6" opacity="0.7">!</text>
+        </g>
+        <!-- doc 3 - almost upside down -->
+        <g transform="translate(130,210) rotate(-40)">
+          <rect width="24" height="32" fill="#1a1a2e" stroke="#e94560" stroke-width="1.2" rx="2"/>
+          <line x1="4" y1="9" x2="20" y2="9" stroke="#e94560" stroke-width="1" opacity="0.5"/>
+          <line x1="4" y1="14" x2="16" y2="14" stroke="#e94560" stroke-width="1" opacity="0.4"/>
+          <text x="12" y="26" text-anchor="middle" fill="#e94560" font-size="8" opacity="0.6">~</text>
+        </g>
+        <!-- small scattered page fragments -->
+        <g transform="translate(170,120) rotate(35)">
+          <rect width="18" height="24" fill="#1a1a2e" stroke="#e94560" stroke-width="0.8" rx="1" opacity="0.4"/>
+        </g>
+        <g transform="translate(105,185) rotate(-55)">
+          <rect width="16" height="22" fill="#1a1a2e" stroke="#e94560" stroke-width="0.8" rx="1" opacity="0.35"/>
+        </g>
+      </g>
+      <!-- Arrows: chaos → shield → order -->
+      <g opacity="0.25">
+        <path d="M195,190 C210,185 215,188 220,190" fill="none" stroke="#e94560" stroke-width="1.5" stroke-dasharray="3,3"/>
+        <path d="M380,190 C390,188 400,185 410,188" fill="none" stroke="#00c853" stroke-width="1.5" stroke-dasharray="3,3"/>
+      </g>
+      <!-- RIGHT: organized documents coming out -->
       <g opacity="0.6">
-        <line x1="140" y1="120" x2="140" y2="180" stroke="#e94560" stroke-width="1"/><rect x="136" y="130" width="8" height="30" fill="#e94560" rx="1"/>
-        <line x1="160" y1="140" x2="160" y2="210" stroke="#e94560" stroke-width="1"/><rect x="156" y="155" width="8" height="40" fill="#e94560" rx="1"/>
-        <line x1="180" y1="160" x2="180" y2="240" stroke="#e94560" stroke-width="1"/><rect x="176" y="175" width="8" height="45" fill="#e94560" rx="1"/>
-        <line x1="420" y1="160" x2="420" y2="240" stroke="#00c853" stroke-width="1"/><rect x="416" y="175" width="8" height="45" fill="#00c853" rx="1"/>
-        <line x1="440" y1="140" x2="440" y2="210" stroke="#00c853" stroke-width="1"/><rect x="436" y="155" width="8" height="40" fill="#00c853" rx="1"/>
-        <line x1="460" y1="120" x2="460" y2="180" stroke="#00c853" stroke-width="1"/><rect x="456" y="130" width="8" height="30" fill="#00c853" rx="1"/>
+        <!-- doc 1 - perfectly straight, green check -->
+        <g transform="translate(420,120)">
+          <rect width="28" height="36" fill="#1a1a2e" stroke="#00c853" stroke-width="1.2" rx="2"/>
+          <line x1="5" y1="10" x2="23" y2="10" stroke="#00c853" stroke-width="1" opacity="0.5"/>
+          <line x1="5" y1="16" x2="23" y2="16" stroke="#00c853" stroke-width="1" opacity="0.4"/>
+          <line x1="5" y1="22" x2="23" y2="22" stroke="#00c853" stroke-width="1" opacity="0.3"/>
+          <path d="M18,5 L21,8 L25,2" fill="none" stroke="#00c853" stroke-width="1.5" stroke-linecap="round"/>
+        </g>
+        <!-- doc 2 - straight, check -->
+        <g transform="translate(430,168)">
+          <rect width="28" height="36" fill="#1a1a2e" stroke="#00c853" stroke-width="1.2" rx="2"/>
+          <line x1="5" y1="10" x2="23" y2="10" stroke="#00c853" stroke-width="1" opacity="0.5"/>
+          <line x1="5" y1="16" x2="23" y2="16" stroke="#00c853" stroke-width="1" opacity="0.4"/>
+          <line x1="5" y1="22" x2="23" y2="22" stroke="#00c853" stroke-width="1" opacity="0.3"/>
+          <path d="M18,5 L21,8 L25,2" fill="none" stroke="#00c853" stroke-width="1.5" stroke-linecap="round"/>
+        </g>
+        <!-- doc 3 - straight, check -->
+        <g transform="translate(440,216)">
+          <rect width="28" height="36" fill="#1a1a2e" stroke="#00c853" stroke-width="1.2" rx="2"/>
+          <line x1="5" y1="10" x2="23" y2="10" stroke="#00c853" stroke-width="1" opacity="0.5"/>
+          <line x1="5" y1="16" x2="23" y2="16" stroke="#00c853" stroke-width="1" opacity="0.4"/>
+          <line x1="5" y1="22" x2="23" y2="22" stroke="#00c853" stroke-width="1" opacity="0.3"/>
+          <path d="M18,5 L21,8 L25,2" fill="none" stroke="#00c853" stroke-width="1.5" stroke-linecap="round"/>
+        </g>
       </g>
       <text x="300" y="370" text-anchor="middle" fill="url(#hGoldGrad)" font-family="'Segoe UI',system-ui,sans-serif" font-size="52" font-weight="800" letter-spacing="18" filter="url(#hGlow)">VEGA</text>
       <text x="300" y="392" text-anchor="middle" fill="#ffa726" font-family="serif" font-size="14" opacity="0.5" font-style="italic">&#957;</text>
