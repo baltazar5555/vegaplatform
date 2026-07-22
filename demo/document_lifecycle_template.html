@@ -53,7 +53,7 @@ body { font-family: 'Segoe UI', -apple-system, system-ui, sans-serif; background
 .detail-box h4 { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text3); margin-bottom: 6px; }
 .detail-box ul { list-style: none; }
 .detail-box li { font-size: 12px; padding: 2px 0; color: var(--text2); }
-.detail-box li::before { content: '→ '; color: var(--text3); }
+.detail-box li::before { content: '\2192 '; color: var(--text3); }
 .detail-box .placeholder { color: var(--accent2); font-style: italic; }
 
 .step-expand { font-size: 10px; color: var(--text3); margin-top: 6px; }
@@ -75,7 +75,7 @@ body { font-family: 'Segoe UI', -apple-system, system-ui, sans-serif; background
 .check-item:last-child { border-bottom: none; }
 .check-box { width: 18px; height: 18px; border: 2px solid var(--text3); border-radius: 4px; flex-shrink: 0; margin-top: 2px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
 .check-box.checked { background: var(--accent2); border-color: var(--accent2); }
-.check-box.checked::after { content: '✓'; color: white; font-size: 12px; font-weight: 700; }
+.check-box.checked::after { content: '\2713'; color: white; font-size: 12px; font-weight: 700; }
 .check-label { color: var(--text2); }
 .check-label strong { color: var(--text); }
 
@@ -90,16 +90,20 @@ body { font-family: 'Segoe UI', -apple-system, system-ui, sans-serif; background
 <div class="header">
   <div class="header-badge">VEGA Framework · Template</div>
   <h1>Document <strong>Lifecycle</strong> Protocol</h1>
-  <div class="header-sub">Univerzalni postopek za upravljanje dokumentov v zdravstvenih ustanovah</div>
+  <div class="header-sub"><span class="lang-en">Universal document management process for healthcare institutions</span><span class="lang-si" style="display:none">Univerzalni postopek za upravljanje dokumentov v zdravstvenih ustanovah</span></div>
+</div>
+
+<div style="text-align:right;padding:8px 20px">
+  <button onclick="setLang('en')" id="btn-en" style="background:#1a56db;color:#fff;border:none;padding:4px 14px;border-radius:6px 0 0 6px;font-size:12px;font-weight:600;cursor:pointer">EN</button><button onclick="setLang('si')" id="btn-si" style="background:#2a2a4a;color:#9ba3b5;border:none;padding:4px 14px;border-radius:0 6px 6px 0;font-size:12px;font-weight:600;cursor:pointer">SI</button>
 </div>
 
 <div class="container">
 
 <div class="template-notice">
-  <h2>📋 To je template</h2>
-  <p>Generična verzija Document Lifecycle Protocol za prilagoditev novi ustanovi. Vsak korak vsebuje placeholder-je ki jih zamenjate z vašimi specifičnimi orodji, mapami in postopki.</p>
+  <h2><span class="lang-en">This is a template</span><span class="lang-si" style="display:none">To je template</span></h2>
+  <p><span class="lang-en">Generic version of the Document Lifecycle Protocol for adapting to a new institution. Each step contains placeholders to replace with your specific tools, paths, and procedures.</span><span class="lang-si" style="display:none">Genericna verzija Document Lifecycle Protocol za prilagoditev novi ustanovi. Vsak korak vsebuje placeholder-je ki jih zamenjate z vasimi specificnimi orodji, mapami in postopki.</span></p>
   <div class="customize">
-    <strong>Prilagoditev:</strong> Zamenjajte <em style="color:#a78bfa;">[USTANOVA]</em> z imenom vaše ustanove, <em style="color:#a78bfa;">[ORODJE]</em> z vašimi orodji, <em style="color:#a78bfa;">[MAPA]</em> z vašimi potmi do datotek. Odstranite korake ki niso relevantni za vaš workflow.
+    <span class="lang-en"><strong>Customization:</strong> Replace <em style="color:#a78bfa;">[INSTITUTION]</em> with your institution name, <em style="color:#a78bfa;">[TOOL]</em> with your tools, <em style="color:#a78bfa;">[PATH]</em> with your file paths. Remove steps that are not relevant to your workflow.</span><span class="lang-si" style="display:none"><strong>Prilagoditev:</strong> Zamenjajte <em style="color:#a78bfa;">[USTANOVA]</em> z imenom vase ustanove, <em style="color:#a78bfa;">[ORODJE]</em> z vasimi orodji, <em style="color:#a78bfa;">[MAPA]</em> z vasimi potmi do datotek. Odstranite korake ki niso relevantni za vas workflow.</span>
   </div>
 </div>
 
@@ -109,31 +113,31 @@ body { font-family: 'Segoe UI', -apple-system, system-ui, sans-serif; background
   <div class="step">
     <div class="step-marker">
       <div class="step-num" style="background:var(--step1)">1</div>
-      <div class="step-line">Vnos</div>
+      <div class="step-line"><span class="lang-en">Intake</span><span class="lang-si" style="display:none">Vnos</span></div>
     </div>
     <div class="step-card" onclick="this.classList.toggle('expanded')">
-      <div class="step-title"><span>📥</span> Vnos dokumenta</div>
-      <div class="step-desc">Dokument pride v sistem — definirati vhodne kanale</div>
-      <div class="step-customize">Prilagodite: kanali vnosa, formati, vhodna mapa</div>
-      <div class="step-expand">▸ klikni za podrobnosti</div>
+      <div class="step-title"><span class="lang-en">Document intake</span><span class="lang-si" style="display:none">Vnos dokumenta</span></div>
+      <div class="step-desc"><span class="lang-en">Document enters the system — define intake channels</span><span class="lang-si" style="display:none">Dokument pride v sistem — definirati vhodne kanale</span></div>
+      <div class="step-customize"><span class="lang-en">Customize: intake channels, formats, input folder</span><span class="lang-si" style="display:none">Prilagodite: kanali vnosa, formati, vhodna mapa</span></div>
+      <div class="step-expand"><span class="lang-en">&#9656; click for details</span><span class="lang-si" style="display:none">&#9656; klikni za podrobnosti</span></div>
       <div class="step-details">
         <div class="detail-grid">
           <div class="detail-box">
-            <h4>Kanali vnosa</h4>
+            <h4><span class="lang-en">Intake channels</span><span class="lang-si" style="display:none">Kanali vnosa</span></h4>
             <ul>
-              <li><span class="placeholder">[Ročni vnos — sken, tipkanje]</span></li>
-              <li><span class="placeholder">[Avtomatski — download mapa, intranet]</span></li>
-              <li><span class="placeholder">[DMZ / pre-screening zona]</span></li>
-              <li><span class="placeholder">[E-pošta, zunanji sistemi]</span></li>
+              <li><span class="placeholder"><span class="lang-en">[Manual entry — scan, typing]</span><span class="lang-si" style="display:none">[Rocni vnos — sken, tipkanje]</span></span></li>
+              <li><span class="placeholder"><span class="lang-en">[Automatic — download folder, intranet]</span><span class="lang-si" style="display:none">[Avtomatski — download mapa, intranet]</span></span></li>
+              <li><span class="placeholder"><span class="lang-en">[DMZ / pre-screening zone]</span><span class="lang-si" style="display:none">[DMZ / pre-screening zona]</span></span></li>
+              <li><span class="placeholder"><span class="lang-en">[Email, external systems]</span><span class="lang-si" style="display:none">[E-posta, zunanji sistemi]</span></span></li>
             </ul>
           </div>
           <div class="detail-box">
-            <h4>Vhodni formati</h4>
+            <h4><span class="lang-en">Input formats</span><span class="lang-si" style="display:none">Vhodni formati</span></h4>
             <ul>
               <li>.txt (plain text)</li>
               <li>.docx (Word)</li>
-              <li>.pdf (skenirani → OCR)</li>
-              <li>.html (digitalni)</li>
+              <li><span class="lang-en">.pdf (scanned → OCR)</span><span class="lang-si" style="display:none">.pdf (skenirani → OCR)</span></li>
+              <li><span class="lang-en">.html (digital)</span><span class="lang-si" style="display:none">.html (digitalni)</span></li>
             </ul>
           </div>
         </div>
@@ -148,28 +152,28 @@ body { font-family: 'Segoe UI', -apple-system, system-ui, sans-serif; background
       <div class="step-line">OCR</div>
     </div>
     <div class="step-card" onclick="this.classList.toggle('expanded')">
-      <div class="step-title"><span>🔍</span> Digitalizacija</div>
-      <div class="step-desc">OCR obdelava, ekstrakcija besedila, quality check</div>
-      <div class="step-customize">Prilagodite: OCR orodje, quality pragovi, popravki</div>
-      <div class="step-expand">▸ klikni za podrobnosti</div>
+      <div class="step-title"><span class="lang-en">Digitization</span><span class="lang-si" style="display:none">Digitalizacija</span></div>
+      <div class="step-desc"><span class="lang-en">OCR processing, text extraction, quality check</span><span class="lang-si" style="display:none">OCR obdelava, ekstrakcija besedila, quality check</span></div>
+      <div class="step-customize"><span class="lang-en">Customize: OCR tool, quality thresholds, corrections</span><span class="lang-si" style="display:none">Prilagodite: OCR orodje, quality pragovi, popravki</span></div>
+      <div class="step-expand"><span class="lang-en">&#9656; click for details</span><span class="lang-si" style="display:none">&#9656; klikni za podrobnosti</span></div>
       <div class="step-details">
         <div class="detail-grid">
           <div class="detail-box">
-            <h4>Orodja</h4>
+            <h4><span class="lang-en">Tools</span><span class="lang-si" style="display:none">Orodja</span></h4>
             <ul>
-              <li><span class="placeholder">[OCR orodje za batch procesiranje]</span></li>
-              <li><span class="placeholder">[Quality check skripta]</span></li>
-              <li><span class="placeholder">[Popravek diakritičnih znakov]</span></li>
-              <li><span class="placeholder">[Gradnja digitalne knjižnice]</span></li>
+              <li><span class="placeholder"><span class="lang-en">[OCR tool for batch processing]</span><span class="lang-si" style="display:none">[OCR orodje za batch procesiranje]</span></span></li>
+              <li><span class="placeholder"><span class="lang-en">[Quality check script]</span><span class="lang-si" style="display:none">[Quality check skripta]</span></span></li>
+              <li><span class="placeholder"><span class="lang-en">[Diacritics correction]</span><span class="lang-si" style="display:none">[Popravek diakriticnih znakov]</span></span></li>
+              <li><span class="placeholder"><span class="lang-en">[Digital library builder]</span><span class="lang-si" style="display:none">[Gradnja digitalne knjiznice]</span></span></li>
             </ul>
           </div>
           <div class="detail-box">
             <h4>Quality gate</h4>
             <ul>
               <li>OCR confidence ≥ 85% = PASS</li>
-              <li>70-85% = REVIEW (ročni pregled)</li>
-              <li>&lt; 70% = FAIL (ponovi)</li>
-              <li>Diakritice: avtomatska + ročna korekcija</li>
+              <li><span class="lang-en">70-85% = REVIEW (manual review)</span><span class="lang-si" style="display:none">70-85% = REVIEW (rocni pregled)</span></li>
+              <li><span class="lang-en">&lt; 70% = FAIL (retry)</span><span class="lang-si" style="display:none">&lt; 70% = FAIL (ponovi)</span></li>
+              <li><span class="lang-en">Diacritics: automatic + manual correction</span><span class="lang-si" style="display:none">Diakritice: avtomatska + rocna korekcija</span></li>
             </ul>
           </div>
         </div>
@@ -181,31 +185,31 @@ body { font-family: 'Segoe UI', -apple-system, system-ui, sans-serif; background
   <div class="step">
     <div class="step-marker">
       <div class="step-num" style="background:var(--step3)">3</div>
-      <div class="step-line">Indeks</div>
+      <div class="step-line"><span class="lang-en">Index</span><span class="lang-si" style="display:none">Indeks</span></div>
     </div>
     <div class="step-card" onclick="this.classList.toggle('expanded')">
-      <div class="step-title"><span>🗂️</span> Indeksiranje</div>
-      <div class="step-desc">Registracija v centralnem registru z metapodatki</div>
-      <div class="step-customize">Prilagodite: register format, ID shema, metapodatki</div>
-      <div class="step-expand">▸ klikni za podrobnosti</div>
+      <div class="step-title"><span class="lang-en">Indexing</span><span class="lang-si" style="display:none">Indeksiranje</span></div>
+      <div class="step-desc"><span class="lang-en">Registration in central registry with metadata</span><span class="lang-si" style="display:none">Registracija v centralnem registru z metapodatki</span></div>
+      <div class="step-customize"><span class="lang-en">Customize: registry format, ID schema, metadata</span><span class="lang-si" style="display:none">Prilagodite: register format, ID shema, metapodatki</span></div>
+      <div class="step-expand"><span class="lang-en">&#9656; click for details</span><span class="lang-si" style="display:none">&#9656; klikni za podrobnosti</span></div>
       <div class="step-details">
         <div class="detail-grid">
           <div class="detail-box">
-            <h4>Register</h4>
+            <h4><span class="lang-en">Registry</span><span class="lang-si" style="display:none">Register</span></h4>
             <ul>
-              <li><span class="placeholder">[Centralni register — JSON/Excel/DB]</span></li>
-              <li><span class="placeholder">[Podatkovni array za module]</span></li>
-              <li><span class="placeholder">[Digitalna knjižnica — vsebine]</span></li>
-              <li><span class="placeholder">[Berljiv indeks dokumentov]</span></li>
+              <li><span class="placeholder"><span class="lang-en">[Central registry — JSON/Excel/DB]</span><span class="lang-si" style="display:none">[Centralni register — JSON/Excel/DB]</span></span></li>
+              <li><span class="placeholder"><span class="lang-en">[Data array for modules]</span><span class="lang-si" style="display:none">[Podatkovni array za module]</span></span></li>
+              <li><span class="placeholder"><span class="lang-en">[Digital library — contents]</span><span class="lang-si" style="display:none">[Digitalna knjiznica — vsebine]</span></span></li>
+              <li><span class="placeholder"><span class="lang-en">[Readable document index]</span><span class="lang-si" style="display:none">[Berljiv indeks dokumentov]</span></span></li>
             </ul>
           </div>
           <div class="detail-box">
-            <h4>Metapodatki</h4>
+            <h4><span class="lang-en">Metadata</span><span class="lang-si" style="display:none">Metapodatki</span></h4>
             <ul>
-              <li><strong>ID:</strong> <span class="placeholder">[prefix_številka]</span></li>
-              <li><strong>Tip:</strong> <span class="placeholder">[obrazec, protokol, SOP...]</span></li>
-              <li><strong>Pravna domena:</strong> <span class="placeholder">[zakoni ki se nanašajo]</span></li>
-              <li><strong>Sektor/enota:</strong> <span class="placeholder">[organizacijska umestitev]</span></li>
+              <li><strong>ID:</strong> <span class="placeholder"><span class="lang-en">[prefix_number]</span><span class="lang-si" style="display:none">[prefix_stevilka]</span></span></li>
+              <li><strong><span class="lang-en">Type:</span><span class="lang-si" style="display:none">Tip:</span></strong> <span class="placeholder"><span class="lang-en">[form, protocol, SOP...]</span><span class="lang-si" style="display:none">[obrazec, protokol, SOP...]</span></span></li>
+              <li><strong><span class="lang-en">Legal domain:</span><span class="lang-si" style="display:none">Pravna domena:</span></strong> <span class="placeholder"><span class="lang-en">[applicable laws]</span><span class="lang-si" style="display:none">[zakoni ki se nanasajo]</span></span></li>
+              <li><strong><span class="lang-en">Sector/unit:</span><span class="lang-si" style="display:none">Sektor/enota:</span></strong> <span class="placeholder"><span class="lang-en">[organizational placement]</span><span class="lang-si" style="display:none">[organizacijska umestitev]</span></span></li>
             </ul>
           </div>
         </div>
@@ -217,31 +221,31 @@ body { font-family: 'Segoe UI', -apple-system, system-ui, sans-serif; background
   <div class="step">
     <div class="step-marker">
       <div class="step-num" style="background:var(--step4)">4</div>
-      <div class="step-line">Razvrstitev</div>
+      <div class="step-line"><span class="lang-en">Classify</span><span class="lang-si" style="display:none">Razvrstitev</span></div>
     </div>
     <div class="step-card" onclick="this.classList.toggle('expanded')">
-      <div class="step-title"><span>🏷️</span> Klasifikacija</div>
-      <div class="step-desc">Umestitev v pravno mrežo, preslikava na zakonodajo</div>
-      <div class="step-customize">Prilagodite: relevantni zakoni, klasifikacijska shema</div>
-      <div class="step-expand">▸ klikni za podrobnosti</div>
+      <div class="step-title"><span class="lang-en">Classification</span><span class="lang-si" style="display:none">Klasifikacija</span></div>
+      <div class="step-desc"><span class="lang-en">Placement in legal framework, mapping to legislation</span><span class="lang-si" style="display:none">Umestitev v pravno mrezo, preslikava na zakonodajo</span></div>
+      <div class="step-customize"><span class="lang-en">Customize: relevant laws, classification schema</span><span class="lang-si" style="display:none">Prilagodite: relevantni zakoni, klasifikacijska shema</span></div>
+      <div class="step-expand"><span class="lang-en">&#9656; click for details</span><span class="lang-si" style="display:none">&#9656; klikni za podrobnosti</span></div>
       <div class="step-details">
         <div class="detail-grid">
           <div class="detail-box">
-            <h4>Pravna umestitev</h4>
+            <h4><span class="lang-en">Legal placement</span><span class="lang-si" style="display:none">Pravna umestitev</span></h4>
             <ul>
-              <li>Keyword matching → pravne domene</li>
-              <li>Ekstrakcija sklicev na zakonske člene</li>
-              <li>Vsebinska analiza → podobnost</li>
-              <li><span class="placeholder">[Zapis v pravno mrežo]</span></li>
+              <li><span class="lang-en">Keyword matching → legal domains</span><span class="lang-si" style="display:none">Keyword matching → pravne domene</span></li>
+              <li><span class="lang-en">Extraction of legal article references</span><span class="lang-si" style="display:none">Ekstrakcija sklicev na zakonske clene</span></li>
+              <li><span class="lang-en">Content analysis → similarity</span><span class="lang-si" style="display:none">Vsebinska analiza → podobnost</span></li>
+              <li><span class="placeholder"><span class="lang-en">[Record in legal framework]</span><span class="lang-si" style="display:none">[Zapis v pravno mrezo]</span></span></li>
             </ul>
           </div>
           <div class="detail-box">
-            <h4>Organizacijska umestitev</h4>
+            <h4><span class="lang-en">Organizational placement</span><span class="lang-si" style="display:none">Organizacijska umestitev</span></h4>
             <ul>
-              <li>Tip → raven v hierarhiji</li>
-              <li><span class="placeholder">[Sektor / oddelek / enota]</span></li>
-              <li><span class="placeholder">[Specifična enota če relevantno]</span></li>
-              <li><span class="placeholder">[Zapis v hierarhijo aktov]</span></li>
+              <li><span class="lang-en">Type → level in hierarchy</span><span class="lang-si" style="display:none">Tip → raven v hierarhiji</span></li>
+              <li><span class="placeholder"><span class="lang-en">[Sector / department / unit]</span><span class="lang-si" style="display:none">[Sektor / oddelek / enota]</span></span></li>
+              <li><span class="placeholder"><span class="lang-en">[Specific unit if relevant]</span><span class="lang-si" style="display:none">[Specificna enota ce relevantno]</span></span></li>
+              <li><span class="placeholder"><span class="lang-en">[Record in act hierarchy]</span><span class="lang-si" style="display:none">[Zapis v hierarhijo aktov]</span></span></li>
             </ul>
           </div>
         </div>
@@ -256,30 +260,30 @@ body { font-family: 'Segoe UI', -apple-system, system-ui, sans-serif; background
       <div class="step-line">Gate</div>
     </div>
     <div class="step-card" onclick="this.classList.toggle('expanded')">
-      <div class="step-title"><span>⚖️</span> Review Gate (pogojno)</div>
-      <div class="step-desc">Strukturne spremembe rabijo review — vsebinski vnos gre mimo</div>
-      <div class="step-customize">Prilagodite: review postopek, pragovi, odločevalci</div>
-      <div class="step-expand">▸ klikni za podrobnosti</div>
+      <div class="step-title"><span class="lang-en">Review Gate (conditional)</span><span class="lang-si" style="display:none">Review Gate (pogojno)</span></div>
+      <div class="step-desc"><span class="lang-en">Structural changes require review — content-only entries bypass</span><span class="lang-si" style="display:none">Strukturne spremembe rabijo review — vsebinski vnos gre mimo</span></div>
+      <div class="step-customize"><span class="lang-en">Customize: review process, thresholds, decision makers</span><span class="lang-si" style="display:none">Prilagodite: review postopek, pragovi, odlocevalci</span></div>
+      <div class="step-expand"><span class="lang-en">&#9656; click for details</span><span class="lang-si" style="display:none">&#9656; klikni za podrobnosti</span></div>
       <div class="step-details">
         <div class="detail-grid">
           <div class="detail-box">
-            <h4>Review je potreben če</h4>
+            <h4><span class="lang-en">Review required when</span><span class="lang-si" style="display:none">Review je potreben ce</span></h4>
             <ul>
-              <li>Nov nivo v hierarhiji dokumentov</li>
-              <li>Vpliv na &gt;1 organizacijsko enoto</li>
-              <li>Dotik zakonodaje ali pravic pacientov</li>
-              <li>Sprememba univerzalnega dokumenta</li>
-              <li>Sprememba governance protokola</li>
+              <li><span class="lang-en">New level in document hierarchy</span><span class="lang-si" style="display:none">Nov nivo v hierarhiji dokumentov</span></li>
+              <li><span class="lang-en">Impact on &gt;1 organizational unit</span><span class="lang-si" style="display:none">Vpliv na &gt;1 organizacijsko enoto</span></li>
+              <li><span class="lang-en">Affects legislation or patient rights</span><span class="lang-si" style="display:none">Dotik zakonodaje ali pravic pacientov</span></li>
+              <li><span class="lang-en">Change to a universal document</span><span class="lang-si" style="display:none">Sprememba univerzalnega dokumenta</span></li>
+              <li><span class="lang-en">Change to governance protocol</span><span class="lang-si" style="display:none">Sprememba governance protokola</span></li>
             </ul>
           </div>
           <div class="detail-box">
-            <h4>Review ni potreben za</h4>
+            <h4><span class="lang-en">Review not required for</span><span class="lang-si" style="display:none">Review ni potreben za</span></h4>
             <ul>
-              <li>Enota-specifične vsebine</li>
-              <li>Analiza brez strukturne spremembe</li>
-              <li>Vizualizacije, tracking, dashboard</li>
-              <li>Jezikovne popravke, prevodi</li>
-              <li>Indeksiranje brez nove strukture</li>
+              <li><span class="lang-en">Unit-specific content</span><span class="lang-si" style="display:none">Enota-specificne vsebine</span></li>
+              <li><span class="lang-en">Analysis without structural change</span><span class="lang-si" style="display:none">Analiza brez strukturne spremembe</span></li>
+              <li><span class="lang-en">Visualizations, tracking, dashboard</span><span class="lang-si" style="display:none">Vizualizacije, tracking, dashboard</span></li>
+              <li><span class="lang-en">Language corrections, translations</span><span class="lang-si" style="display:none">Jezikovne popravke, prevodi</span></li>
+              <li><span class="lang-en">Indexing without new structure</span><span class="lang-si" style="display:none">Indeksiranje brez nove strukture</span></li>
             </ul>
           </div>
         </div>
@@ -294,28 +298,28 @@ body { font-family: 'Segoe UI', -apple-system, system-ui, sans-serif; background
       <div class="step-line">Sync</div>
     </div>
     <div class="step-card" onclick="this.classList.toggle('expanded')">
-      <div class="step-title"><span>🔄</span> Sinhronizacija</div>
-      <div class="step-desc">Posodobitev vseh modulov ki prikazujejo podatke iz korpusa</div>
-      <div class="step-customize">Prilagodite: sync mehanizem, manifest, distribucija</div>
-      <div class="step-expand">▸ klikni za podrobnosti</div>
+      <div class="step-title"><span class="lang-en">Synchronization</span><span class="lang-si" style="display:none">Sinhronizacija</span></div>
+      <div class="step-desc"><span class="lang-en">Update all modules that display data from the corpus</span><span class="lang-si" style="display:none">Posodobitev vseh modulov ki prikazujejo podatke iz korpusa</span></div>
+      <div class="step-customize"><span class="lang-en">Customize: sync mechanism, manifest, distribution</span><span class="lang-si" style="display:none">Prilagodite: sync mehanizem, manifest, distribucija</span></div>
+      <div class="step-expand"><span class="lang-en">&#9656; click for details</span><span class="lang-si" style="display:none">&#9656; klikni za podrobnosti</span></div>
       <div class="step-details">
         <div class="detail-grid">
           <div class="detail-box">
-            <h4>Sync mehanizem</h4>
+            <h4><span class="lang-en">Sync mechanism</span><span class="lang-si" style="display:none">Sync mehanizem</span></h4>
             <ul>
-              <li><span class="placeholder">[Centralni verzijski token]</span></li>
-              <li><span class="placeholder">[Manifest z consumers]</span></li>
-              <li><span class="placeholder">[Avtomatska posodobitev modulov]</span></li>
-              <li><span class="placeholder">[Distribucija na končne uporabnike]</span></li>
+              <li><span class="placeholder"><span class="lang-en">[Central version token]</span><span class="lang-si" style="display:none">[Centralni verzijski token]</span></span></li>
+              <li><span class="placeholder"><span class="lang-en">[Manifest with consumers]</span><span class="lang-si" style="display:none">[Manifest z consumers]</span></span></li>
+              <li><span class="placeholder"><span class="lang-en">[Automatic module update]</span><span class="lang-si" style="display:none">[Avtomatska posodobitev modulov]</span></span></li>
+              <li><span class="placeholder"><span class="lang-en">[Distribution to end users]</span><span class="lang-si" style="display:none">[Distribucija na koncne uporabnike]</span></span></li>
             </ul>
           </div>
           <div class="detail-box">
             <h4>Drift detection</h4>
             <ul>
               <li>Modul.count ≠ manifest.count → STALE</li>
-              <li>Avtomatski popravek (manifest wins)</li>
-              <li>Log vseh sinhronizacij</li>
-              <li><span class="placeholder">[Alerting pri neskladju]</span></li>
+              <li><span class="lang-en">Automatic correction (manifest wins)</span><span class="lang-si" style="display:none">Avtomatski popravek (manifest wins)</span></li>
+              <li><span class="lang-en">Log of all synchronizations</span><span class="lang-si" style="display:none">Log vseh sinhronizacij</span></li>
+              <li><span class="placeholder"><span class="lang-en">[Alerting on mismatch]</span><span class="lang-si" style="display:none">[Alerting pri neskladju]</span></span></li>
             </ul>
           </div>
         </div>
@@ -327,84 +331,95 @@ body { font-family: 'Segoe UI', -apple-system, system-ui, sans-serif; background
 
 <!-- PRAVILA -->
 <div class="rules">
-  <h2>📐 Univerzalna pravila</h2>
+  <h2><span class="lang-en">Universal rules</span><span class="lang-si" style="display:none">Univerzalna pravila</span></h2>
   <div class="rule-grid">
     <div class="rule">
       <div class="rule-num">P1</div>
-      <div class="rule-title">Enotna identifikacija</div>
-      <div class="rule-desc">Vsak dokument dobi unikaten ID. ID se nikoli ne spremeni ali reciklira. Prefix določa tip dokumenta.</div>
+      <div class="rule-title"><span class="lang-en">Unique identification</span><span class="lang-si" style="display:none">Enotna identifikacija</span></div>
+      <div class="rule-desc"><span class="lang-en">Every document receives a unique ID. The ID never changes or gets recycled. The prefix determines the document type.</span><span class="lang-si" style="display:none">Vsak dokument dobi unikaten ID. ID se nikoli ne spremeni ali reciklira. Prefix doloca tip dokumenta.</span></div>
     </div>
     <div class="rule">
       <div class="rule-num">P2</div>
       <div class="rule-title">Single Source of Truth</div>
-      <div class="rule-desc">En centralni objekt za vse števce. Moduli nikoli ne hardkodirajo — vedno berejo iz centralnega vira.</div>
+      <div class="rule-desc"><span class="lang-en">One central object for all counters. Modules never hardcode — they always read from the central source.</span><span class="lang-si" style="display:none">En centralni objekt za vse stevce. Moduli nikoli ne hardkodirajo — vedno berejo iz centralnega vira.</span></div>
     </div>
     <div class="rule">
       <div class="rule-num">P3</div>
-      <div class="rule-title">Avtomatska sinhronizacija</div>
-      <div class="rule-desc">Ob vnosu novega dokumenta se vsi moduli posodobijo avtomatsko. Človek ne sme biti bottleneck za sync.</div>
+      <div class="rule-title"><span class="lang-en">Automatic synchronization</span><span class="lang-si" style="display:none">Avtomatska sinhronizacija</span></div>
+      <div class="rule-desc"><span class="lang-en">When a new document is added, all modules update automatically. A human must not be the bottleneck for sync.</span><span class="lang-si" style="display:none">Ob vnosu novega dokumenta se vsi moduli posodobijo avtomatsko. Clovek ne sme biti bottleneck za sync.</span></div>
     </div>
     <div class="rule">
       <div class="rule-num">P4</div>
       <div class="rule-title">Manifest tracking</div>
-      <div class="rule-desc">Manifest beleži vse deljene podatke, kdo jih uporablja in trenutne vrednosti. Drift = avtomatski popravek.</div>
+      <div class="rule-desc"><span class="lang-en">The manifest records all shared data, who uses it, and current values. Drift = automatic correction.</span><span class="lang-si" style="display:none">Manifest belezi vse deljene podatke, kdo jih uporablja in trenutne vrednosti. Drift = avtomatski popravek.</span></div>
     </div>
     <div class="rule">
       <div class="rule-num">P5</div>
-      <div class="rule-title">Gate = samo strukturno</div>
-      <div class="rule-desc">Review je za strukturne spremembe. Vsebinski vnos brez strukturne spremembe ne rabi review-a.</div>
+      <div class="rule-title"><span class="lang-en">Gate = structural only</span><span class="lang-si" style="display:none">Gate = samo strukturno</span></div>
+      <div class="rule-desc"><span class="lang-en">Review is for structural changes. Content entries without structural changes do not require review.</span><span class="lang-si" style="display:none">Review je za strukturne spremembe. Vsebinski vnos brez strukturne spremembe ne rabi review-a.</span></div>
     </div>
     <div class="rule">
       <div class="rule-num">P6</div>
-      <div class="rule-title">Idempotentnost</div>
-      <div class="rule-desc">Isti dokument dvakrat skozi pipeline = isti rezultat. Duplikati se zaznajo in zavrnejo v koraku 3.</div>
+      <div class="rule-title"><span class="lang-en">Idempotency</span><span class="lang-si" style="display:none">Idempotentnost</span></div>
+      <div class="rule-desc"><span class="lang-en">The same document twice through the pipeline = the same result. Duplicates are detected and rejected at step 3.</span><span class="lang-si" style="display:none">Isti dokument dvakrat skozi pipeline = isti rezultat. Duplikati se zaznajo in zavrnejo v koraku 3.</span></div>
     </div>
   </div>
 </div>
 
 <!-- IMPLEMENTATION CHECKLIST -->
 <div class="checklist">
-  <h2>✅ Implementacijski checklist</h2>
+  <h2><span class="lang-en">Implementation checklist</span><span class="lang-si" style="display:none">Implementacijski checklist</span></h2>
   <div class="check-item" onclick="this.querySelector('.check-box').classList.toggle('checked')">
     <div class="check-box"></div>
-    <div class="check-label"><strong>Definirati vhodne kanale</strong> — od kod prihajajo dokumenti (ročno, intranet, e-pošta, sken)</div>
+    <div class="check-label"><span class="lang-en"><strong>Define intake channels</strong> — where documents come from (manual, intranet, email, scan)</span><span class="lang-si" style="display:none"><strong>Definirati vhodne kanale</strong> — od kod prihajajo dokumenti (rocno, intranet, e-posta, sken)</span></div>
   </div>
   <div class="check-item" onclick="this.querySelector('.check-box').classList.toggle('checked')">
     <div class="check-box"></div>
-    <div class="check-label"><strong>Vzpostaviti OCR pipeline</strong> — orodje za digitalizacijo, quality pragovi, popravki</div>
+    <div class="check-label"><span class="lang-en"><strong>Set up OCR pipeline</strong> — digitization tool, quality thresholds, corrections</span><span class="lang-si" style="display:none"><strong>Vzpostaviti OCR pipeline</strong> — orodje za digitalizacijo, quality pragovi, popravki</span></div>
   </div>
   <div class="check-item" onclick="this.querySelector('.check-box').classList.toggle('checked')">
     <div class="check-box"></div>
-    <div class="check-label"><strong>Definirati ID shemo</strong> — prefix konvencija, številčenje, metapodatki</div>
+    <div class="check-label"><span class="lang-en"><strong>Define ID schema</strong> — prefix convention, numbering, metadata</span><span class="lang-si" style="display:none"><strong>Definirati ID shemo</strong> — prefix konvencija, stevilcenje, metapodatki</span></div>
   </div>
   <div class="check-item" onclick="this.querySelector('.check-box').classList.toggle('checked')">
     <div class="check-box"></div>
-    <div class="check-label"><strong>Vzpostaviti centralni register</strong> — JSON/Excel/DB z vsemi dokumenti in metapodatki</div>
+    <div class="check-label"><span class="lang-en"><strong>Set up central registry</strong> — JSON/Excel/DB with all documents and metadata</span><span class="lang-si" style="display:none"><strong>Vzpostaviti centralni register</strong> — JSON/Excel/DB z vsemi dokumenti in metapodatki</span></div>
   </div>
   <div class="check-item" onclick="this.querySelector('.check-box').classList.toggle('checked')">
     <div class="check-box"></div>
-    <div class="check-label"><strong>Preslikati relevantno zakonodajo</strong> — kateri zakoni se nanašajo na vaše dokumente</div>
+    <div class="check-label"><span class="lang-en"><strong>Map relevant legislation</strong> — which laws apply to your documents</span><span class="lang-si" style="display:none"><strong>Preslikati relevantno zakonodajo</strong> — kateri zakoni se nanasajo na vase dokumente</span></div>
   </div>
   <div class="check-item" onclick="this.querySelector('.check-box').classList.toggle('checked')">
     <div class="check-box"></div>
-    <div class="check-label"><strong>Definirati review gate</strong> — kaj je strukturna sprememba, kdo odloča, postopek</div>
+    <div class="check-label"><span class="lang-en"><strong>Define review gate</strong> — what counts as structural change, who decides, process</span><span class="lang-si" style="display:none"><strong>Definirati review gate</strong> — kaj je strukturna sprememba, kdo odloca, postopek</span></div>
   </div>
   <div class="check-item" onclick="this.querySelector('.check-box').classList.toggle('checked')">
     <div class="check-box"></div>
-    <div class="check-label"><strong>Vzpostaviti sync mehanizem</strong> — verzijski token, manifest, avtomatska posodobitev</div>
+    <div class="check-label"><span class="lang-en"><strong>Set up sync mechanism</strong> — version token, manifest, automatic update</span><span class="lang-si" style="display:none"><strong>Vzpostaviti sync mehanizem</strong> — verzijski token, manifest, avtomatska posodobitev</span></div>
   </div>
   <div class="check-item" onclick="this.querySelector('.check-box').classList.toggle('checked')">
     <div class="check-box"></div>
-    <div class="check-label"><strong>Testirati end-to-end</strong> — nov dokument od vnosa do vidnosti v vseh modulih</div>
+    <div class="check-label"><span class="lang-en"><strong>Test end-to-end</strong> — new document from intake to visibility in all modules</span><span class="lang-si" style="display:none"><strong>Testirati end-to-end</strong> — nov dokument od vnosa do vidnosti v vseh modulih</span></div>
   </div>
 </div>
 
 </div>
 
 <div class="footer">
-  VEGA Document Lifecycle Template v1.0 · julij 2026<br>
-  Del <a href="vega_governance_console.html">VEGA Governance Framework</a> · Porting Guide: <a href="#">PORTING_GUIDE.md</a>
+  VEGA Document Lifecycle Template v1.0 · <span class="lang-en">July 2026</span><span class="lang-si" style="display:none">julij 2026</span><br>
+  <span class="lang-en">Part of</span><span class="lang-si" style="display:none">Del</span> <a href="vega_governance_console.html">VEGA Governance Framework</a> · Porting Guide: <a href="#">PORTING_GUIDE.md</a>
 </div>
+
+<script>
+function setLang(lang){
+  document.querySelectorAll('.lang-en').forEach(el=>el.style.display=lang==='en'?'':'none');
+  document.querySelectorAll('.lang-si').forEach(el=>el.style.display=lang==='si'?'':'none');
+  document.getElementById('btn-en').style.background=lang==='en'?'#1a56db':'#2a2a4a';
+  document.getElementById('btn-en').style.color=lang==='en'?'#fff':'#9ba3b5';
+  document.getElementById('btn-si').style.background=lang==='si'?'#1a56db':'#2a2a4a';
+  document.getElementById('btn-si').style.color=lang==='si'?'#fff':'#9ba3b5';
+}
+</script>
 
 </body>
 </html>

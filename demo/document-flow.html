@@ -196,158 +196,237 @@
 </style>
 
 <div class="container">
-  <h1>VEGA Document Governance Flow</h1>
-  <p class="subtitle">End-to-end journey: upload &rarr; OCR &rarr; verify &rarr; KGR review &rarr; index &rarr; modules</p>
+  <div style="text-align:right;padding:0 0 8px">
+    <button onclick="setLang('en')" id="btn-en" style="background:#1a56db;color:#fff;border:none;padding:4px 14px;border-radius:6px 0 0 6px;font-size:12px;font-weight:600;cursor:pointer">EN</button><button onclick="setLang('si')" id="btn-si" style="background:#2a2a4a;color:#9ba3b5;border:none;padding:4px 14px;border-radius:0 6px 6px 0;font-size:12px;font-weight:600;cursor:pointer">SI</button>
+  </div>
+
+  <h1><span class="lang-en">VEGA Document Governance Flow</span><span class="lang-si" style="display:none">VEGA Tok upravljanja dokumentov</span></h1>
+  <p class="subtitle"><span class="lang-en">End-to-end journey: upload &rarr; OCR &rarr; verify &rarr; KGR review &rarr; index &rarr; modules</span><span class="lang-si" style="display:none">Celoten postopek: nalaganje &rarr; OCR &rarr; preverjanje &rarr; KGR pregled &rarr; indeksiranje &rarr; moduli</span></p>
 
   <!-- ══════ SIMULATION PANEL ══════ -->
   <div class="sim-panel">
     <div class="sim-header">
-      <span class="sim-title">Live Simulation</span>
+      <span class="sim-title"><span class="lang-en">Live Simulation</span><span class="lang-si" style="display:none">Simulacija v živo</span></span>
       <span class="sim-step-label" id="stepLabel">Step 1 / 8</span>
     </div>
     <div class="sim-progress" id="progressBar"></div>
     <div class="sim-content" id="simContent"></div>
     <div class="sim-controls">
-      <button class="sim-btn" id="btnPrev" onclick="prevStep()" disabled>&larr; Back</button>
-      <button class="sim-btn sim-btn-auto" id="btnAuto" onclick="toggleAuto()">Auto-play</button>
-      <button class="sim-btn primary" id="btnNext" onclick="nextStep()">Next &rarr;</button>
+      <button class="sim-btn" id="btnPrev" onclick="prevStep()" disabled><span class="lang-en">&larr; Back</span><span class="lang-si" style="display:none">&larr; Nazaj</span></button>
+      <button class="sim-btn sim-btn-auto" id="btnAuto" onclick="toggleAuto()"><span class="lang-en">Auto-play</span><span class="lang-si" style="display:none">Samodejno</span></button>
+      <button class="sim-btn primary" id="btnNext" onclick="nextStep()"><span class="lang-en">Next &rarr;</span><span class="lang-si" style="display:none">Naprej &rarr;</span></button>
     </div>
   </div>
 
   <!-- ══════ STATIC FLOW DIAGRAM ══════ -->
-  <div class="section-divider">FULL ARCHITECTURE</div>
+  <div class="section-divider"><span class="lang-en">FULL ARCHITECTURE</span><span class="lang-si" style="display:none">CELOTNA ARHITEKTURA</span></div>
 
   <div class="legend">
-    <div class="legend-item"><div class="legend-dot human"></div> Human action</div>
-    <div class="legend-item"><div class="legend-dot ai"></div> AI review (API)</div>
-    <div class="legend-item"><div class="legend-dot auto"></div> Automated</div>
-    <div class="legend-item"><div class="legend-dot gate"></div> Gate / decision</div>
+    <div class="legend-item"><div class="legend-dot human"></div> <span class="lang-en">Human action</span><span class="lang-si" style="display:none">Človeško dejanje</span></div>
+    <div class="legend-item"><div class="legend-dot ai"></div> <span class="lang-en">AI review (API)</span><span class="lang-si" style="display:none">AI pregled (API)</span></div>
+    <div class="legend-item"><div class="legend-dot auto"></div> <span class="lang-en">Automated</span><span class="lang-si" style="display:none">Avtomatizirano</span></div>
+    <div class="legend-item"><div class="legend-dot gate"></div> <span class="lang-en">Gate / decision</span><span class="lang-si" style="display:none">Vrata / odločitev</span></div>
   </div>
 
   <div class="flow" id="flowDiagram">
+    <!-- Phase 1: Upload -->
     <div class="phase" data-phase="0">
       <div class="phase-number" id="pn1">1</div><div class="phase-connector"></div>
       <div class="phase-card human-card" id="pc1">
-        <div class="phase-title">Upload Documents <span class="badge badge-human">Human</span></div>
-        <div class="phase-body">User uploads 1-50 internal documents from intranet, local drive, or shared folder.
+        <div class="phase-title"><span class="lang-en">Upload Documents</span><span class="lang-si" style="display:none">Nalaganje dokumentov</span> <span class="badge badge-human"><span class="lang-en">Human</span><span class="lang-si" style="display:none">Človek</span></span></div>
+        <div class="phase-body"><span class="lang-en">User uploads 1-50 internal documents from intranet, local drive, or shared folder.</span><span class="lang-si" style="display:none">Uporabnik naloži 1-50 internih dokumentov z intraneta, lokalnega diska ali skupne mape.</span>
           <div class="formats"><span class="format-tag">PDF (scan)</span><span class="format-tag">PDF (digital)</span><span class="format-tag">DOCX</span><span class="format-tag">DOC</span><span class="format-tag">TXT</span><span class="format-tag">ODT</span></div>
         </div>
       </div>
     </div>
+    <!-- Phase 2: OCR -->
     <div class="phase" data-phase="1">
       <div class="phase-number" id="pn2">2</div><div class="phase-connector"></div>
       <div class="phase-card" id="pc2">
-        <div class="phase-title">Format Detection &amp; OCR <span class="badge badge-auto">Auto</span></div>
-        <div class="phase-body"><ul>
-          <li><strong>Digital PDF/DOCX/TXT</strong> &rarr; direct text extraction (pdfplumber / python-docx)</li>
-          <li><strong>Scanned PDF</strong> &rarr; Tesseract OCR &rarr; plain text + confidence score</li>
-          <li><strong>DOC (legacy)</strong> &rarr; LibreOffice convert &rarr; DOCX &rarr; text</li>
-        </ul>Output: plain text + metadata (pages, char count, OCR confidence %)</div>
+        <div class="phase-title"><span class="lang-en">Format Detection &amp; OCR</span><span class="lang-si" style="display:none">Zaznava formata in OCR</span> <span class="badge badge-auto">Auto</span></div>
+        <div class="phase-body">
+          <div class="lang-en"><ul>
+            <li><strong>Digital PDF/DOCX/TXT</strong> &rarr; direct text extraction (pdfplumber / python-docx)</li>
+            <li><strong>Scanned PDF</strong> &rarr; Tesseract OCR &rarr; plain text + confidence score</li>
+            <li><strong>DOC (legacy)</strong> &rarr; LibreOffice convert &rarr; DOCX &rarr; text</li>
+          </ul>Output: plain text + metadata (pages, char count, OCR confidence %)</div>
+          <div class="lang-si" style="display:none"><ul>
+            <li><strong>Digitalni PDF/DOCX/TXT</strong> &rarr; neposredna ekstrakcija besedila (pdfplumber / python-docx)</li>
+            <li><strong>Skeniran PDF</strong> &rarr; Tesseract OCR &rarr; besedilo + ocena zaupanja</li>
+            <li><strong>DOC (zapuščina)</strong> &rarr; LibreOffice pretvorba &rarr; DOCX &rarr; besedilo</li>
+          </ul>Izhod: besedilo + metapodatki (strani, število znakov, OCR zaupanje %)</div>
+        </div>
       </div>
     </div>
+    <!-- Phase 3: Verification -->
     <div class="phase" data-phase="2">
       <div class="phase-number" id="pn3">3</div><div class="phase-connector"></div>
       <div class="phase-card human-card" id="pc3">
-        <div class="phase-title">OCR Verification <span class="badge badge-human">Human</span> <span class="badge badge-gate">Gate</span></div>
-        <div class="phase-body">Side-by-side: original PDF on left, extracted text on right. User confirms:
-          <div class="checklist">
-            <label><input type="checkbox"> Document title matches original</label>
-            <label><input type="checkbox"> Article/clause numbering preserved</label>
-            <label><input type="checkbox"> No missing pages or sections</label>
-            <label><input type="checkbox"> Dates and signatures legible</label>
-            <label><input type="checkbox"> Tables and lists correctly parsed</label>
+        <div class="phase-title"><span class="lang-en">OCR Verification</span><span class="lang-si" style="display:none">Preverjanje OCR</span> <span class="badge badge-human"><span class="lang-en">Human</span><span class="lang-si" style="display:none">Človek</span></span> <span class="badge badge-gate"><span class="lang-en">Gate</span><span class="lang-si" style="display:none">Vrata</span></span></div>
+        <div class="phase-body">
+          <div class="lang-en">Side-by-side: original PDF on left, extracted text on right. User confirms:
+            <div class="checklist">
+              <label><input type="checkbox"> Document title matches original</label>
+              <label><input type="checkbox"> Article/clause numbering preserved</label>
+              <label><input type="checkbox"> No missing pages or sections</label>
+              <label><input type="checkbox"> Dates and signatures legible</label>
+              <label><input type="checkbox"> Tables and lists correctly parsed</label>
+            </div>
+            <div class="decision-diamond"><div class="diamond"><span>?</span></div>
+              <div class="decision-paths"><span><span class="path-yes">All checked</span> &rarr; proceed to anonymization</span><span><span class="path-no">Issues found</span> &rarr; manual correction or re-scan</span></div>
+            </div>
           </div>
-          <div class="decision-diamond"><div class="diamond"><span>?</span></div>
-            <div class="decision-paths"><span><span class="path-yes">All checked</span> &rarr; proceed to anonymization</span><span><span class="path-no">Issues found</span> &rarr; manual correction or re-scan</span></div>
+          <div class="lang-si" style="display:none">Vzporedno: izvirni PDF na levi, ekstrahan besedilo na desni. Uporabnik potrdi:
+            <div class="checklist">
+              <label><input type="checkbox"> Naslov dokumenta se ujema z izvirnikom</label>
+              <label><input type="checkbox"> Številčenje členov/klavzul ohranjeno</label>
+              <label><input type="checkbox"> Brez manjkajočih strani ali razdelkov</label>
+              <label><input type="checkbox"> Datumi in podpisi berljivi</label>
+              <label><input type="checkbox"> Tabele in seznami pravilno razčlenjeni</label>
+            </div>
+            <div class="decision-diamond"><div class="diamond"><span>?</span></div>
+              <div class="decision-paths"><span><span class="path-yes">Vse potrjeno</span> &rarr; naprej na anonimizacijo</span><span><span class="path-no">Najdene težave</span> &rarr; ročni popravek ali ponoven sken</span></div>
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <!-- Phase 4: Anonymization -->
     <div class="phase" data-phase="3">
       <div class="phase-number" id="pn4">4</div><div class="phase-connector"></div>
       <div class="phase-card" id="pc4">
-        <div class="phase-title">R53 Anonymization <span class="badge badge-auto">Auto</span></div>
-        <div class="phase-body">Institution names, city references, law-specific identifiers, personnel &rarr; replaced with generic tokens. Dual-pass: anonymize then verify. Zero-leak policy before any text reaches external APIs.
-          <div class="decision-diamond"><div class="diamond"><span>?</span></div>
-            <div class="decision-paths"><span><span class="path-yes">0 leaks</span> &rarr; proceed to KGR</span><span><span class="path-no">Leaks found</span> &rarr; block + flag for pattern update</span></div>
+        <div class="phase-title"><span class="lang-en">R53 Anonymization</span><span class="lang-si" style="display:none">R53 Anonimizacija</span> <span class="badge badge-auto">Auto</span></div>
+        <div class="phase-body">
+          <div class="lang-en">Institution names, city references, law-specific identifiers, personnel &rarr; replaced with generic tokens. Dual-pass: anonymize then verify. Zero-leak policy before any text reaches external APIs.
+            <div class="decision-diamond"><div class="diamond"><span>?</span></div>
+              <div class="decision-paths"><span><span class="path-yes">0 leaks</span> &rarr; proceed to KGR</span><span><span class="path-no">Leaks found</span> &rarr; block + flag for pattern update</span></div>
+            </div>
+          </div>
+          <div class="lang-si" style="display:none">Imena ustanov, omembe mest, zakonski identifikatorji, osebje &rarr; zamenjani z generičnimi žetoni. Dvostopenjski postopek: anonimizacija, nato preverjanje. Politika brez uhajanj preden besedilo doseže zunanje API-je.
+            <div class="decision-diamond"><div class="diamond"><span>?</span></div>
+              <div class="decision-paths"><span><span class="path-yes">0 uhajanj</span> &rarr; naprej na KGR</span><span><span class="path-no">Uhajanja najdena</span> &rarr; blokada + označi za posodobitev vzorcev</span></div>
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <!-- Phase 5: KGR -->
     <div class="phase" data-phase="4">
       <div class="phase-number" id="pn5">5</div><div class="phase-connector"></div>
       <div class="phase-card ai-card" id="pc5">
-        <div class="phase-title">KGR Multi-AI Review <span class="badge badge-ai">3 AI APIs</span></div>
-        <div class="phase-body">Anonymized document sent to 3 independent AI reviewers in parallel:
+        <div class="phase-title"><span class="lang-en">KGR Multi-AI Review</span><span class="lang-si" style="display:none">KGR večstranski AI pregled</span> <span class="badge badge-ai">3 AI API</span></div>
+        <div class="phase-body">
+          <span class="lang-en">Anonymized document sent to 3 independent AI reviewers in parallel:</span><span class="lang-si" style="display:none">Anonimiziran dokument poslan 3 neodvisnim AI pregledovalcem vzporedno:</span>
           <div class="split-row">
-            <div class="reviewer-box"><div class="name">Skeptic</div><div class="role">Find risks &amp; gaps</div><div class="api">DeepSeek / Gemini</div></div>
-            <div class="reviewer-box"><div class="name">Optimist</div><div class="role">Strengths &amp; structure</div><div class="api">GPT-4o / Gemini</div></div>
-            <div class="reviewer-box"><div class="name">Arbiter</div><div class="role">Synthesis &amp; verdict</div><div class="api">Claude / Gemini</div></div>
+            <div class="reviewer-box"><div class="name"><span class="lang-en">Skeptic</span><span class="lang-si" style="display:none">Skeptik</span></div><div class="role"><span class="lang-en">Find risks &amp; gaps</span><span class="lang-si" style="display:none">Iskanje tveganj in vrzeli</span></div><div class="api">DeepSeek / Gemini</div></div>
+            <div class="reviewer-box"><div class="name"><span class="lang-en">Optimist</span><span class="lang-si" style="display:none">Optimist</span></div><div class="role"><span class="lang-en">Strengths &amp; structure</span><span class="lang-si" style="display:none">Prednosti in struktura</span></div><div class="api">GPT-4o / Gemini</div></div>
+            <div class="reviewer-box"><div class="name"><span class="lang-en">Arbiter</span><span class="lang-si" style="display:none">Arbiter</span></div><div class="role"><span class="lang-en">Synthesis &amp; verdict</span><span class="lang-si" style="display:none">Sinteza in sklep</span></div><div class="api">Claude / Gemini</div></div>
           </div>
         </div>
       </div>
       <div class="phase-card" id="pc5b">
-        <div class="phase-title">Split Detection &amp; R2 Rebuttal <span class="badge badge-auto">Auto</span></div>
-        <div class="phase-body"><ul>
-          <li><strong>Unanimous</strong> (all agree) &rarr; skip R2, final verdict</li>
-          <li><strong>Split</strong> (disagree) &rarr; R2 rebuttal round with cross-concerns</li>
-          <li><strong>Severity divergence</strong> (gap &ge; 2 levels) &rarr; R2 even if verdicts match</li>
-          <li><strong>R2 resolved</strong> &rarr; skip arbiter. <strong>Still split</strong> &rarr; arbiter breaks tie</li>
-        </ul><div class="output-bar"><span class="output-tag">APPROVE</span><span class="output-tag">CONDITIONAL</span><span class="output-tag" style="background:var(--danger-light);color:var(--danger);">REJECT</span></div></div>
+        <div class="phase-title"><span class="lang-en">Split Detection &amp; R2 Rebuttal</span><span class="lang-si" style="display:none">Zaznava razhajanj in R2 ugovor</span> <span class="badge badge-auto">Auto</span></div>
+        <div class="phase-body">
+          <div class="lang-en"><ul>
+            <li><strong>Unanimous</strong> (all agree) &rarr; skip R2, final verdict</li>
+            <li><strong>Split</strong> (disagree) &rarr; R2 rebuttal round with cross-concerns</li>
+            <li><strong>Severity divergence</strong> (gap &ge; 2 levels) &rarr; R2 even if verdicts match</li>
+            <li><strong>R2 resolved</strong> &rarr; skip arbiter. <strong>Still split</strong> &rarr; arbiter breaks tie</li>
+          </ul></div>
+          <div class="lang-si" style="display:none"><ul>
+            <li><strong>Soglasno</strong> (vsi se strinjajo) &rarr; preskoči R2, končni sklep</li>
+            <li><strong>Razhajanje</strong> (nestrinjanje) &rarr; R2 ugovorni krog s prekrižanimi pomisleki</li>
+            <li><strong>Odstopanje resnosti</strong> (razlika &ge; 2 stopnji) &rarr; R2 tudi če se sklepi ujemajo</li>
+            <li><strong>R2 razrešen</strong> &rarr; preskoči arbitra. <strong>Še vedno razdeljeno</strong> &rarr; arbiter prelomi</li>
+          </ul></div>
+          <div class="output-bar"><span class="output-tag"><span class="lang-en">APPROVE</span><span class="lang-si" style="display:none">ODOBRITEV</span></span><span class="output-tag"><span class="lang-en">CONDITIONAL</span><span class="lang-si" style="display:none">POGOJNO</span></span><span class="output-tag" style="background:var(--danger-light);color:var(--danger);"><span class="lang-en">REJECT</span><span class="lang-si" style="display:none">ZAVRNITEV</span></span></div>
+        </div>
       </div>
     </div>
+    <!-- Phase 6: ISO -->
     <div class="phase" data-phase="5">
       <div class="phase-number" id="pn6">6</div><div class="phase-connector"></div>
       <div class="phase-card" id="pc6">
-        <div class="phase-title">ISO Classification &amp; Indexing <span class="badge badge-auto">Auto</span></div>
-        <div class="phase-body"><ul>
-          <li>Map to ISO 9001:2015 clauses (4&ndash;10)</li>
-          <li>Map to ISO 15189 (medical labs) if applicable</li>
-          <li>Tag: document type (pravilnik, navodilo, obrazec, operativni postopek)</li>
-          <li>Tag: legal references (national healthcare law, data protection, GDPR)</li>
-          <li>Assign to document registry with lifecycle metadata</li>
-        </ul></div>
+        <div class="phase-title"><span class="lang-en">ISO Classification &amp; Indexing</span><span class="lang-si" style="display:none">ISO klasifikacija in indeksiranje</span> <span class="badge badge-auto">Auto</span></div>
+        <div class="phase-body">
+          <div class="lang-en"><ul>
+            <li>Map to ISO 9001:2015 clauses (4&ndash;10)</li>
+            <li>Map to ISO 15189 (medical labs) if applicable</li>
+            <li>Tag: document type (pravilnik, navodilo, obrazec, operativni postopek)</li>
+            <li>Tag: legal references (national healthcare law, data protection, GDPR)</li>
+            <li>Assign to document registry with lifecycle metadata</li>
+          </ul></div>
+          <div class="lang-si" style="display:none"><ul>
+            <li>Preslikava na ISO 9001:2015 klavzule (4&ndash;10)</li>
+            <li>Preslikava na ISO 15189 (medicinski laboratoriji), če je ustrezno</li>
+            <li>Oznaka: vrsta dokumenta (pravilnik, navodilo, obrazec, operativni postopek)</li>
+            <li>Oznaka: zakonske reference (zakon o zdravstveni dejavnosti, varstvo podatkov, GDPR)</li>
+            <li>Dodelitev v register dokumentov z metapodatki življenjskega cikla</li>
+          </ul></div>
+        </div>
       </div>
     </div>
+    <!-- Phase 7: Active Modules -->
     <div class="phase" data-phase="6">
       <div class="phase-number" id="pn7">7</div>
       <div class="phase-card" id="pc7">
-        <div class="phase-title">Active Modules <span class="badge badge-auto">Auto</span></div>
-        <div class="phase-body">Document enters the live governance system:
-          <div class="output-bar"><span class="output-tag">Compliance Tracker</span><span class="output-tag">Dashboard</span><span class="output-tag">Timeline</span><span class="output-tag">Version Control</span><span class="output-tag">Alert Engine</span></div>
-          <ul style="margin-top:0.5rem">
+        <div class="phase-title"><span class="lang-en">Active Modules</span><span class="lang-si" style="display:none">Aktivni moduli</span> <span class="badge badge-auto">Auto</span></div>
+        <div class="phase-body">
+          <span class="lang-en">Document enters the live governance system:</span><span class="lang-si" style="display:none">Dokument vstopi v sistem upravljanja v živo:</span>
+          <div class="output-bar"><span class="output-tag"><span class="lang-en">Compliance Tracker</span><span class="lang-si" style="display:none">Sledilnik skladnosti</span></span><span class="output-tag"><span class="lang-en">Dashboard</span><span class="lang-si" style="display:none">Nadzorna plošča</span></span><span class="output-tag"><span class="lang-en">Timeline</span><span class="lang-si" style="display:none">Časovnica</span></span><span class="output-tag"><span class="lang-en">Version Control</span><span class="lang-si" style="display:none">Upravljanje verzij</span></span><span class="output-tag"><span class="lang-en">Alert Engine</span><span class="lang-si" style="display:none">Sistem opozoril</span></span></div>
+          <div class="lang-en"><ul style="margin-top:0.5rem">
             <li>Compliance tracker: cross-reference with law changes</li>
             <li>Dashboard: real-time document health score</li>
             <li>Alerts: notify when linked legislation changes</li>
             <li>Version control: track amendments over time</li>
-          </ul>
+          </ul></div>
+          <div class="lang-si" style="display:none"><ul style="margin-top:0.5rem">
+            <li>Sledilnik skladnosti: navzkrižno preverjanje s spremembami zakonodaje</li>
+            <li>Nadzorna plošča: ocena zdravja dokumenta v realnem času</li>
+            <li>Opozorila: obvestilo ob spremembi povezane zakonodaje</li>
+            <li>Upravljanje verzij: sledenje dopolnitvam skozi čas</li>
+          </ul></div>
         </div>
       </div>
     </div>
   </div>
 
   <div class="cost-note">
-    <strong>API cost estimate (per document):</strong> ~4,000 tokens input &times; 3 reviewers = ~12,000 tokens.
+    <span class="lang-en"><strong>API cost estimate (per document):</strong> ~4,000 tokens input &times; 3 reviewers = ~12,000 tokens.
     Gemini (free tier): $0. DeepSeek: ~$0.002. GPT-4o: ~$0.01. Claude: ~$0.01.
-    <strong>Full 456-doc run: $2&ndash;10</strong> depending on provider mix.
+    <strong>Full 456-doc run: $2&ndash;10</strong> depending on provider mix.</span>
+    <span class="lang-si" style="display:none"><strong>Ocena stroškov API (na dokument):</strong> ~4.000 vhodnih žetonov &times; 3 pregledovalce = ~12.000 žetonov.
+    Gemini (brezplačna raven): $0. DeepSeek: ~$0,002. GPT-4o: ~$0,01. Claude: ~$0,01.
+    <strong>Celoten zagon 456 dokumentov: $2&ndash;10</strong> glede na kombinacijo ponudnikov.</span>
   </div>
 </div>
 
 <script>
+let currentLang = 'en';
+
 const STEPS = [
   {
-    phase: 0, header: "h-upload", title: "1. Upload",
-    data: `<div class="sim-label">INPUT FILE</div>
+    phase: 0, header: "h-upload",
+    title_en: "1. Upload", title_si: "1. Nalaganje",
+    data_en: `<div class="sim-label">INPUT FILE</div>
 <div class="sim-data">pozarni_red_2023.pdf
 Type: Scanned PDF (300 DPI)
 Pages: 2
 Size: 1.4 MB
 Source: Intranet / Interni akti</div>
-<div class="sim-explain"><strong>User uploads a scanned PDF</strong> from the hospital intranet. The system detects it's a scanned image (no selectable text layer), so it will route to OCR in the next step.</div>`
+<div class="sim-explain"><strong>User uploads a scanned PDF</strong> from the hospital intranet. The system detects it's a scanned image (no selectable text layer), so it will route to OCR in the next step.</div>`,
+    data_si: `<div class="sim-label">VHODNA DATOTEKA</div>
+<div class="sim-data">pozarni_red_2023.pdf
+Vrsta: Skeniran PDF (300 DPI)
+Strani: 2
+Velikost: 1,4 MB
+Vir: Intranet / Interni akti</div>
+<div class="sim-explain"><strong>Uporabnik naloži skeniran PDF</strong> z bolnišničnega intraneta. Sistem zazna, da gre za skenirano sliko (brez izbirljive tekstovne plasti), zato jo v naslednjem koraku usmeri na OCR.</div>`
   },
   {
-    phase: 1, header: "h-ocr", title: "2. OCR Extraction",
-    data: `<div class="sim-label">OCR OUTPUT (Tesseract)</div>
+    phase: 1, header: "h-ocr",
+    title_en: "2. OCR Extraction", title_si: "2. OCR ekstrakcija",
+    data_en: `<div class="sim-label">OCR OUTPUT (Tesseract)</div>
 <div class="sim-data">POZARNI RED JAVNEGA ZDRAVSTVENEGA ZAVODA
 
 Sprejeto na seji sveta zavoda dne 8 1 2023
@@ -364,11 +443,30 @@ pozarom (Ur l RS st 3/07)...</div>
 Characters: 2,841
 Missing diacritics: YES (č→c, š→s, ž→z)
 Format anomalies: "Stev1" (should be "Štev."), "Ce" (should be "Če")</div>
-<div class="sim-explain"><strong>Tesseract extracts text from the scan.</strong> Note: OCR drops Slovenian diacritics (š, č, ž) and sometimes joins words. Confidence 87% = acceptable but needs human verification. The R53 anonymizer is designed to handle these OCR artifacts.</div>`
+<div class="sim-explain"><strong>Tesseract extracts text from the scan.</strong> Note: OCR drops Slovenian diacritics (š, č, ž) and sometimes joins words. Confidence 87% = acceptable but needs human verification. The R53 anonymizer is designed to handle these OCR artifacts.</div>`,
+    data_si: `<div class="sim-label">OCR IZHOD (Tesseract)</div>
+<div class="sim-data">POZARNI RED JAVNEGA ZDRAVSTVENEGA ZAVODA
+
+Sprejeto na seji sveta zavoda dne 8 1 2023
+Stev1 01-2023-PR
+
+1 SPLOSNE DOLOCBE
+
+11 Ta pozarni red doloca ukrepe varstva pred
+pozarom v prostorih <span class="flag">javnega zdravstvenega
+zavoda</span> v skladu z Zakonom o varstvu pred
+pozarom (Ur l RS st 3/07)...</div>
+<div class="sim-label">METAPODATKI</div>
+<div class="sim-data">OCR zaupanje: 87,3 %
+Znakov: 2.841
+Manjkajoče diakritike: DA (č→c, š→s, ž→z)
+Napake formata: "Stev1" (pravilno "Štev."), "Ce" (pravilno "Če")</div>
+<div class="sim-explain"><strong>Tesseract ekstrahira besedilo iz skena.</strong> Opomba: OCR izgubi slovenske diakritike (š, č, ž) in včasih združi besede. Zaupanje 87 % = sprejemljivo, a zahteva človeško preverjanje. Anonimizator R53 je zasnovan za obvladovanje teh OCR artefaktov.</div>`
   },
   {
-    phase: 2, header: "h-verify", title: "3. Human Verification",
-    data: `<div class="sim-label">VERIFICATION CHECKLIST</div>
+    phase: 2, header: "h-verify",
+    title_en: "3. Human Verification", title_si: "3. Človeško preverjanje",
+    data_en: `<div class="sim-label">VERIFICATION CHECKLIST</div>
 <div class="sim-data"><span class="ok">&#10003;</span> Document title matches original: "POZARNI RED"
 <span class="ok">&#10003;</span> Section numbering preserved: 1-6 + subsections
 <span class="ok">&#10003;</span> No missing pages: 2/2 extracted
@@ -377,11 +475,22 @@ Format anomalies: "Stev1" (should be "Štev."), "Ce" (should be "Če")</div>
 
 HUMAN ACTION: Manually corrected merged cells.
 STATUS: <span class="ok">VERIFIED</span></div>
-<div class="sim-explain"><strong>Compliance officer reviews side-by-side:</strong> original PDF on left, extracted text on right. They check every box. One issue found (merged table cells) — manually corrected. Document cleared for anonymization. This is the only step that requires human judgment.</div>`
+<div class="sim-explain"><strong>Compliance officer reviews side-by-side:</strong> original PDF on left, extracted text on right. They check every box. One issue found (merged table cells) — manually corrected. Document cleared for anonymization. This is the only step that requires human judgment.</div>`,
+    data_si: `<div class="sim-label">KONTROLNI SEZNAM PREVERJANJA</div>
+<div class="sim-data"><span class="ok">&#10003;</span> Naslov dokumenta se ujema z izvirnikom: "POZARNI RED"
+<span class="ok">&#10003;</span> Številčenje razdelkov ohranjeno: 1-6 + podrazdelki
+<span class="ok">&#10003;</span> Brez manjkajočih strani: 2/2 ekstrahovani
+<span class="ok">&#10003;</span> Datumi berljivi: "8 1 2023" (= 8.1.2023)
+<span class="flag">&#9888;</span> Razčlenjevanje tabel: seznam skladišč plina ima združene celice
+
+ČLOVEŠKO DEJANJE: Ročno popravljene združene celice.
+STATUS: <span class="ok">PREVERJENO</span></div>
+<div class="sim-explain"><strong>Skrbnik skladnosti pregleda vzporedno:</strong> izvirni PDF na levi, ekstrahan besedilo na desni. Preveri vsako postavko. Najdena ena težava (združene celice tabele) — ročno popravljena. Dokument odobren za anonimizacijo. To je edini korak, ki zahteva človeško presojo.</div>`
   },
   {
-    phase: 3, header: "h-anon", title: "4. R53 Anonymization",
-    data: `<div class="sim-label">BEFORE (raw text)</div>
+    phase: 3, header: "h-anon",
+    title_en: "4. R53 Anonymization", title_si: "4. R53 Anonimizacija",
+    data_en: `<div class="sim-label">BEFORE (raw text)</div>
 <div class="sim-data">...ukrepe varstva pred pozarom v prostorih <span class="redacted">javnega zdravstvenega zavoda</span>
 v skladu z Zakonom o varstvu pred pozarom...</div>
 <div class="sim-label">AFTER (anonymized)</div>
@@ -392,11 +501,24 @@ v skladu z Zakonom o varstvu pred pozarom...</div>
 Matches remaining: <span class="ok">0</span>
 Redacted tokens: 3 (institution name, address, personnel)
 STATUS: <span class="ok">CLEAN — safe for external API</span></div>
-<div class="sim-explain"><strong>Dual-pass anonymization:</strong> first replace all sensitive patterns (institution names, cities, law references, personnel), then verify zero leaks remain. Only after this passes does any text reach an external AI API. The anonymizer handles OCR artifacts (missing diacritics, joined words).</div>`
+<div class="sim-explain"><strong>Dual-pass anonymization:</strong> first replace all sensitive patterns (institution names, cities, law references, personnel), then verify zero leaks remain. Only after this passes does any text reach an external AI API. The anonymizer handles OCR artifacts (missing diacritics, joined words).</div>`,
+    data_si: `<div class="sim-label">PRED (surovo besedilo)</div>
+<div class="sim-data">...ukrepe varstva pred pozarom v prostorih <span class="redacted">javnega zdravstvenega zavoda</span>
+v skladu z Zakonom o varstvu pred pozarom...</div>
+<div class="sim-label">PO (anonimizirano)</div>
+<div class="sim-data">...ukrepe varstva pred pozarom v prostorih <span class="added">[JAVNI ZDRAVSTVENI ZAVOD]</span>
+v skladu z Zakonom o varstvu pred pozarom...</div>
+<div class="sim-label">R53 PREVERJANJE USPEŠNO</div>
+<div class="sim-data">Preverjenih vzorcev: 11
+Preostalih zadetkov: <span class="ok">0</span>
+Anonimizirani žetoni: 3 (ime ustanove, naslov, osebje)
+STATUS: <span class="ok">ČISTO — varno za zunanji API</span></div>
+<div class="sim-explain"><strong>Dvostopenjska anonimizacija:</strong> najprej zamenjava vseh občutljivih vzorcev (imena ustanov, mest, zakonskih referenc, osebja), nato preverjanje, da ni preostalih uhajanj. Šele po uspešnem preverjanju besedilo doseže zunanji AI API. Anonimizator obvladuje OCR artefakte (manjkajoče diakritike, združene besede).</div>`
   },
   {
-    phase: 4, header: "h-kgr", title: "5a. KGR R1 — Three AI Reviews",
-    data: `<div class="sim-label">SKEPTIC (Gemini Flash)</div>
+    phase: 4, header: "h-kgr",
+    title_en: "5a. KGR R1 — Three AI Reviews", title_si: "5a. KGR R1 — Trije AI pregledi",
+    data_en: `<div class="sim-label">SKEPTIC (Gemini Flash)</div>
 <div class="sim-data">{
   "verdict": "<span class="flag">conditional</span>",
   "confidence": "MEDIUM",
@@ -416,11 +538,33 @@ STATUS: <span class="ok">CLEAN — safe for external API</span></div>
   "key_risk": "Minor: revision cycle (3 years) is long",
   "severity": "low"
 }</div>
-<div class="sim-explain"><strong>Two reviewers disagree:</strong> Skeptic found an outdated law reference (severity: HIGH), Optimist approved the overall structure. This triggers split detection in the next step.</div>`
+<div class="sim-explain"><strong>Two reviewers disagree:</strong> Skeptic found an outdated law reference (severity: HIGH), Optimist approved the overall structure. This triggers split detection in the next step.</div>`,
+    data_si: `<div class="sim-label">SKEPTIK (Gemini Flash)</div>
+<div class="sim-data">{
+  "verdict": "<span class="flag">conditional</span>",
+  "confidence": "MEDIUM",
+  "reasoning": "Dokument se sklicuje na Zakon o varstvu pred pozarom
+    (Ur.l. RS 3/07), a ta je bil spremenjen leta 2022.
+    Trenutna verzija je 3/07 z dopolnitvami 23/22.",
+  "key_risk": "Zastarela zakonska referenca — neskladno",
+  "severity": "<span class="flag">high</span>"
+}</div>
+<div class="sim-label">OPTIMIST (Gemini Pro)</div>
+<div class="sim-data">{
+  "verdict": "<span class="ok">approve</span>",
+  "confidence": "HIGH",
+  "reasoning": "Dokument pokriva vse zahtevane elemente:
+    kategorije požarnega tveganja, preprečevanje, evakuacija,
+    odgovornosti. Struktura sledi ISO 45001.",
+  "key_risk": "Manjše: cikel revizije (3 leta) je dolg",
+  "severity": "low"
+}</div>
+<div class="sim-explain"><strong>Dva pregledovalca se ne strinjata:</strong> Skeptik je našel zastarelo zakonsko referenco (resnost: VISOKA), Optimist je odobril celotno strukturo. To sproži zaznavo razhajanja v naslednjem koraku.</div>`
   },
   {
-    phase: 4, header: "h-split", title: "5b. Split Detection + R2 Rebuttal",
-    data: `<div class="sim-label">SPLIT DETECTION</div>
+    phase: 4, header: "h-split",
+    title_en: "5b. Split Detection + R2 Rebuttal", title_si: "5b. Zaznava razhajanj + R2 ugovor",
+    data_en: `<div class="sim-label">SPLIT DETECTION</div>
 <div class="sim-data">Type: <span class="flag">SOFT_SPLIT</span> (approve vs conditional)
 Severity divergence: <span class="flag">2</span> (high vs low) — triggers R2
 Skeptic concerns: outdated legal reference
@@ -444,11 +588,37 @@ Optimist position: structure is sound</div>
 Arbiter: <span class="ok">SKIPPED</span> (consensus reached)
 Final verdict: <span class="flag">CONDITIONAL APPROVE</span>
 Conditions: Update legal reference (Ur.l. RS 3/07 + 23/22)</div>
-<div class="sim-explain"><strong>R2 rebuttal worked:</strong> The optimist read the skeptic's concern, verified the law was indeed amended, and changed their verdict. Both now agree on CONDITIONAL. Since R2 resolved the split, the arbiter is skipped — saving one API call. The document gets a clear action item.</div>`
+<div class="sim-explain"><strong>R2 rebuttal worked:</strong> The optimist read the skeptic's concern, verified the law was indeed amended, and changed their verdict. Both now agree on CONDITIONAL. Since R2 resolved the split, the arbiter is skipped — saving one API call. The document gets a clear action item.</div>`,
+    data_si: `<div class="sim-label">ZAZNAVA RAZHAJANJA</div>
+<div class="sim-data">Vrsta: <span class="flag">SOFT_SPLIT</span> (odobritev vs pogojno)
+Odstopanje resnosti: <span class="flag">2</span> (visoka vs nizka) — sproži R2
+Pomisleki Skeptika: zastarela zakonska referenca
+Stališče Optimista: struktura je ustrezna</div>
+<div class="sim-label">R2 UGOVOR — SKEPTIK (revidiran)</div>
+<div class="sim-data">{
+  "verdict": "<span class="flag">conditional</span>",
+  "reasoning": "Ohranitev stališča. Ur.l. RS 3/07 je bil dopolnjen
+    z 23/22. Dokument mora navajati prečiščeno besedilo.",
+  "conditions": ["C1: Posodobi zakonsko referenco na 23/22"]
+}</div>
+<div class="sim-label">R2 UGOVOR — OPTIMIST (revidiran)</div>
+<div class="sim-data">{
+  "verdict": "<span class="flag">conditional</span>",
+  "reasoning": "Sprejemam pomislek Skeptika. Zakonska referenca
+    JE zastarela. Spreminjam v POGOJNO.",
+  "conditions": ["C1: Posodobi zakonsko referenco"]
+}</div>
+<div class="sim-label">R2 REZULTAT</div>
+<div class="sim-data">Razhajanje razrešeno: oba POGOJNO
+Arbiter: <span class="ok">PRESKOČEN</span> (doseženo soglasje)
+Končni sklep: <span class="flag">POGOJNA ODOBRITEV</span>
+Pogoji: Posodobi zakonsko referenco (Ur.l. RS 3/07 + 23/22)</div>
+<div class="sim-explain"><strong>R2 ugovor je deloval:</strong> Optimist je prebral pomislek Skeptika, preveril, da je bil zakon dejansko spremenjen, in spremenil svoj sklep. Oba se zdaj strinjata o POGOJNEM. Ker je R2 razrešil razhajanje, je arbiter preskočen — prihranjen en API klic. Dokument dobi jasno akcijsko postavko.</div>`
   },
   {
-    phase: 5, header: "h-iso", title: "6. ISO Classification",
-    data: `<div class="sim-label">ISO MAPPING</div>
+    phase: 5, header: "h-iso",
+    title_en: "6. ISO Classification", title_si: "6. ISO klasifikacija",
+    data_en: `<div class="sim-label">ISO MAPPING</div>
 <div class="sim-data">Primary: ISO 45001:2018 (Occupational Health & Safety)
 Secondary: ISO 9001:2015, clause 8.1 (Operational planning)
 
@@ -459,11 +629,24 @@ Domain tags: fire-safety, evacuation, OHS, risk-assessment
 Registry ID: DOC-2023-PR-001
 Lifecycle: ACTIVE (needs amendment per KGR condition)
 Review due: 8.1.2026 (3-year cycle per clause 6.2)</div>
-<div class="sim-explain"><strong>Auto-classification:</strong> The document is mapped to ISO standards, tagged with legal references, classified by type, and assigned a registry ID with lifecycle metadata. The KGR condition ("update law reference") is carried forward as a pending action item.</div>`
+<div class="sim-explain"><strong>Auto-classification:</strong> The document is mapped to ISO standards, tagged with legal references, classified by type, and assigned a registry ID with lifecycle metadata. The KGR condition ("update law reference") is carried forward as a pending action item.</div>`,
+    data_si: `<div class="sim-label">ISO PRESLIKAVA</div>
+<div class="sim-data">Primarno: ISO 45001:2018 (Varnost in zdravje pri delu)
+Sekundarno: ISO 9001:2015, klavzula 8.1 (Operativno načrtovanje)
+
+Vrsta dokumenta: <span class="added">pravilnik</span> (interni predpis)
+Zakonske ref.: Zakon o varstvu pred pozarom (Ur.l. RS 3/07, 23/22)
+Domenske oznake: požarna varnost, evakuacija, VZD, ocena tveganja
+
+ID v registru: DOC-2023-PR-001
+Življenjski cikel: AKTIVEN (potrebna dopolnitev po pogoju KGR)
+Pregled do: 8.1.2026 (3-letni cikel po klavzuli 6.2)</div>
+<div class="sim-explain"><strong>Samodejna klasifikacija:</strong> dokument je preslikav na ISO standarde, označen z zakonskimi referencami, klasificiran po vrsti in mu je dodeljen registrski ID z metapodatki življenjskega cikla. Pogoj KGR ("posodobi zakonsko referenco") je prenesen kot odprta akcijska postavka.</div>`
   },
   {
-    phase: 6, header: "h-done", title: "7. Active in Modules",
-    data: `<div class="sim-label">DOCUMENT STATUS</div>
+    phase: 6, header: "h-done",
+    title_en: "7. Active in Modules", title_si: "7. Aktivno v modulih",
+    data_en: `<div class="sim-label">DOCUMENT STATUS</div>
 <div class="sim-data"><span class="ok">&#10003;</span> Compliance Tracker: monitoring Zakon o varstvu pred pozarom
 <span class="ok">&#10003;</span> Dashboard: health score 78/100 (pending law update)
 <span class="ok">&#10003;</span> Timeline: next review 8.1.2026
@@ -473,7 +656,18 @@ Review due: 8.1.2026 (3-year cycle per clause 6.2)</div>
 TOTAL PIPELINE TIME: ~45 seconds
 API COST: $0.00 (Gemini free tier)
 HUMAN TIME: ~3 minutes (verification only)</div>
-<div class="sim-explain"><strong>Document is now live in the governance system.</strong> The compliance tracker will automatically alert when the linked law changes again. The pending condition from KGR (update law reference) appears as an action item on the dashboard. Total cost for this document: zero (Gemini free tier). Human involvement: only the 3-minute verification step.</div>`
+<div class="sim-explain"><strong>Document is now live in the governance system.</strong> The compliance tracker will automatically alert when the linked law changes again. The pending condition from KGR (update law reference) appears as an action item on the dashboard. Total cost for this document: zero (Gemini free tier). Human involvement: only the 3-minute verification step.</div>`,
+    data_si: `<div class="sim-label">STATUS DOKUMENTA</div>
+<div class="sim-data"><span class="ok">&#10003;</span> Sledilnik skladnosti: spremljanje Zakona o varstvu pred pozarom
+<span class="ok">&#10003;</span> Nadzorna plošča: ocena zdravja 78/100 (čaka posodobitev zakona)
+<span class="ok">&#10003;</span> Časovnica: naslednji pregled 8.1.2026
+<span class="ok">&#10003;</span> Upravljanje verzij: v1.0 (izvirnik), v1.1 (čaka dopolnitev)
+<span class="flag">&#9888;</span> Opozorilo: zakonska referenca potrebuje posodobitev → dodeljeno odgovorni osebi
+
+SKUPNI ČAS CEVOVODA: ~45 sekund
+STROŠKI API: $0,00 (Gemini brezplačna raven)
+ČLOVEŠKI ČAS: ~3 minute (samo preverjanje)</div>
+<div class="sim-explain"><strong>Dokument je zdaj aktiven v sistemu upravljanja.</strong> Sledilnik skladnosti bo samodejno opozoril, ko se povezani zakon ponovno spremeni. Odprti pogoj iz KGR (posodobi zakonsko referenco) se prikaže kot akcijska postavka na nadzorni plošči. Skupni stroški za ta dokument: nič (Gemini brezplačna raven). Človeška udeležba: samo 3-minutni korak preverjanja.</div>`
   }
 ];
 
@@ -493,12 +687,25 @@ function init() {
 
 function render() {
   const step = STEPS[current];
-  document.getElementById('stepLabel').textContent = `Step ${current + 1} / ${STEPS.length}`;
+  const title = currentLang === 'si' ? step.title_si : step.title_en;
+  const data = currentLang === 'si' ? step.data_si : step.data_en;
+  const stepWord = currentLang === 'si' ? 'Korak' : 'Step';
+  document.getElementById('stepLabel').textContent = `${stepWord} ${current + 1} / ${STEPS.length}`;
   document.getElementById('simContent').innerHTML =
-    `<div class="sim-card"><div class="sim-card-header ${step.header}">${step.title}</div><div class="sim-card-body">${step.data}</div></div>`;
+    `<div class="sim-card"><div class="sim-card-header ${step.header}">${title}</div><div class="sim-card-body">${data}</div></div>`;
 
   document.getElementById('btnPrev').disabled = current === 0;
-  document.getElementById('btnNext').textContent = current === STEPS.length - 1 ? 'Restart' : 'Next →';
+
+  const btnNext = document.getElementById('btnNext');
+  if (current === STEPS.length - 1) {
+    btnNext.innerHTML = currentLang === 'si'
+      ? '<span class="lang-en" style="display:none">Restart</span><span class="lang-si">Znova</span>'
+      : '<span class="lang-en">Restart</span><span class="lang-si" style="display:none">Znova</span>';
+  } else {
+    btnNext.innerHTML = currentLang === 'si'
+      ? '<span class="lang-en" style="display:none">Next &rarr;</span><span class="lang-si">Naprej &rarr;</span>'
+      : '<span class="lang-en">Next &rarr;</span><span class="lang-si" style="display:none">Naprej &rarr;</span>';
+  }
 
   const dots = document.querySelectorAll('.sim-dot');
   dots.forEach((d, i) => {
@@ -527,16 +734,31 @@ function toggleAuto() {
   if (autoTimer) {
     clearInterval(autoTimer);
     autoTimer = null;
-    btn.textContent = 'Auto-play';
+    btn.innerHTML = currentLang === 'si'
+      ? '<span class="lang-en" style="display:none">Auto-play</span><span class="lang-si">Samodejno</span>'
+      : '<span class="lang-en">Auto-play</span><span class="lang-si" style="display:none">Samodejno</span>';
     btn.classList.remove('running');
   } else {
     autoTimer = setInterval(() => {
       if (current < STEPS.length - 1) nextStep();
       else toggleAuto();
     }, 4000);
-    btn.textContent = 'Stop';
+    btn.innerHTML = currentLang === 'si'
+      ? '<span class="lang-en" style="display:none">Stop</span><span class="lang-si">Ustavi</span>'
+      : '<span class="lang-en">Stop</span><span class="lang-si" style="display:none">Ustavi</span>';
     btn.classList.add('running');
   }
+}
+
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-en').forEach(el => el.style.display = lang === 'en' ? '' : 'none');
+  document.querySelectorAll('.lang-si').forEach(el => el.style.display = lang === 'si' ? '' : 'none');
+  document.getElementById('btn-en').style.background = lang === 'en' ? '#1a56db' : '#2a2a4a';
+  document.getElementById('btn-en').style.color = lang === 'en' ? '#fff' : '#9ba3b5';
+  document.getElementById('btn-si').style.background = lang === 'si' ? '#1a56db' : '#2a2a4a';
+  document.getElementById('btn-si').style.color = lang === 'si' ? '#fff' : '#9ba3b5';
+  render();
 }
 
 init();

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="sl">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -188,32 +188,36 @@ svg text { font-family: 'Segoe UI', system-ui, sans-serif; }
 </head>
 <body>
 
+<div style="text-align:right;padding:8px 20px;position:relative;z-index:10">
+  <button onclick="setLang('en')" id="btn-en" style="background:#1a56db;color:#fff;border:none;padding:4px 14px;border-radius:6px 0 0 6px;font-size:12px;font-weight:600;cursor:pointer">EN</button><button onclick="setLang('si')" id="btn-si" style="background:#2a2a4a;color:#9ba3b5;border:none;padding:4px 14px;border-radius:0 6px 6px 0;font-size:12px;font-weight:600;cursor:pointer">SI</button>
+</div>
+
 <div class="header">
   <div>
     <h1>VEGA Signal Verify</h1>
-    <div class="subtitle">Independent Signal Provider Certification — Trust Through Transparency</div>
+    <div class="subtitle"><span class="lang-en">Independent Signal Provider Certification — Trust Through Transparency</span><span class="lang-si" style="display:none">Neodvisna certifikacija ponudnikov signalov — Zaupanje skozi transparentnost</span></div>
   </div>
   <div class="badge">B2B PLATFORM</div>
 </div>
 
 <div class="tabs">
-  <div class="tab active" onclick="switchTab(0)">1. Provider Submit</div>
-  <div class="tab" onclick="switchTab(1)">2. Verification Engine</div>
-  <div class="tab" onclick="switchTab(2)">3. Marketplace</div>
-  <div class="tab" onclick="switchTab(3)">4. Provider Detail</div>
+  <div class="tab active" onclick="switchTab(0)"><span class="lang-en">1. Provider Submit</span><span class="lang-si" style="display:none">1. Prijava Ponudnika</span></div>
+  <div class="tab" onclick="switchTab(1)"><span class="lang-en">2. Verification Engine</span><span class="lang-si" style="display:none">2. Verifikacijski Motor</span></div>
+  <div class="tab" onclick="switchTab(2)"><span class="lang-en">3. Marketplace</span><span class="lang-si" style="display:none">3. Trznica</span></div>
+  <div class="tab" onclick="switchTab(3)"><span class="lang-en">4. Provider Detail</span><span class="lang-si" style="display:none">4. Podrobnosti Ponudnika</span></div>
 </div>
 
 <!-- SCREEN 1: Provider Submit -->
 <div class="screen active" id="screen0">
-  <h2 style="font-size:16px; margin-bottom:4px;">Prijavi Strategijo za Neodvisno Verifikacijo</h2>
-  <p style="font-size:12px; color:#888; margin-bottom:20px;">Vega verificira tvoje signale skozi WFA, rezimsko analizo in fraud detection. Investitorji vidijo samo verificirane ponudnike.</p>
+  <h2 style="font-size:16px; margin-bottom:4px;"><span class="lang-en">Submit Strategy for Independent Verification</span><span class="lang-si" style="display:none">Prijavi Strategijo za Neodvisno Verifikacijo</span></h2>
+  <p style="font-size:12px; color:#888; margin-bottom:20px;"><span class="lang-en">Vega verifies your signals through WFA, regime analysis and fraud detection. Investors see only verified providers.</span><span class="lang-si" style="display:none">Vega verificira tvoje signale skozi WFA, rezimsko analizo in fraud detection. Investitorji vidijo samo verificirane ponudnike.</span></p>
 
   <div class="verify-grid">
     <div class="verify-panel">
-      <h3>1. Nalozi Track Record</h3>
+      <h3><span class="lang-en">1. Upload Track Record</span><span class="lang-si" style="display:none">1. Nalozi Track Record</span></h3>
       <div style="border:2px dashed #333; border-radius:8px; padding:30px; text-align:center; margin-bottom:16px;">
         <div style="font-size:36px; margin-bottom:8px;">&#128200;</div>
-        <p style="font-size:13px;">CSV trade log, API povezava, ali Myfxbook/TradingView link</p>
+        <p style="font-size:13px;"><span class="lang-en">CSV trade log, API connection, or Myfxbook/TradingView link</span><span class="lang-si" style="display:none">CSV trade log, API povezava, ali Myfxbook/TradingView link</span></p>
         <div style="display:flex; gap:8px; justify-content:center; margin-top:12px;">
           <button style="padding:8px 16px; border-radius:6px; border:1px solid #333; background:#16213e; color:#e0e0e0; cursor:pointer; font-size:12px;">CSV Upload</button>
           <button style="padding:8px 16px; border-radius:6px; border:1px solid #333; background:#16213e; color:#e0e0e0; cursor:pointer; font-size:12px;">API Connect</button>
@@ -221,14 +225,14 @@ svg text { font-family: 'Segoe UI', system-ui, sans-serif; }
         </div>
       </div>
 
-      <h3 style="margin-top:20px;">2. Strategija Info</h3>
+      <h3 style="margin-top:20px;"><span class="lang-en">2. Strategy Info</span><span class="lang-si" style="display:none">2. Strategija Info</span></h3>
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:8px;">
         <div>
-          <label style="font-size:11px; color:#888;">Ime Strategije</label>
+          <label style="font-size:11px; color:#888;"><span class="lang-en">Strategy Name</span><span class="lang-si" style="display:none">Ime Strategije</span></label>
           <input style="width:100%; padding:8px; background:#16213e; border:1px solid #333; border-radius:6px; color:#e0e0e0; margin-top:4px;" value="AlphaWave Crypto Signals">
         </div>
         <div>
-          <label style="font-size:11px; color:#888;">Trg</label>
+          <label style="font-size:11px; color:#888;"><span class="lang-en">Market</span><span class="lang-si" style="display:none">Trg</span></label>
           <select style="width:100%; padding:8px; background:#16213e; border:1px solid #333; border-radius:6px; color:#e0e0e0; margin-top:4px;">
             <option>Crypto</option><option>Forex</option><option>Stocks</option>
           </select>
@@ -241,61 +245,67 @@ svg text { font-family: 'Segoe UI', system-ui, sans-serif; }
         </div>
         <div>
           <label style="font-size:11px; color:#888;">Min Track Record</label>
-          <input style="width:100%; padding:8px; background:#16213e; border:1px solid #333; border-radius:6px; color:#e0e0e0; margin-top:4px;" value="6 mesecev" disabled>
+          <input style="width:100%; padding:8px; background:#16213e; border:1px solid #333; border-radius:6px; color:#e0e0e0; margin-top:4px;" value="6 months" disabled>
         </div>
       </div>
 
-      <button style="margin-top:20px; width:100%; padding:12px; background:#4fc3f7; border:none; border-radius:8px; color:#0a0a0f; font-weight:700; font-size:14px; cursor:pointer;" onclick="switchTab(1)">ZACNI VERIFIKACIJO</button>
+      <button style="margin-top:20px; width:100%; padding:12px; background:#4fc3f7; border:none; border-radius:8px; color:#0a0a0f; font-weight:700; font-size:14px; cursor:pointer;" onclick="switchTab(1)"><span class="lang-en">START VERIFICATION</span><span class="lang-si" style="display:none">ZACNI VERIFIKACIJO</span></button>
     </div>
 
     <div class="verify-panel">
-      <h3>Kaj Verificiramo</h3>
+      <h3><span class="lang-en">What We Verify</span><span class="lang-si" style="display:none">Kaj Verificiramo</span></h3>
       <div class="check-item">
         <div class="check-icon pass">&#10003;</div>
         <div class="check-text">
-          <div class="title">WFA Walk-Forward Analiza</div>
-          <div class="detail">5-fold cross-validation cez razlicne tržne rezime</div>
+          <div class="title"><span class="lang-en">WFA Walk-Forward Analysis</span><span class="lang-si" style="display:none">WFA Walk-Forward Analiza</span></div>
+          <div class="detail"><span class="lang-en">5-fold cross-validation across different market regimes</span><span class="lang-si" style="display:none">5-fold cross-validation cez razlicne tržne rezime</span></div>
         </div>
       </div>
       <div class="check-item">
         <div class="check-icon pass">&#10003;</div>
         <div class="check-text">
-          <div class="title">Regime Robustnost</div>
-          <div class="detail">Ali signali delujejo v bull, bear IN sideways?</div>
+          <div class="title"><span class="lang-en">Regime Robustness</span><span class="lang-si" style="display:none">Regime Robustnost</span></div>
+          <div class="detail"><span class="lang-en">Do signals work in bull, bear AND sideways?</span><span class="lang-si" style="display:none">Ali signali delujejo v bull, bear IN sideways?</span></div>
         </div>
       </div>
       <div class="check-item">
         <div class="check-icon pass">&#10003;</div>
         <div class="check-text">
           <div class="title">Drawdown Stress Test</div>
-          <div class="detail">Monte Carlo simulacija 1000 scenarijev najslabsega primera</div>
+          <div class="detail"><span class="lang-en">Monte Carlo simulation of 1000 worst-case scenarios</span><span class="lang-si" style="display:none">Monte Carlo simulacija 1000 scenarijev najslabsega primera</span></div>
         </div>
       </div>
       <div class="check-item">
         <div class="check-icon pass">&#10003;</div>
         <div class="check-text">
           <div class="title">Fraud Detection</div>
-          <div class="detail">Detekcija manipuliranih trade logov, survivorship bias, cherry-picking</div>
+          <div class="detail"><span class="lang-en">Detection of manipulated trade logs, survivorship bias, cherry-picking</span><span class="lang-si" style="display:none">Detekcija manipuliranih trade logov, survivorship bias, cherry-picking</span></div>
         </div>
       </div>
       <div class="check-item">
         <div class="check-icon pass">&#10003;</div>
         <div class="check-text">
           <div class="title">Cost-Adjusted Returns</div>
-          <div class="detail">Realni donosi po fees, slippage in funding (ne bruto iluzija)</div>
+          <div class="detail"><span class="lang-en">Real returns after fees, slippage and funding (not gross illusion)</span><span class="lang-si" style="display:none">Realni donosi po fees, slippage in funding (ne bruto iluzija)</span></div>
         </div>
       </div>
       <div class="check-item">
         <div class="check-icon pass">&#10003;</div>
         <div class="check-text">
           <div class="title">Consistency Score</div>
-          <div class="detail">Mesecna stabilnost donosov vs "en velik trade" efekt</div>
+          <div class="detail"><span class="lang-en">Monthly return stability vs 'one big trade' effect</span><span class="lang-si" style="display:none">Mesecna stabilnost donosov vs "en velik trade" efekt</span></div>
         </div>
       </div>
 
       <div style="margin-top:16px; padding:12px; background:#16213e; border-radius:8px;">
-        <div style="font-size:12px; color:#4fc3f7; font-weight:600; margin-bottom:4px;">Verifikacijski Nivoji</div>
-        <div style="font-size:12px; color:#888; line-height:2;">
+        <div style="font-size:12px; color:#4fc3f7; font-weight:600; margin-bottom:4px;"><span class="lang-en">Verification Tiers</span><span class="lang-si" style="display:none">Verifikacijski Nivoji</span></div>
+        <div class="lang-en" style="font-size:12px; color:#888; line-height:2;">
+          <span style="color:#ffa726;">&#9733; GOLD</span> — WFA 5/5, all regimes PASS, n>500, 12mo+ track<br>
+          <span style="color:#b0bec5;">&#9733; SILVER</span> — WFA 4/5, most regimes PASS, n>200, 6mo+<br>
+          <span style="color:#a1887f;">&#9733; BRONZE</span> — WFA 3/5, basic tests PASS, n>100, 3mo+<br>
+          <span style="color:#e94560;">&#10007; FAILED</span> — WFA &lt;3/5, fraud indicators, or insufficient data
+        </div>
+        <div class="lang-si" style="display:none;font-size:12px; color:#888; line-height:2;">
           <span style="color:#ffa726;">&#9733; GOLD</span> — WFA 5/5, vsi rezimi PASS, n>500, 12mo+ track<br>
           <span style="color:#b0bec5;">&#9733; SILVER</span> — WFA 4/5, vecina rezimov PASS, n>200, 6mo+<br>
           <span style="color:#a1887f;">&#9733; BRONZE</span> — WFA 3/5, osnovni testi PASS, n>100, 3mo+<br>
@@ -308,8 +318,8 @@ svg text { font-family: 'Segoe UI', system-ui, sans-serif; }
 
 <!-- SCREEN 2: Verification Engine -->
 <div class="screen" id="screen1">
-  <h2 style="font-size:16px; margin-bottom:4px;">Verifikacija: AlphaWave Crypto Signals</h2>
-  <p style="font-size:12px; color:#888; margin-bottom:20px;">Neodvisna analiza 847 tradov cez 14 mesecev (avg 2.0 tradov/dan)</p>
+  <h2 style="font-size:16px; margin-bottom:4px;"><span class="lang-en">Verification: AlphaWave Crypto Signals</span><span class="lang-si" style="display:none">Verifikacija: AlphaWave Crypto Signals</span></h2>
+  <p style="font-size:12px; color:#888; margin-bottom:20px;"><span class="lang-en">Independent analysis of 847 trades over 14 months (avg 2.0 trades/day)</span><span class="lang-si" style="display:none">Neodvisna analiza 847 tradov cez 14 mesecev (avg 2.0 tradov/dan)</span></p>
 
   <div style="display:flex; gap:24px; align-items:flex-start;">
     <div class="trust-ring">
@@ -326,11 +336,11 @@ svg text { font-family: 'Segoe UI', system-ui, sans-serif; }
     <div style="flex:1;">
       <div style="display:flex; gap:8px; margin-bottom:12px;">
         <span class="verified-badge silver">&#9733; SILVER VERIFIED</span>
-        <span style="font-size:12px; color:#888; padding-top:4px;">Izdano: 28.5.2026 | Veljavno: 6 mesecev</span>
+        <span style="font-size:12px; color:#888; padding-top:4px;"><span class="lang-en">Issued: 28.5.2026 | Valid: 6 months</span><span class="lang-si" style="display:none">Izdano: 28.5.2026 | Veljavno: 6 mesecev</span></span>
       </div>
       <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:12px;">
         <div style="text-align:center;"><div style="font-size:22px; font-weight:700; color:#00c853;">4/5</div><div style="font-size:10px; color:#888;">WFA Folds</div></div>
-        <div style="text-align:center;"><div style="font-size:22px; font-weight:700;">847</div><div style="font-size:10px; color:#888;">Tradov</div></div>
+        <div style="text-align:center;"><div style="font-size:22px; font-weight:700;">847</div><div style="font-size:10px; color:#888;"><span class="lang-en">Trades</span><span class="lang-si" style="display:none">Tradov</span></div></div>
         <div style="text-align:center;"><div style="font-size:22px; font-weight:700; color:#00c853;">1.64</div><div style="font-size:10px; color:#888;">PF (net)</div></div>
         <div style="text-align:center;"><div style="font-size:22px; font-weight:700; color:#ffc107;">-11.2%</div><div style="font-size:10px; color:#888;">Max DD</div></div>
         <div style="text-align:center;"><div style="font-size:22px; font-weight:700;">14mo</div><div style="font-size:10px; color:#888;">Track Record</div></div>
@@ -340,82 +350,87 @@ svg text { font-family: 'Segoe UI', system-ui, sans-serif; }
 
   <div class="verify-grid" style="margin-top:20px;">
     <div class="verify-panel">
-      <h3>Verifikacijski Testi</h3>
+      <h3><span class="lang-en">Verification Tests</span><span class="lang-si" style="display:none">Verifikacijski Testi</span></h3>
       <div class="check-item">
         <div class="check-icon pass">&#10003;</div>
         <div class="check-text">
           <div class="title">WFA Walk-Forward: 4/5 PASS</div>
-          <div class="detail">Fold 3 (2024 Q1) MARGINAL — PF 1.08 v sideways rezime</div>
+          <div class="detail"><span class="lang-en">Fold 3 (2024 Q1) MARGINAL — PF 1.08 in sideways regime</span><span class="lang-si" style="display:none">Fold 3 (2024 Q1) MARGINAL — PF 1.08 v sideways rezime</span></div>
         </div>
       </div>
       <div class="check-item">
         <div class="check-icon pass">&#10003;</div>
         <div class="check-text">
-          <div class="title">Bull Rezim: PF 1.92, WR 54%</div>
-          <div class="detail">Mocna performance v rastocih trgih</div>
+          <div class="title"><span class="lang-en">Bull Regime: PF 1.92, WR 54%</span><span class="lang-si" style="display:none">Bull Rezim: PF 1.92, WR 54%</span></div>
+          <div class="detail"><span class="lang-en">Strong performance in rising markets</span><span class="lang-si" style="display:none">Mocna performance v rastocih trgih</span></div>
         </div>
       </div>
       <div class="check-item">
         <div class="check-icon pass">&#10003;</div>
         <div class="check-text">
-          <div class="title">Bear Rezim: PF 1.41, WR 46%</div>
-          <div class="detail">Pozitivna performance tudi v padajocih trgih</div>
+          <div class="title"><span class="lang-en">Bear Regime: PF 1.41, WR 46%</span><span class="lang-si" style="display:none">Bear Rezim: PF 1.41, WR 46%</span></div>
+          <div class="detail"><span class="lang-en">Positive performance even in falling markets</span><span class="lang-si" style="display:none">Pozitivna performance tudi v padajocih trgih</span></div>
         </div>
       </div>
       <div class="check-item">
         <div class="check-icon warn">!</div>
         <div class="check-text">
-          <div class="title">Sideways Rezim: PF 1.08, WR 43%</div>
-          <div class="detail">Minimalen edge v mirnih trgih — glavna slabost</div>
+          <div class="title"><span class="lang-en">Sideways Regime: PF 1.08, WR 43%</span><span class="lang-si" style="display:none">Sideways Rezim: PF 1.08, WR 43%</span></div>
+          <div class="detail"><span class="lang-en">Minimal edge in quiet markets — main weakness</span><span class="lang-si" style="display:none">Minimalen edge v mirnih trgih — glavna slabost</span></div>
         </div>
       </div>
       <div class="check-item">
         <div class="check-icon pass">&#10003;</div>
         <div class="check-text">
-          <div class="title">Cost-Adjusted: Bruto PF 1.82 -> Neto PF 1.64</div>
-          <div class="detail">Fees in slippage pojejo 10% edge, ampak ostane profitabilen</div>
+          <div class="title"><span class="lang-en">Cost-Adjusted: Gross PF 1.82 -> Net PF 1.64</span><span class="lang-si" style="display:none">Cost-Adjusted: Bruto PF 1.82 -> Neto PF 1.64</span></div>
+          <div class="detail"><span class="lang-en">Fees and slippage eat 10% of the edge, but remains profitable</span><span class="lang-si" style="display:none">Fees in slippage pojejo 10% edge, ampak ostane profitabilen</span></div>
         </div>
       </div>
       <div class="check-item">
         <div class="check-icon pass">&#10003;</div>
         <div class="check-text">
-          <div class="title">Consistency: 10/14 mesecev profitabilnih</div>
-          <div class="detail">71% mesecna konzistentnost — nad pragom 60%</div>
+          <div class="title"><span class="lang-en">Consistency: 10/14 months profitable</span><span class="lang-si" style="display:none">Consistency: 10/14 mesecev profitabilnih</span></div>
+          <div class="detail"><span class="lang-en">71% monthly consistency — above the 60% threshold</span><span class="lang-si" style="display:none">71% mesecna konzistentnost — nad pragom 60%</span></div>
         </div>
       </div>
     </div>
 
     <div class="verify-panel">
-      <h3>Fraud Detection Rezultati</h3>
+      <h3><span class="lang-en">Fraud Detection Results</span><span class="lang-si" style="display:none">Fraud Detection Rezultati</span></h3>
       <div class="fraud-item clean">
-        <div class="label"><strong style="color:#00c853;">CLEAN</strong> — Casovni zapisi konsistentni (ni zakasnelih vnosov)</div>
+        <div class="label"><strong style="color:#00c853;">CLEAN</strong> — <span class="lang-en">Timestamps consistent (no delayed entries)</span><span class="lang-si" style="display:none">Casovni zapisi konsistentni (ni zakasnelih vnosov)</span></div>
       </div>
       <div class="fraud-item clean">
-        <div class="label"><strong style="color:#00c853;">CLEAN</strong> — Win/loss distribucija normalna (ni cherry-picking vzorca)</div>
+        <div class="label"><strong style="color:#00c853;">CLEAN</strong> — <span class="lang-en">Win/loss distribution normal (no cherry-picking pattern)</span><span class="lang-si" style="display:none">Win/loss distribucija normalna (ni cherry-picking vzorca)</span></div>
       </div>
       <div class="fraud-item clean">
-        <div class="label"><strong style="color:#00c853;">CLEAN</strong> — Position sizing konsistenten (ni martingale po izgubah)</div>
+        <div class="label"><strong style="color:#00c853;">CLEAN</strong> — <span class="lang-en">Position sizing consistent (no martingale after losses)</span><span class="lang-si" style="display:none">Position sizing konsistenten (ni martingale po izgubah)</span></div>
       </div>
       <div class="fraud-item">
-        <div class="label"><strong style="color:#ffc107;">FLAG</strong> — 3 tradov z entry tocno na low/high svecke (mozni limit fills ali post-hoc editing). Verjetnost: 12% (pod pragom za fail).</div>
+        <div class="label"><strong style="color:#ffc107;">FLAG</strong> — <span class="lang-en">3 trades with entry exactly at candle low/high (possible limit fills or post-hoc editing). Probability: 12% (below fail threshold).</span><span class="lang-si" style="display:none">3 tradov z entry tocno na low/high svecke (mozni limit fills ali post-hoc editing). Verjetnost: 12% (pod pragom za fail).</span></div>
       </div>
       <div class="fraud-item clean">
-        <div class="label"><strong style="color:#00c853;">CLEAN</strong> — Ni survivorship bias (vsi instrumenti vkljuceni, tudi delisted)</div>
+        <div class="label"><strong style="color:#00c853;">CLEAN</strong> — <span class="lang-en">No survivorship bias (all instruments included, even delisted)</span><span class="lang-si" style="display:none">Ni survivorship bias (vsi instrumenti vkljuceni, tudi delisted)</span></div>
       </div>
       <div class="fraud-item clean">
-        <div class="label"><strong style="color:#00c853;">CLEAN</strong> — Drawdown krivulja realisticna (ni "perfect recovery" vzorca)</div>
+        <div class="label"><strong style="color:#00c853;">CLEAN</strong> — <span class="lang-en">Drawdown curve realistic (no 'perfect recovery' pattern)</span><span class="lang-si" style="display:none">Drawdown krivulja realisticna (ni "perfect recovery" vzorca)</span></div>
       </div>
 
       <div style="margin-top:16px; padding:12px; background:#16213e; border-radius:8px; font-size:12px;">
-        <strong>Fraud Score: 8/100</strong> (nizji = cistejsi)<br>
+        <span class="lang-en"><strong>Fraud Score: 8/100</strong> (lower = cleaner)<br>
+        <span style="color:#888;">Threshold for FAIL: 40+. Threshold for manual review: 25+.</span><br>
+        <span style="color:#00c853;">Result: CLEAN — no signs of manipulation.</span></span>
+        <span class="lang-si" style="display:none"><strong>Fraud Score: 8/100</strong> (nizji = cistejsi)<br>
         <span style="color:#888;">Prag za FAIL: 40+. Prag za manual review: 25+.</span><br>
-        <span style="color:#00c853;">Rezultat: CLEAN — ni znakov manipulacije.</span>
+        <span style="color:#00c853;">Rezultat: CLEAN — ni znakov manipulacije.</span></span>
       </div>
 
       <div style="margin-top:16px; padding:12px; background:rgba(79,195,247,0.1); border-radius:8px; border:1px solid #4fc3f7; font-size:12px;">
         <strong style="color:#4fc3f7;">SILVER CERTIFICATION</strong><br>
-        <span style="color:#888;">Razlog za Silver (ne Gold): WFA 4/5 (ne 5/5) + n=847 (potrebno 500+, ampak track record 14mo &lt; 24mo za Gold).</span><br>
-        <span style="color:#888; margin-top:4px; display:block;">Upgrade do Gold: se 10 mesecev track record + izboljsaj sideways performance.</span>
+        <span class="lang-en"><span style="color:#888;">Reason for Silver (not Gold): WFA 4/5 (not 5/5) + n=847 (requires 500+, but track record 14mo &lt; 24mo for Gold).</span><br>
+        <span style="color:#888; margin-top:4px; display:block;">Upgrade to Gold: 10 more months of track record + improve sideways performance.</span></span>
+        <span class="lang-si" style="display:none"><span style="color:#888;">Razlog za Silver (ne Gold): WFA 4/5 (ne 5/5) + n=847 (potrebno 500+, ampak track record 14mo &lt; 24mo za Gold).</span><br>
+        <span style="color:#888; margin-top:4px; display:block;">Upgrade do Gold: se 10 mesecev track record + izboljsaj sideways performance.</span></span>
       </div>
     </div>
   </div>
@@ -423,30 +438,30 @@ svg text { font-family: 'Segoe UI', system-ui, sans-serif; }
 
 <!-- SCREEN 3: Marketplace -->
 <div class="screen" id="screen2">
-  <h2 style="font-size:16px; margin-bottom:16px;">Verificiran Signal Marketplace</h2>
+  <h2 style="font-size:16px; margin-bottom:16px;"><span class="lang-en">Verified Signal Marketplace</span><span class="lang-si" style="display:none">Verificirana Trznica Signalov</span></h2>
 
   <div class="marketplace-header">
-    <div class="filter-chip active">Vsi</div>
+    <div class="filter-chip active"><span class="lang-en">All</span><span class="lang-si" style="display:none">Vsi</span></div>
     <div class="filter-chip">Crypto</div>
     <div class="filter-chip">Forex</div>
     <div class="filter-chip">Stocks</div>
     <div class="filter-chip">Gold Only</div>
-    <input class="search-box" placeholder="Isci ponudnika ali strategijo...">
+    <input class="search-box" id="search-box-input" placeholder="Search provider or strategy...">
   </div>
 
   <table class="leaderboard">
     <thead>
       <tr>
         <th>#</th>
-        <th>Ponudnik</th>
-        <th>Certifikat</th>
+        <th><span class="lang-en">Provider</span><span class="lang-si" style="display:none">Ponudnik</span></th>
+        <th><span class="lang-en">Certificate</span><span class="lang-si" style="display:none">Certifikat</span></th>
         <th>Trust Score</th>
         <th>PF (net)</th>
         <th>WR</th>
         <th>Max DD</th>
-        <th>Tradov</th>
-        <th>Konzistentnost</th>
-        <th>Mesecna Cena</th>
+        <th><span class="lang-en">Trades</span><span class="lang-si" style="display:none">Tradov</span></th>
+        <th><span class="lang-en">Consistency</span><span class="lang-si" style="display:none">Konzistentnost</span></th>
+        <th><span class="lang-en">Monthly Price</span><span class="lang-si" style="display:none">Mesecna Cena</span></th>
       </tr>
     </thead>
     <tbody>
@@ -527,12 +542,12 @@ svg text { font-family: 'Segoe UI', system-ui, sans-serif; }
 
   <div style="margin-top:20px; padding:16px; background:#1a1a2e; border-radius:12px; border:1px solid #333; display:flex; justify-content:space-between; align-items:center;">
     <div>
-      <div style="font-size:14px; font-weight:600;">Investitorji: Zakaj Vega Verify?</div>
-      <div style="font-size:12px; color:#888; margin-top:4px;">67% signal ponudnikov na trgu ne bi preslo nasega WFA testa. Placujes samo za verificirane signale.</div>
+      <div style="font-size:14px; font-weight:600;"><span class="lang-en">Investors: Why Vega Verify?</span><span class="lang-si" style="display:none">Investitorji: Zakaj Vega Verify?</span></div>
+      <div style="font-size:12px; color:#888; margin-top:4px;"><span class="lang-en">67% of signal providers on the market would not pass our WFA test. You only pay for verified signals.</span><span class="lang-si" style="display:none">67% signal ponudnikov na trgu ne bi preslo nasega WFA testa. Placujes samo za verificirane signale.</span></div>
     </div>
     <div style="text-align:right;">
       <div style="font-size:24px; font-weight:800; color:#e94560;">67%</div>
-      <div style="font-size:11px; color:#888;">ponudnikov FAIL</div>
+      <div style="font-size:11px; color:#888;"><span class="lang-en">of providers FAIL</span><span class="lang-si" style="display:none">ponudnikov FAIL</span></div>
     </div>
   </div>
 </div>
@@ -553,14 +568,14 @@ svg text { font-family: 'Segoe UI', system-ui, sans-serif; }
     </div>
     <div class="detail-info">
       <h2>SteadyEdge Pro <span class="verified-badge gold" style="vertical-align:middle;">&#9733; GOLD VERIFIED</span></h2>
-      <div class="meta">Crypto | 1H Timeframe | Mean Reversion + Trend Filter | Aktiven od Jan 2024</div>
-      <div class="meta">Narocnikov: 342 | Povp. mesecni donos narocnikov: +4.2% (po fees)</div>
+      <div class="meta">Crypto | 1H Timeframe | Mean Reversion + Trend Filter | <span class="lang-en">Active since Jan 2024</span><span class="lang-si" style="display:none">Aktiven od Jan 2024</span></div>
+      <div class="meta"><span class="lang-en">Subscribers: 342 | Avg. monthly subscriber return: +4.2% (after fees)</span><span class="lang-si" style="display:none">Narocnikov: 342 | Povp. mesecni donos narocnikov: +4.2% (po fees)</span></div>
     </div>
   </div>
 
   <div class="detail-grid">
     <div class="equity-panel">
-      <h3>Equity Krivulja (24 mesecev verificiranih tradov)</h3>
+      <h3><span class="lang-en">Equity Curve (24 months of verified trades)</span><span class="lang-si" style="display:none">Equity Krivulja (24 mesecev verificiranih tradov)</span></h3>
       <svg width="100%" height="200" viewBox="0 0 600 200">
         <defs>
           <linearGradient id="eqGrad" x1="0" y1="0" x2="0" y2="1">
@@ -607,29 +622,29 @@ svg text { font-family: 'Segoe UI', system-ui, sans-serif; }
     </div>
 
     <div class="metrics-panel">
-      <h3 style="font-size:13px; color:#888; margin-bottom:12px;">Podrobne Metrike</h3>
+      <h3 style="font-size:13px; color:#888; margin-bottom:12px;"><span class="lang-en">Detailed Metrics</span><span class="lang-si" style="display:none">Podrobne Metrike</span></h3>
       <div class="metric-row"><span class="label">WFA Status</span><span style="color:#00c853; font-weight:600;">5/5 PASS</span></div>
-      <div class="metric-row"><span class="label">Skupaj Tradov</span><span>2,847</span></div>
+      <div class="metric-row"><span class="label"><span class="lang-en">Total Trades</span><span class="lang-si" style="display:none">Skupaj Tradov</span></span><span>2,847</span></div>
       <div class="metric-row"><span class="label">Win Rate</span><span>52.8%</span></div>
-      <div class="metric-row"><span class="label">Profit Factor (bruto)</span><span>2.41</span></div>
-      <div class="metric-row"><span class="label">Profit Factor (neto)</span><span style="color:#00c853;">2.14</span></div>
+      <div class="metric-row"><span class="label"><span class="lang-en">Profit Factor (gross)</span><span class="lang-si" style="display:none">Profit Factor (bruto)</span></span><span>2.41</span></div>
+      <div class="metric-row"><span class="label"><span class="lang-en">Profit Factor (net)</span><span class="lang-si" style="display:none">Profit Factor (neto)</span></span><span style="color:#00c853;">2.14</span></div>
       <div class="metric-row"><span class="label">Max Drawdown</span><span style="color:#00c853;">-6.4%</span></div>
       <div class="metric-row"><span class="label">Sharpe Ratio</span><span>1.82</span></div>
-      <div class="metric-row"><span class="label">Povp. Trade</span><span>+0.38%</span></div>
-      <div class="metric-row"><span class="label">Povp. Holding</span><span>18.4h</span></div>
-      <div class="metric-row"><span class="label">Konzistentnost</span><span style="color:#00c853;">92%</span></div>
+      <div class="metric-row"><span class="label"><span class="lang-en">Avg. Trade</span><span class="lang-si" style="display:none">Povp. Trade</span></span><span>+0.38%</span></div>
+      <div class="metric-row"><span class="label"><span class="lang-en">Avg. Holding</span><span class="lang-si" style="display:none">Povp. Holding</span></span><span>18.4h</span></div>
+      <div class="metric-row"><span class="label"><span class="lang-en">Consistency</span><span class="lang-si" style="display:none">Konzistentnost</span></span><span style="color:#00c853;">92%</span></div>
       <div class="metric-row"><span class="label">Fraud Score</span><span style="color:#00c853;">3/100</span></div>
-      <div class="metric-row"><span class="label">Korelacija z BTC</span><span>0.34</span></div>
+      <div class="metric-row"><span class="label"><span class="lang-en">Correlation with BTC</span><span class="lang-si" style="display:none">Korelacija z BTC</span></span><span>0.34</span></div>
 
       <div style="margin-top:16px; padding:12px; background:#16213e; border-radius:8px;">
         <div style="font-size:12px; color:#ffa726; font-weight:600;">GOLD VERIFICATION</div>
         <div style="font-size:11px; color:#888; margin-top:4px;">
-          WFA 5/5 &#10003; | n>500 &#10003; | 24mo+ &#10003; | Vsi rezimi PASS &#10003; | Fraud &lt;10 &#10003;
+          <span class="lang-en">WFA 5/5 &#10003; | n>500 &#10003; | 24mo+ &#10003; | All regimes PASS &#10003; | Fraud &lt;10 &#10003;</span><span class="lang-si" style="display:none">WFA 5/5 &#10003; | n>500 &#10003; | 24mo+ &#10003; | Vsi rezimi PASS &#10003; | Fraud &lt;10 &#10003;</span>
         </div>
       </div>
 
       <button style="margin-top:12px; width:100%; padding:12px; background:#ffa726; border:none; border-radius:8px; color:#0a0a0f; font-weight:700; font-size:14px; cursor:pointer;">
-        NAROČI SE — $149/mesec
+        <span class="lang-en">SUBSCRIBE — $149/month</span><span class="lang-si" style="display:none">NAROCI SE — $149/mesec</span>
       </button>
     </div>
   </div>
@@ -637,12 +652,26 @@ svg text { font-family: 'Segoe UI', system-ui, sans-serif; }
 
 <script>
 function switchTab(n) {
-  document.querySelectorAll('.tab').forEach((t,i) => {
+  document.querySelectorAll('.tab').forEach(function(t,i) {
     t.classList.toggle('active', i===n);
   });
-  document.querySelectorAll('.screen').forEach((s,i) => {
+  document.querySelectorAll('.screen').forEach(function(s,i) {
     s.classList.toggle('active', i===n);
   });
+}
+
+var currentLang = 'en';
+function setLang(lang){
+  currentLang = lang;
+  document.querySelectorAll('.lang-en').forEach(function(el){el.style.display=lang==='en'?'':'none';});
+  document.querySelectorAll('.lang-si').forEach(function(el){el.style.display=lang==='si'?'':'none';});
+  document.getElementById('btn-en').style.background=lang==='en'?'#1a56db':'#2a2a4a';
+  document.getElementById('btn-en').style.color=lang==='en'?'#fff':'#9ba3b5';
+  document.getElementById('btn-si').style.background=lang==='si'?'#1a56db':'#2a2a4a';
+  document.getElementById('btn-si').style.color=lang==='si'?'#fff':'#9ba3b5';
+  document.documentElement.lang=lang==='en'?'en':'sl';
+  document.getElementById('search-box-input').placeholder=lang==='en'?'Search provider or strategy...':'Isci ponudnika ali strategijo...';
+  document.querySelector('#screen0 input[disabled]').value=lang==='en'?'6 months':'6 mesecev';
 }
 </script>
 

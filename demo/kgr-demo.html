@@ -173,25 +173,28 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;color:var(--text)
 </style>
 
 <div class="container">
+  <div style="text-align:right;padding:8px 20px">
+    <button onclick="setLang('en')" id="btn-en" style="background:#1a56db;color:#fff;border:none;padding:4px 14px;border-radius:6px 0 0 6px;font-size:12px;font-weight:600;cursor:pointer">EN</button><button onclick="setLang('si')" id="btn-si" style="background:#2a2a4a;color:#9ba3b5;border:none;padding:4px 14px;border-radius:0 6px 6px 0;font-size:12px;font-weight:600;cursor:pointer">SI</button>
+  </div>
   <div class="demo-header">
     <a href="../" class="back-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5m0 0l7 7m-7-7l7-7"/></svg> vegaplatform.app</a>
-    <h1><span>KGR</span> Live Demo</h1>
-    <p>Experience the Knowledge Guard Review protocol. Three independent AI reviewers examine your hypothesis — each blind to the others.</p>
+    <h1><span>KGR</span> <span class="lang-en">Live Demo</span><span class="lang-si" style="display:none">V živo</span></h1>
+    <p><span class="lang-en">Experience the Knowledge Guard Review protocol. Three independent AI reviewers examine your hypothesis — each blind to the others.</span><span class="lang-si" style="display:none">Preizkusite protokol Knowledge Guard Review. Trije neodvisni AI pregledovalci preverijo vašo hipotezo — vsak brez vpogleda v mnenja drugih.</span></p>
   </div>
 
   <div class="input-section">
-    <label>Hypothesis to review</label>
+    <label><span class="lang-en">Hypothesis to review</span><span class="lang-si" style="display:none">Hipoteza za pregled</span></label>
     <textarea class="hypothesis-input" id="hypothesis" placeholder="Describe a proposed change, policy update, or technical decision..."></textarea>
     <div class="examples">
-      <span>Try:</span>
-      <button class="example-btn" onclick="setExample(0)">Cache layer</button>
-      <button class="example-btn" onclick="setExample(1)">JWT migration</button>
-      <button class="example-btn" onclick="setExample(2)">Auto-classify docs</button>
-      <button class="example-btn" onclick="setExample(3)">Skip staging</button>
+      <span><span class="lang-en">Try:</span><span class="lang-si" style="display:none">Poskusite:</span></span>
+      <button class="example-btn" onclick="setExample(0)"><span class="lang-en">Cache layer</span><span class="lang-si" style="display:none">Predpomnilnik</span></button>
+      <button class="example-btn" onclick="setExample(1)"><span class="lang-en">JWT migration</span><span class="lang-si" style="display:none">JWT migracija</span></button>
+      <button class="example-btn" onclick="setExample(2)"><span class="lang-en">Auto-classify docs</span><span class="lang-si" style="display:none">Avto-klasifikacija</span></button>
+      <button class="example-btn" onclick="setExample(3)"><span class="lang-en">Skip staging</span><span class="lang-si" style="display:none">Preskoči staging</span></button>
     </div>
     <button class="run-btn" id="runBtn" onclick="runReview()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3" fill="currentColor" stroke="none"/></svg>
-      Run KGR Review
+      <span class="lang-en">Run KGR Review</span><span class="lang-si" style="display:none">Poženi KGR pregled</span>
     </button>
   </div>
 
@@ -202,44 +205,45 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;color:var(--text)
       <div class="progress-step step-arbiter"><div class="fill" id="fill-a"></div></div>
       <div class="progress-step step-verdict"><div class="fill" id="fill-v"></div></div>
     </div>
-    <div class="progress-label" id="progressLabel">Initializing review council...</div>
+    <div class="progress-label" id="progressLabel"><span class="lang-en">Initializing review council...</span><span class="lang-si" style="display:none">Inicializacija preglednega sveta...</span></div>
   </div>
 
   <div class="reviews" id="reviews"></div>
 
   <div class="how-it-works">
-    <h3>How KGR works</h3>
+    <h3><span class="lang-en">How KGR works</span><span class="lang-si" style="display:none">Kako deluje KGR</span></h3>
     <div class="how-steps">
       <div class="how-step">
         <div class="num">1</div>
-        <div class="step-title">Hypothesis</div>
-        <div class="step-desc">A proposed change enters the review pipeline</div>
+        <div class="step-title"><span class="lang-en">Hypothesis</span><span class="lang-si" style="display:none">Hipoteza</span></div>
+        <div class="step-desc"><span class="lang-en">A proposed change enters the review pipeline</span><span class="lang-si" style="display:none">Predlagana sprememba vstopi v pregledni proces</span></div>
       </div>
       <div class="how-step">
         <div class="num">2</div>
-        <div class="step-title">Three Reviewers</div>
-        <div class="step-desc">Skeptic, Optimist, and Arbiter each review independently</div>
+        <div class="step-title"><span class="lang-en">Three Reviewers</span><span class="lang-si" style="display:none">Trije pregledovalci</span></div>
+        <div class="step-desc"><span class="lang-en">Skeptic, Optimist, and Arbiter each review independently</span><span class="lang-si" style="display:none">Skeptik, Optimist in Arbiter vsak pregleda neodvisno</span></div>
       </div>
       <div class="how-step">
         <div class="num">3</div>
-        <div class="step-title">Evidence Check</div>
-        <div class="step-desc">Every claim must be verified against source material</div>
+        <div class="step-title"><span class="lang-en">Evidence Check</span><span class="lang-si" style="display:none">Preverjanje dokazov</span></div>
+        <div class="step-desc"><span class="lang-en">Every claim must be verified against source material</span><span class="lang-si" style="display:none">Vsaka trditev mora biti preverjena z izvornim gradivom</span></div>
       </div>
       <div class="how-step">
         <div class="num">4</div>
-        <div class="step-title">Verdict</div>
-        <div class="step-desc">Unanimous approve, reject, or conditional with noted concerns</div>
+        <div class="step-title"><span class="lang-en">Verdict</span><span class="lang-si" style="display:none">Razsodba</span></div>
+        <div class="step-desc"><span class="lang-en">Unanimous approve, reject, or conditional with noted concerns</span><span class="lang-si" style="display:none">Soglasno odobritev, zavrnitev ali pogojno z zabeleženimi pomisleki</span></div>
       </div>
     </div>
   </div>
 
-  <p class="disclaimer">This is a simulated demonstration of the KGR protocol structure. In production, each reviewer is a separate AI model with no access to other reviewers' outputs. VEGA KGR has completed 80+ adversarial review rounds across multiple domains.</p>
+  <p class="disclaimer"><span class="lang-en">This is a simulated demonstration of the KGR protocol structure. In production, each reviewer is a separate AI model with no access to other reviewers' outputs. VEGA KGR has completed 80+ adversarial review rounds across multiple domains.</span><span class="lang-si" style="display:none">To je simulirana predstavitev strukture KGR protokola. V produkciji je vsak pregledovalec locen AI model brez dostopa do mnenj drugih. VEGA KGR je opravil 80+ adversarialnih preglednih krogov na vec domenah.</span></p>
 </div>
 
 <script>
 const EXAMPLES = [
   {
     text: "Add a Redis caching layer to reduce API response times from 800ms to under 200ms for frequently accessed endpoints.",
+    text_si: "Dodaj Redis predpomnilnik za zmanjšanje odzivnih časov API-ja z 800ms na manj kot 200ms za pogosto dostopane končne točke.",
     reviews: {
       skeptic: {
         verdict: "CONDITIONAL",
@@ -263,11 +267,12 @@ const EXAMPLES = [
 <ul><li><strong>Skeptic's invalidation concern:</strong> Valid. Must be addressed before implementation.</li><li><strong>Optimist's incremental path:</strong> Strong recommendation. Start with in-memory LRU, measure, then evaluate Redis need.</li><li><strong>Missing from both:</strong> No cost-benefit analysis. Is 600ms improvement worth the operational overhead for the current user base?</li></ul>
 <div class="evidence-block">VERDICT RATIONALE: Approve the investigation, but require a design document with: (1) baseline latency distribution, (2) invalidation strategy per endpoint, (3) failure mode specification, (4) cost comparison: in-memory vs Redis.</div>`
       },
-      final: { verdict: "CONDITIONAL APPROVE", cls: "conditional", summary: "Proceed with design document first. Start with in-memory caching; escalate to Redis only if measurements justify the infrastructure cost.", votes: [{name:"Skeptic",v:"CONDITIONAL",c:"var(--skeptic)"},{name:"Optimist",v:"APPROVE",c:"var(--approve)"},{name:"Arbiter",v:"CONDITIONAL",c:"var(--conditional)"}] }
+      final: { verdict: "CONDITIONAL APPROVE", cls: "conditional", summary: "Proceed with design document first. Start with in-memory caching; escalate to Redis only if measurements justify the infrastructure cost.", summary_si: "Najprej pripravite projektni dokument. Začnite s predpomnilnikom v pomnilniku; Redis le če meritve upravičijo infrastrukturne stroške.", verdict_si: "POGOJNO ODOBRENO", votes: [{name:"Skeptic",v:"CONDITIONAL",c:"var(--skeptic)",name_si:"Skeptik",v_si:"POGOJNO"},{name:"Optimist",v:"APPROVE",c:"var(--approve)",name_si:"Optimist",v_si:"ODOBRI"},{name:"Arbiter",v:"CONDITIONAL",c:"var(--conditional)",name_si:"Arbiter",v_si:"POGOJNO"}] }
     }
   },
   {
     text: "Migrate user authentication from session-based cookies to JWT tokens to enable horizontal scaling across multiple servers.",
+    text_si: "Zamenjaj avtentikacijo uporabnikov iz sej na podlagi piškotkov na JWT žetone za horizontalno skaliranje čez več strežnikov.",
     reviews: {
       skeptic: {
         verdict: "REJECT",
@@ -291,11 +296,12 @@ const EXAMPLES = [
 <ul><li><strong>Core issue:</strong> The hypothesis solves horizontal scaling, but session-based auth already scales horizontally with shared stores. The premise is flawed.</li><li><strong>Security regression:</strong> Confirmed. Token revocation requires server-side state, eliminating JWT's only advantage.</li><li><strong>Recommendation:</strong> Reject this hypothesis. Open a new hypothesis for "Add JWT-based API authentication for external consumers" — a genuinely valuable and appropriate use of JWT.</li></ul>
 <div class="evidence-block">VERDICT RATIONALE: Reject on grounds of flawed premise (scaling is already solved) and security regression (non-revocable tokens). The underlying need (API auth) should be re-framed as a separate, correctly-scoped hypothesis.</div>`
       },
-      final: { verdict: "REJECT", cls: "reject", summary: "JWT is wrong tool for session replacement. Re-frame as API authentication for external consumers — that's where JWT belongs.", votes: [{name:"Skeptic",v:"REJECT",c:"var(--reject)"},{name:"Optimist",v:"CONDITIONAL",c:"var(--conditional)"},{name:"Arbiter",v:"REJECT",c:"var(--reject)"}] }
+      final: { verdict: "REJECT", cls: "reject", summary: "JWT is wrong tool for session replacement. Re-frame as API authentication for external consumers — that's where JWT belongs.", summary_si: "JWT je napačno orodje za zamenjavo sej. Preoblikujte kot API avtentikacijo za zunanje porabnike — tam JWT sodi.", verdict_si: "ZAVRNJENO", votes: [{name:"Skeptic",v:"REJECT",c:"var(--reject)",name_si:"Skeptik",v_si:"ZAVRNI"},{name:"Optimist",v:"CONDITIONAL",c:"var(--conditional)",name_si:"Optimist",v_si:"POGOJNO"},{name:"Arbiter",v:"REJECT",c:"var(--reject)",name_si:"Arbiter",v_si:"ZAVRNI"}] }
     }
   },
   {
     text: "Replace manual document compliance review with automated AI classification to process documents 10x faster.",
+    text_si: "Zamenjaj ročni pregled skladnosti dokumentov z avtomatizirano AI klasifikacijo za 10x hitrejšo obdelavo.",
     reviews: {
       skeptic: {
         verdict: "CONDITIONAL",
@@ -319,11 +325,12 @@ const EXAMPLES = [
 <ul><li><strong>Reframe the hypothesis:</strong> "AI-assisted document triage" not "AI replacement of manual review." The original framing implies full automation; the safe implementation is augmentation.</li><li><strong>Shadow mode:</strong> The Optimist's 30-day parallel run is the correct first step. Measurable, reversible, no risk.</li><li><strong>False-negative threshold:</strong> The Skeptic's requirement is valid. Define it before deployment, not after.</li></ul>
 <div class="evidence-block">VERDICT RATIONALE: Approve shadow-mode evaluation. Before production deployment, require: (1) false-negative rate below manual review baseline, (2) regulatory sign-off on AI-assisted workflow, (3) human-in-the-loop for all medium/low-confidence classifications.</div>`
       },
-      final: { verdict: "CONDITIONAL APPROVE", cls: "conditional", summary: "Approved as AI-assisted triage (not replacement). Start with 30-day shadow mode. Define false-negative threshold before production deployment.", votes: [{name:"Skeptic",v:"CONDITIONAL",c:"var(--skeptic)"},{name:"Optimist",v:"APPROVE",c:"var(--approve)"},{name:"Arbiter",v:"CONDITIONAL",c:"var(--conditional)"}] }
+      final: { verdict: "CONDITIONAL APPROVE", cls: "conditional", summary: "Approved as AI-assisted triage (not replacement). Start with 30-day shadow mode. Define false-negative threshold before production deployment.", summary_si: "Odobreno kot AI-podprta trijaža (ne zamenjava). Začnite s 30-dnevnim opazovalnim načinom. Določite prag lažno-negativnih pred produkcijo.", verdict_si: "POGOJNO ODOBRENO", votes: [{name:"Skeptic",v:"CONDITIONAL",c:"var(--skeptic)",name_si:"Skeptik",v_si:"POGOJNO"},{name:"Optimist",v:"APPROVE",c:"var(--approve)",name_si:"Optimist",v_si:"ODOBRI"},{name:"Arbiter",v:"CONDITIONAL",c:"var(--conditional)",name_si:"Arbiter",v_si:"POGOJNO"}] }
     }
   },
   {
     text: "Skip staging environment and deploy directly to production to move faster. We can hotfix any issues.",
+    text_si: "Preskoči staging okolje in objavi neposredno v produkcijo za hitrejše delo. Morebitne težave lahko popravimo sproti.",
     reviews: {
       skeptic: {
         verdict: "REJECT",
@@ -346,13 +353,15 @@ const EXAMPLES = [
 <ul><li><strong>Root cause:</strong> The hypothesis treats a symptom (slow deploys) with a dangerous remedy (removing safety). The correct response is to fix the staging pipeline.</li><li><strong>No rebuttal path:</strong> This hypothesis should not proceed to R2. The risk is well-documented, the evidence is clear, and both reviewers agree.</li></ul>
 <div class="evidence-block">VERDICT RATIONALE: Unanimous REJECT. Archive with note: "If staging is slow, open hypothesis for staging pipeline optimization." Do not revisit this hypothesis without fundamentally new evidence.</div>`
       },
-      final: { verdict: "UNANIMOUS REJECT", cls: "reject", summary: "No defensible path. Even the Optimist could not construct a supporting argument. Fix the staging pipeline instead.", votes: [{name:"Skeptic",v:"REJECT",c:"var(--reject)"},{name:"Optimist",v:"REJECT",c:"var(--reject)"},{name:"Arbiter",v:"REJECT",c:"var(--reject)"}] }
+      final: { verdict: "UNANIMOUS REJECT", cls: "reject", summary: "No defensible path. Even the Optimist could not construct a supporting argument. Fix the staging pipeline instead.", summary_si: "Ni zagovorljive poti. Niti Optimist ni mogel sestaviti podpornega argumenta. Namesto tega popravite staging proces.", verdict_si: "SOGLASNO ZAVRNJENO", votes: [{name:"Skeptic",v:"REJECT",c:"var(--reject)",name_si:"Skeptik",v_si:"ZAVRNI"},{name:"Optimist",v:"REJECT",c:"var(--reject)",name_si:"Optimist",v_si:"ZAVRNI"},{name:"Arbiter",v:"REJECT",c:"var(--reject)",name_si:"Arbiter",v_si:"ZAVRNI"}] }
     }
   }
 ];
 
+let currentLang = 'en';
+
 function setExample(i) {
-  document.getElementById('hypothesis').value = EXAMPLES[i].text;
+  document.getElementById('hypothesis').value = currentLang === 'si' && EXAMPLES[i].text_si ? EXAMPLES[i].text_si : EXAMPLES[i].text;
 }
 
 let running = false;

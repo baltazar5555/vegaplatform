@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="sl">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -200,25 +200,29 @@ svg text { font-family: 'Segoe UI', system-ui, sans-serif; }
 </head>
 <body>
 
+<div style="text-align:right;padding:8px 20px;position:relative;z-index:10">
+  <button onclick="setLang('en')" id="btn-en" style="background:#1a56db;color:#fff;border:none;padding:4px 14px;border-radius:6px 0 0 6px;font-size:12px;font-weight:600;cursor:pointer">EN</button><button onclick="setLang('si')" id="btn-si" style="background:#2a2a4a;color:#9ba3b5;border:none;padding:4px 14px;border-radius:0 6px 6px 0;font-size:12px;font-weight:600;cursor:pointer">SI</button>
+</div>
+
 <div class="header">
   <div>
     <h1>VEGA PropFirm Prep</h1>
-    <div class="subtitle">Challenge Survival Simulator — Know Before You Pay</div>
+    <div class="subtitle"><span class="lang-en">Challenge Survival Simulator — Know Before You Pay</span><span class="lang-si" style="display:none">Simulator prezivetja challengea — Vedi preden placas</span></div>
   </div>
   <div class="badge">BETA v0.1</div>
 </div>
 
 <div class="tabs">
-  <div class="tab active" onclick="switchTab(0)">1. Challenge Setup</div>
-  <div class="tab" onclick="switchTab(1)">2. Survival Simulation</div>
-  <div class="tab" onclick="switchTab(2)">3. Training Mode</div>
-  <div class="tab" onclick="switchTab(3)">4. WFA Regime Check</div>
+  <div class="tab active" onclick="switchTab(0)"><span class="lang-en">1. Challenge Setup</span><span class="lang-si" style="display:none">1. Nastavitev Challengea</span></div>
+  <div class="tab" onclick="switchTab(1)"><span class="lang-en">2. Survival Simulation</span><span class="lang-si" style="display:none">2. Simulacija Prezivetja</span></div>
+  <div class="tab" onclick="switchTab(2)"><span class="lang-en">3. Training Mode</span><span class="lang-si" style="display:none">3. Nacin Vadbe</span></div>
+  <div class="tab" onclick="switchTab(3)"><span class="lang-en">4. WFA Regime Check</span><span class="lang-si" style="display:none">4. WFA Rezimska Preverba</span></div>
 </div>
 
 <!-- SCREEN 1: Challenge Setup -->
 <div class="screen active" id="screen0">
-  <h2 style="font-size:16px; margin-bottom:4px;">Izberi Challenge + Nalozi Strategijo</h2>
-  <p style="font-size:12px; color:#888;">Platforma simulira tocne pogoje prop firm challengea na tvojih backtestih.</p>
+  <h2 style="font-size:16px; margin-bottom:4px;"><span class="lang-en">Select Challenge + Upload Strategy</span><span class="lang-si" style="display:none">Izberi Challenge + Nalozi Strategijo</span></h2>
+  <p style="font-size:12px; color:#888;"><span class="lang-en">The platform simulates exact prop firm challenge conditions on your backtests.</span><span class="lang-si" style="display:none">Platforma simulira tocne pogoje prop firm challengea na tvojih backtestih.</span></p>
 
   <div class="setup-grid">
     <div class="firm-card selected" onclick="selectFirm(this)">
@@ -227,9 +231,9 @@ svg text { font-family: 'Segoe UI', system-ui, sans-serif; }
         Max Daily Drawdown: <span class="val">5%</span><br>
         Max Total Drawdown: <span class="val">10%</span><br>
         Profit Target: <span class="val">10%</span><br>
-        Trajanje: <span class="val">30 dni</span><br>
+        <span class="lang-en">Duration:</span><span class="lang-si" style="display:none">Trajanje:</span> <span class="val"><span class="lang-en">30 days</span><span class="lang-si" style="display:none">30 dni</span></span><br>
         Min Trading Days: <span class="val">4</span><br>
-        Cena Challengea: <span class="val">$499 (100k)</span>
+        <span class="lang-en">Challenge Cost:</span><span class="lang-si" style="display:none">Cena Challengea:</span> <span class="val">$499 (100k)</span>
       </div>
     </div>
     <div class="firm-card" onclick="selectFirm(this)">
@@ -238,9 +242,9 @@ svg text { font-family: 'Segoe UI', system-ui, sans-serif; }
         Max Daily Drawdown: <span class="val">5%</span><br>
         Max Total Drawdown: <span class="val">10%</span><br>
         Profit Target: <span class="val">8%</span><br>
-        Trajanje: <span class="val">Neomejeno</span><br>
+        <span class="lang-en">Duration:</span><span class="lang-si" style="display:none">Trajanje:</span> <span class="val"><span class="lang-en">Unlimited</span><span class="lang-si" style="display:none">Neomejeno</span></span><br>
         Min Trading Days: <span class="val">5</span><br>
-        Cena Challengea: <span class="val">$549 (100k)</span>
+        <span class="lang-en">Challenge Cost:</span><span class="lang-si" style="display:none">Cena Challengea:</span> <span class="val">$549 (100k)</span>
       </div>
     </div>
     <div class="firm-card" onclick="selectFirm(this)">
@@ -249,9 +253,9 @@ svg text { font-family: 'Segoe UI', system-ui, sans-serif; }
         Max Daily Drawdown: <span class="val">3%</span><br>
         Max Total Drawdown: <span class="val">6%</span><br>
         Profit Target: <span class="val">6%</span><br>
-        Trajanje: <span class="val">Neomejeno</span><br>
+        <span class="lang-en">Duration:</span><span class="lang-si" style="display:none">Trajanje:</span> <span class="val"><span class="lang-en">Unlimited</span><span class="lang-si" style="display:none">Neomejeno</span></span><br>
         Min Trading Days: <span class="val">3</span><br>
-        Cena Challengea: <span class="val">$260 (100k)</span>
+        <span class="lang-en">Challenge Cost:</span><span class="lang-si" style="display:none">Cena Challengea:</span> <span class="val">$260 (100k)</span>
       </div>
     </div>
     <div class="firm-card" onclick="selectFirm(this)">
@@ -260,22 +264,22 @@ svg text { font-family: 'Segoe UI', system-ui, sans-serif; }
         Max Daily Drawdown: <span class="val">$2,000</span><br>
         Max Total Drawdown: <span class="val">$3,000</span><br>
         Profit Target: <span class="val">$3,000</span><br>
-        Trajanje: <span class="val">Neomejeno</span><br>
+        <span class="lang-en">Duration:</span><span class="lang-si" style="display:none">Trajanje:</span> <span class="val"><span class="lang-en">Unlimited</span><span class="lang-si" style="display:none">Neomejeno</span></span><br>
         Min Trading Days: <span class="val">2</span><br>
-        Cena Challengea: <span class="val">$165/mo (50k)</span>
+        <span class="lang-en">Challenge Cost:</span><span class="lang-si" style="display:none">Cena Challengea:</span> <span class="val">$165/mo (50k)</span>
       </div>
     </div>
   </div>
 
   <div class="strategy-upload">
     <div class="icon">&#128196;</div>
-    <p><strong>Nalozi svojo strategijo</strong></p>
-    <p>Pine Script, Python modul, ali CSV trade log</p>
+    <p><strong><span class="lang-en">Upload your strategy</span><span class="lang-si" style="display:none">Nalozi svojo strategijo</span></strong></p>
+    <p><span class="lang-en">Pine Script, Python module, or CSV trade log</span><span class="lang-si" style="display:none">Pine Script, Python modul, ali CSV trade log</span></p>
     <div class="upload-options">
       <button class="upload-btn">Pine Script (.pine)</button>
       <button class="upload-btn">Python (.py)</button>
       <button class="upload-btn">Trade Log (.csv)</button>
-      <button class="upload-btn primary" onclick="switchTab(1)">DEMO: Uporabi PP strategijo</button>
+      <button class="upload-btn primary" onclick="switchTab(1)"><span class="lang-en">DEMO: Use sample strategy</span><span class="lang-si" style="display:none">DEMO: Uporabi vzorcno strategijo</span></button>
     </div>
   </div>
 </div>
@@ -285,27 +289,27 @@ svg text { font-family: 'Segoe UI', system-ui, sans-serif; }
   <div class="sim-header">
     <div>
       <h2 style="font-size:16px;">FTMO 100k Challenge Simulation</h2>
-      <p style="font-size:12px; color:#888;">1000x Monte Carlo na 4 letih podatkov, 25 coinov</p>
+      <p style="font-size:12px; color:#888;"><span class="lang-en">1000x Monte Carlo on 4 years of data, 25 coins</span><span class="lang-si" style="display:none">1000x Monte Carlo na 4 letih podatkov, 25 coinov</span></p>
     </div>
     <div style="display:flex; gap:16px;">
       <div class="pass-prob medium">
         <div class="number">34%</div>
-        <div class="label">PASS VERJETNOST</div>
+        <div class="label"><span class="lang-en">PASS PROBABILITY</span><span class="lang-si" style="display:none">PASS VERJETNOST</span></div>
       </div>
       <div class="pass-prob low">
         <div class="number">2.1</div>
-        <div class="label">POVP. POSKUSOV DO PASS</div>
+        <div class="label"><span class="lang-en">AVG. ATTEMPTS TO PASS</span><span class="lang-si" style="display:none">POVP. POSKUSOV DO PASS</span></div>
       </div>
       <div class="pass-prob high">
         <div class="number">$547</div>
-        <div class="label">PRICAKOVAN STROSEK</div>
+        <div class="label"><span class="lang-en">EXPECTED COST</span><span class="lang-si" style="display:none">PRICAKOVAN STROSEK</span></div>
       </div>
     </div>
   </div>
 
   <div class="sim-grid">
     <div class="equity-chart">
-      <h3>Equity Krivulje (100 simulacij od 1000)</h3>
+      <h3><span class="lang-en">Equity Curves (100 simulations of 1000)</span><span class="lang-si" style="display:none">Equity Krivulje (100 simulacij od 1000)</span></h3>
       <svg width="100%" height="230" viewBox="0 0 600 230">
         <defs>
           <linearGradient id="dangerZone" x1="0" y1="0" x2="0" y2="1">
@@ -351,29 +355,32 @@ svg text { font-family: 'Segoe UI', system-ui, sans-serif; }
         <text x="5" y="104" fill="#666" font-size="9">0%</text>
         <text x="5" y="144" fill="#666" font-size="9">-5%</text>
         <text x="5" y="196" fill="#666" font-size="9">-10%</text>
-        <text x="40" y="225" fill="#666" font-size="9">Dan 1</text>
-        <text x="280" y="225" fill="#666" font-size="9">Dan 15</text>
-        <text x="540" y="225" fill="#666" font-size="9">Dan 30</text>
+        <text x="40" y="225" fill="#666" font-size="9" class="lang-en">Day 1</text>
+        <text x="40" y="225" fill="#666" font-size="9" class="lang-si" style="display:none">Dan 1</text>
+        <text x="280" y="225" fill="#666" font-size="9" class="lang-en">Day 15</text>
+        <text x="280" y="225" fill="#666" font-size="9" class="lang-si" style="display:none">Dan 15</text>
+        <text x="540" y="225" fill="#666" font-size="9" class="lang-en">Day 30</text>
+        <text x="540" y="225" fill="#666" font-size="9" class="lang-si" style="display:none">Dan 30</text>
       </svg>
     </div>
 
     <div class="weakness-panel">
-      <h3>Identificirane Slabosti</h3>
+      <h3><span class="lang-en">Identified Weaknesses</span><span class="lang-si" style="display:none">Identificirane Slabosti</span></h3>
       <div class="weakness-item">
-        <div class="title">Daily DD Krsitev</div>
-        <div class="desc">V 23% simulacij tvoja strategija krsi 5% daily DD limit. Vzrok: prevelike pozicije po seriji zmag (overconfidence sizing).</div>
+        <div class="title"><span class="lang-en">Daily DD Violation</span><span class="lang-si" style="display:none">Daily DD Krsitev</span></div>
+        <div class="desc"><span class="lang-en">In 23% of simulations your strategy violates the 5% daily DD limit. Cause: oversized positions after a winning streak (overconfidence sizing).</span><span class="lang-si" style="display:none">V 23% simulacij tvoja strategija krsi 5% daily DD limit. Vzrok: prevelike pozicije po seriji zmag (overconfidence sizing).</span></div>
       </div>
       <div class="weakness-item">
-        <div class="title">Trend Rezim = Nevarnost</div>
-        <div class="desc">Mean-reversion strategija trpi v mocnih trendih. 68% failov se zgodi v bull/bear trending obdobjih.</div>
+        <div class="title"><span class="lang-en">Trend Regime = Danger</span><span class="lang-si" style="display:none">Trend Rezim = Nevarnost</span></div>
+        <div class="desc"><span class="lang-en">Mean-reversion strategy suffers in strong trends. 68% of failures occur during bull/bear trending periods.</span><span class="lang-si" style="display:none">Mean-reversion strategija trpi v mocnih trendih. 68% failov se zgodi v bull/bear trending obdobjih.</span></div>
       </div>
       <div class="weakness-item warning">
-        <div class="title">Pocasen Start</div>
-        <div class="desc">Median cas do targeta: 24 dni (od 30). Malo prostora za napake v drugi polovici.</div>
+        <div class="title"><span class="lang-en">Slow Start</span><span class="lang-si" style="display:none">Pocasen Start</span></div>
+        <div class="desc"><span class="lang-en">Median time to target: 24 days (of 30). Little room for error in the second half.</span><span class="lang-si" style="display:none">Median cas do targeta: 24 dni (od 30). Malo prostora za napake v drugi polovici.</span></div>
       </div>
       <div class="weakness-item ok">
         <div class="title">Drawdown Recovery</div>
-        <div class="desc">Ko pade pod -5%, se v 62% primerov povrne. Strategija ima dober recovery profil.</div>
+        <div class="desc"><span class="lang-en">When it drops below -5%, it recovers in 62% of cases. Strategy has a good recovery profile.</span><span class="lang-si" style="display:none">Ko pade pod -5%, se v 62% primerov povrne. Strategija ima dober recovery profil.</span></div>
       </div>
     </div>
   </div>
@@ -398,22 +405,26 @@ svg text { font-family: 'Segoe UI', system-ui, sans-serif; }
   </div>
 
   <div class="verdict-box marginal" style="margin-top:20px;">
-    VERDICT: MARGINAL — 34% pass rate je pod 50% pragom. Priporocamo: zmanjsaj position size za 30% ali dodaj trend filter pred challengeom.
+    <span class="lang-en">VERDICT: MARGINAL — 34% pass rate is below the 50% threshold. Recommended: reduce position size by 30% or add a trend filter before the challenge.</span><span class="lang-si" style="display:none">VERDICT: MARGINAL — 34% pass rate je pod 50% pragom. Priporocamo: zmanjsaj position size za 30% ali dodaj trend filter pred challengeom.</span>
   </div>
 </div>
 
 <!-- SCREEN 3: Training Mode -->
 <div class="screen" id="screen2">
-  <h2 style="font-size:16px; margin-bottom:16px;">Training Mode — Simuliraj Challenge Dan za Dnem</h2>
+  <h2 style="font-size:16px; margin-bottom:16px;"><span class="lang-en">Training Mode — Simulate Challenge Day by Day</span><span class="lang-si" style="display:none">Training Mode — Simuliraj Challenge Dan za Dnem</span></h2>
 
   <div class="training-controls">
     <label>Firm:</label>
     <select><option>FTMO 100k</option><option>FundedNext 100k</option><option>The5ers 100k</option></select>
-    <label style="margin-left:16px;">Zacetni Datum:</label>
+    <label style="margin-left:16px;"><span class="lang-en">Start Date:</span><span class="lang-si" style="display:none">Zacetni Datum:</span></label>
     <input type="date" value="2025-03-01">
-    <label style="margin-left:16px;">Hitrost:</label>
-    <select><option>1 dan / sec</option><option>Realtime</option><option>Hitro (skip no-trade dni)</option></select>
-    <button class="run-btn" onclick="startTraining()">ZACNI CHALLENGE</button>
+    <label style="margin-left:16px;"><span class="lang-en">Speed:</span><span class="lang-si" style="display:none">Hitrost:</span></label>
+    <select id="speed-select">
+      <option>1 day / sec</option>
+      <option>Realtime</option>
+      <option>Fast (skip no-trade days)</option>
+    </select>
+    <button class="run-btn" onclick="startTraining()"><span class="lang-en">START CHALLENGE</span><span class="lang-si" style="display:none">ZACNI CHALLENGE</span></button>
   </div>
 
   <div class="challenge-progress">
@@ -452,8 +463,8 @@ svg text { font-family: 'Segoe UI', system-ui, sans-serif; }
 
       <div class="progress-bar-container">
         <div class="progress-label">
-          <span>Cas</span>
-          <span>Dan 18 / 30</span>
+          <span><span class="lang-en">Time</span><span class="lang-si" style="display:none">Cas</span></span>
+          <span><span class="lang-en">Day 18 / 30</span><span class="lang-si" style="display:none">Dan 18 / 30</span></span>
         </div>
         <div class="progress-bar">
           <div class="progress-fill" style="width:60%; background:#4fc3f7;"></div>
@@ -461,26 +472,26 @@ svg text { font-family: 'Segoe UI', system-ui, sans-serif; }
       </div>
 
       <div style="margin-top:16px; padding:12px; background:#16213e; border-radius:8px; font-size:12px;">
-        <strong style="color:#ffc107;">OPOZORILO:</strong> Ce danes izgubis vec kot $3,180, bos krsil daily DD. Priporocam max 2 poziciji po $1,500.
+        <strong style="color:#ffc107;"><span class="lang-en">WARNING:</span><span class="lang-si" style="display:none">OPOZORILO:</span></strong> <span class="lang-en">If you lose more than $3,180 today, you will violate the daily DD. Recommended: max 2 positions at $1,500.</span><span class="lang-si" style="display:none">Ce danes izgubis vec kot $3,180, bos krsil daily DD. Priporocam max 2 poziciji po $1,500.</span>
       </div>
     </div>
 
     <div class="progress-card">
-      <h3>Trade Log (Zadnjih 10 dni)</h3>
+      <h3><span class="lang-en">Trade Log (Last 10 days)</span><span class="lang-si" style="display:none">Trade Log (Zadnjih 10 dni)</span></h3>
       <div class="day-log">
-        <div class="entry win">Dan 18: ETH LONG +$820 (PP signal, Q=7.2)</div>
-        <div class="entry loss">Dan 17: BTC SHORT -$340 (RangeSqueeze, trend override)</div>
-        <div class="entry win">Dan 16: SOL LONG +$1,240 (PP signal, Q=8.1)</div>
-        <div class="entry">Dan 15: No trade (brez signalov)</div>
-        <div class="entry loss">Dan 14: BNB LONG -$680 (PP signal, Q=5.8 - nizek Q!)</div>
-        <div class="entry win">Dan 13: ETH LONG +$560 (PP signal, Q=6.9)</div>
-        <div class="entry win">Dan 12: BTC LONG +$1,120 (RangeSqueeze)</div>
-        <div class="entry loss">Dan 11: ADA LONG -$420 (PP signal, Q=4.2 - PREMALO)</div>
-        <div class="entry">Dan 10: No trade (weekend)</div>
-        <div class="entry win">Dan 9: SOL LONG +$780 (PP signal, Q=7.8)</div>
+        <div class="entry win"><span class="lang-en">Day 18: ETH LONG +$820 (PP signal, Q=7.2)</span><span class="lang-si" style="display:none">Dan 18: ETH LONG +$820 (PP signal, Q=7.2)</span></div>
+        <div class="entry loss"><span class="lang-en">Day 17: BTC SHORT -$340 (RangeSqueeze, trend override)</span><span class="lang-si" style="display:none">Dan 17: BTC SHORT -$340 (RangeSqueeze, trend override)</span></div>
+        <div class="entry win"><span class="lang-en">Day 16: SOL LONG +$1,240 (PP signal, Q=8.1)</span><span class="lang-si" style="display:none">Dan 16: SOL LONG +$1,240 (PP signal, Q=8.1)</span></div>
+        <div class="entry"><span class="lang-en">Day 15: No trade (no signals)</span><span class="lang-si" style="display:none">Dan 15: No trade (brez signalov)</span></div>
+        <div class="entry loss"><span class="lang-en">Day 14: BNB LONG -$680 (PP signal, Q=5.8 - low Q!)</span><span class="lang-si" style="display:none">Dan 14: BNB LONG -$680 (PP signal, Q=5.8 - nizek Q!)</span></div>
+        <div class="entry win"><span class="lang-en">Day 13: ETH LONG +$560 (PP signal, Q=6.9)</span><span class="lang-si" style="display:none">Dan 13: ETH LONG +$560 (PP signal, Q=6.9)</span></div>
+        <div class="entry win"><span class="lang-en">Day 12: BTC LONG +$1,120 (RangeSqueeze)</span><span class="lang-si" style="display:none">Dan 12: BTC LONG +$1,120 (RangeSqueeze)</span></div>
+        <div class="entry loss"><span class="lang-en">Day 11: ADA LONG -$420 (PP signal, Q=4.2 - TOO LOW)</span><span class="lang-si" style="display:none">Dan 11: ADA LONG -$420 (PP signal, Q=4.2 - PREMALO)</span></div>
+        <div class="entry"><span class="lang-en">Day 10: No trade (weekend)</span><span class="lang-si" style="display:none">Dan 10: No trade (weekend)</span></div>
+        <div class="entry win"><span class="lang-en">Day 9: SOL LONG +$780 (PP signal, Q=7.8)</span><span class="lang-si" style="display:none">Dan 9: SOL LONG +$780 (PP signal, Q=7.8)</span></div>
       </div>
       <div style="margin-top:12px; padding:8px; background:#16213e; border-radius:6px; font-size:11px; color:#888;">
-        Pattern: Izgube korelirane z nizkim Quality Score (Q &lt; 6). Filter: blokiraj trade ko Q &lt; 6.5 med challengeom.
+        <span class="lang-en">Pattern: Losses correlated with low Quality Score (Q &lt; 6). Filter: block trades when Q &lt; 6.5 during the challenge.</span><span class="lang-si" style="display:none">Pattern: Izgube korelirane z nizkim Quality Score (Q &lt; 6). Filter: blokiraj trade ko Q &lt; 6.5 med challengeom.</span>
       </div>
     </div>
   </div>
@@ -488,8 +499,8 @@ svg text { font-family: 'Segoe UI', system-ui, sans-serif; }
 
 <!-- SCREEN 4: WFA Regime Check -->
 <div class="screen" id="screen3">
-  <h2 style="font-size:16px; margin-bottom:4px;">WFA Regime Analiza za Challenge Pogoje</h2>
-  <p style="font-size:12px; color:#888; margin-bottom:16px;">Ali tvoja strategija prezivi v VSEH tržnih rezimih ki jih bos srecel med 30-dnevnim challengeom?</p>
+  <h2 style="font-size:16px; margin-bottom:4px;"><span class="lang-en">WFA Regime Analysis for Challenge Conditions</span><span class="lang-si" style="display:none">WFA Regime Analiza za Challenge Pogoje</span></h2>
+  <p style="font-size:12px; color:#888; margin-bottom:16px;"><span class="lang-en">Does your strategy survive in ALL market regimes you may encounter during the 30-day challenge?</span><span class="lang-si" style="display:none">Ali tvoja strategija prezivi v VSEH trznih rezimih ki jih bos srecel med 30-dnevnim challengeom?</span></p>
 
   <div class="regime-grid">
     <div class="regime-card">
@@ -497,7 +508,7 @@ svg text { font-family: 'Segoe UI', system-ui, sans-serif; }
       <div class="big pass">PASS</div>
       <div style="margin-top:8px; font-size:12px; color:#888;">
         PF 1.82 | WR 52% | DD -4.1%<br>
-        <span style="color:#00c853;">Znotraj FTMO limitov</span>
+        <span style="color:#00c853;"><span class="lang-en">Within FTMO limits</span><span class="lang-si" style="display:none">Znotraj FTMO limitov</span></span>
       </div>
     </div>
     <div class="regime-card">
@@ -505,7 +516,7 @@ svg text { font-family: 'Segoe UI', system-ui, sans-serif; }
       <div class="big pass">PASS</div>
       <div style="margin-top:8px; font-size:12px; color:#888;">
         PF 1.61 | WR 47% | DD -6.8%<br>
-        <span style="color:#00c853;">Znotraj FTMO limitov</span>
+        <span style="color:#00c853;"><span class="lang-en">Within FTMO limits</span><span class="lang-si" style="display:none">Znotraj FTMO limitov</span></span>
       </div>
     </div>
     <div class="regime-card">
@@ -513,7 +524,7 @@ svg text { font-family: 'Segoe UI', system-ui, sans-serif; }
       <div class="big marginal">MARGINAL</div>
       <div style="margin-top:8px; font-size:12px; color:#888;">
         PF 1.12 | WR 44% | DD -8.9%<br>
-        <span style="color:#ffc107;">Blizu DD limita!</span>
+        <span style="color:#ffc107;"><span class="lang-en">Near DD limit!</span><span class="lang-si" style="display:none">Blizu DD limita!</span></span>
       </div>
     </div>
   </div>
@@ -522,8 +533,8 @@ svg text { font-family: 'Segoe UI', system-ui, sans-serif; }
     <thead>
       <tr>
         <th>WFA Fold</th>
-        <th>Obdobje</th>
-        <th>Rezim</th>
+        <th><span class="lang-en">Period</span><span class="lang-si" style="display:none">Obdobje</span></th>
+        <th><span class="lang-en">Regime</span><span class="lang-si" style="display:none">Rezim</span></th>
         <th>PF</th>
         <th>WR</th>
         <th>Max DD</th>
@@ -586,37 +597,61 @@ svg text { font-family: 'Segoe UI', system-ui, sans-serif; }
   </table>
 
   <div class="verdict-box marginal" style="margin-top:20px;">
-    WFA VERDICT: 4/5 PASS, 1/5 MARGINAL (Sideways rezim) — Strategija je challenge-ready za bull/bear, ampak rabi dodaten sideways filter ali manjso pozicijo v chop obdobjih.
+    <span class="lang-en">WFA VERDICT: 4/5 PASS, 1/5 MARGINAL (Sideways regime) — Strategy is challenge-ready for bull/bear, but needs an additional sideways filter or smaller position in chop periods.</span><span class="lang-si" style="display:none">WFA VERDICT: 4/5 PASS, 1/5 MARGINAL (Sideways rezim) — Strategija je challenge-ready za bull/bear, ampak rabi dodaten sideways filter ali manjso pozicijo v chop obdobjih.</span>
   </div>
 
   <div style="margin-top:16px; padding:16px; background:#1a1a2e; border-radius:12px; border:1px solid #333;">
-    <h3 style="font-size:13px; color:#888; margin-bottom:8px;">Priporocila pred Challengeom</h3>
+    <h3 style="font-size:13px; color:#888; margin-bottom:8px;"><span class="lang-en">Recommendations Before the Challenge</span><span class="lang-si" style="display:none">Priporocila pred Challengeom</span></h3>
     <div style="font-size:13px; line-height:2;">
-      1. Zmanjsaj position size na <strong style="color:#e94560;">70%</strong> normalne velikosti (DD buffer)<br>
+      <span class="lang-en">1. Reduce position size to <strong style="color:#e94560;">70%</strong> of normal size (DD buffer)<br>
+      2. Block trades when Quality Score &lt; <strong style="color:#e94560;">6.5</strong> (challenge mode)<br>
+      3. If you're on Day 25+ and profit &lt; 5%, <strong style="color:#ffc107;">do not increase risk</strong> — switch to FundedNext (unlimited) instead<br>
+      4. Sideways detection: if ATR drops below <strong style="color:#e94560;">2.0%</strong> for 3+ days, pause trading for 24h</span><span class="lang-si" style="display:none">1. Zmanjsaj position size na <strong style="color:#e94560;">70%</strong> normalne velikosti (DD buffer)<br>
       2. Blokiraj trade ko Quality Score &lt; <strong style="color:#e94560;">6.5</strong> (challenge mode)<br>
       3. Ce si na Dan 25+ in profit &lt; 5%, <strong style="color:#ffc107;">ne povecuj tveganja</strong> — raje podaljsaj na FundedNext (neomejeno)<br>
-      4. Sideways detection: ce ATR pade pod <strong style="color:#e94560;">2.0%</strong> za 3+ dni, prekini trading za 24h
+      4. Sideways detection: ce ATR pade pod <strong style="color:#e94560;">2.0%</strong> za 3+ dni, prekini trading za 24h</span>
     </div>
   </div>
 </div>
 
 <script>
+var currentLang = 'en';
+function setLang(lang){
+  currentLang = lang;
+  document.querySelectorAll('.lang-en').forEach(function(el){el.style.display=lang==='en'?'':'none';});
+  document.querySelectorAll('.lang-si').forEach(function(el){el.style.display=lang==='si'?'':'none';});
+  document.getElementById('btn-en').style.background=lang==='en'?'#1a56db':'#2a2a4a';
+  document.getElementById('btn-en').style.color=lang==='en'?'#fff':'#9ba3b5';
+  document.getElementById('btn-si').style.background=lang==='si'?'#1a56db':'#2a2a4a';
+  document.getElementById('btn-si').style.color=lang==='si'?'#fff':'#9ba3b5';
+  document.documentElement.lang = lang === 'en' ? 'en' : 'sl';
+  var sel = document.getElementById('speed-select');
+  var opts = lang === 'en'
+    ? ['1 day / sec','Realtime','Fast (skip no-trade days)']
+    : ['1 dan / sec','Realtime','Hitro (preskok dni brez tradov)'];
+  sel.innerHTML = '';
+  opts.forEach(function(t){ var o = document.createElement('option'); o.textContent = t; sel.appendChild(o); });
+}
+
 function switchTab(n) {
-  document.querySelectorAll('.tab').forEach((t,i) => {
+  document.querySelectorAll('.tab').forEach(function(t,i){
     t.classList.toggle('active', i===n);
   });
-  document.querySelectorAll('.screen').forEach((s,i) => {
+  document.querySelectorAll('.screen').forEach(function(s,i){
     s.classList.toggle('active', i===n);
   });
 }
 
 function selectFirm(el) {
-  document.querySelectorAll('.firm-card').forEach(c => c.classList.remove('selected'));
+  document.querySelectorAll('.firm-card').forEach(function(c){ c.classList.remove('selected'); });
   el.classList.add('selected');
 }
 
 function startTraining() {
-  alert('Training simulation bi v produkciji predvajal challenge dan-za-dnem z realnimi podatki. Demo verzija prikazuje staticne rezultate.');
+  var msg = currentLang === 'en'
+    ? 'Training simulation would play through the challenge day-by-day with real data in production. The demo version shows static results.'
+    : 'Training simulation bi v produkciji predvajal challenge dan-za-dnem z realnimi podatki. Demo verzija prikazuje staticne rezultate.';
+  alert(msg);
 }
 </script>
 

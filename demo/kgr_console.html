@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="sl">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -134,6 +134,10 @@ body { font-family: system-ui,-apple-system,sans-serif; background:var(--bg); co
 </head>
 <body>
 
+<div style="text-align:right;padding:8px 20px">
+  <button onclick="setLang('en')" id="btn-en" style="background:#1a56db;color:#fff;border:none;padding:4px 14px;border-radius:6px 0 0 6px;font-size:12px;font-weight:600;cursor:pointer">EN</button><button onclick="setLang('si')" id="btn-si" style="background:#2a2a4a;color:#9ba3b5;border:none;padding:4px 14px;border-radius:0 6px 6px 0;font-size:12px;font-weight:600;cursor:pointer">SI</button>
+</div>
+
 <div class="header">
   <h1>KGR Console</h1>
   <span class="badge">Knowledge Guard Review</span>
@@ -142,34 +146,34 @@ body { font-family: system-ui,-apple-system,sans-serif; background:var(--bg); co
 
 <div class="container">
   <div class="tabs">
-    <button class="tab active" onclick="showTab('submit')">Nova hipoteza</button>
+    <button class="tab active" onclick="showTab('submit')"><span class="lang-en">New Hypothesis</span><span class="lang-si" style="display:none">Nova hipoteza</span></button>
     <button class="tab" onclick="showTab('live')">Live Review</button>
-    <button class="tab" onclick="showTab('history')">Zgodovina</button>
+    <button class="tab" onclick="showTab('history')"><span class="lang-en">History</span><span class="lang-si" style="display:none">Zgodovina</span></button>
     <button class="tab" onclick="showTab('config')">Config</button>
   </div>
 
   <!-- SUBMIT -->
   <div id="tab-submit" class="tab-content">
     <div class="form-card">
-      <h2>Submittaj hipotezo za KGR review</h2>
+      <h2><span class="lang-en">Submit a hypothesis for KGR review</span><span class="lang-si" style="display:none">Submittaj hipotezo za KGR review</span></h2>
       <div class="field">
-        <label>Hypothesis</label>
-        <input id="fTitle" placeholder="Kaj hočeš spremeniti? (1 stavek)">
+        <label><span class="lang-en">Hypothesis</span><span class="lang-si" style="display:none">Hipoteza</span></label>
+        <input id="fTitle" placeholder="What do you want to change? (1 sentence)">
       </div>
       <div class="field">
-        <label>Claimed</label>
-        <textarea id="fClaimed" placeholder="Kaj pričakuješ da se bo zgodilo?"></textarea>
+        <label><span class="lang-en">Claimed</span><span class="lang-si" style="display:none">Trditev</span></label>
+        <textarea id="fClaimed" placeholder="What do you expect to happen?"></textarea>
       </div>
       <div class="field">
-        <label>Evidence (Tier + data)</label>
-        <textarea id="fEvidence" placeholder="Tier 2 — WFA 5/5, 4 leta, 25 coinov..."></textarea>
+        <label><span class="lang-en">Evidence (Tier + data)</span><span class="lang-si" style="display:none">Dokazi (Tier + podatki)</span></label>
+        <textarea id="fEvidence" placeholder="Tier 2 — WFA 5/5, 4 years, 25 coins..."></textarea>
       </div>
       <div class="field">
-        <label>Question</label>
-        <textarea id="fQuestion" placeholder="Kaj naj reviewerji ocenijo?"></textarea>
+        <label><span class="lang-en">Question</span><span class="lang-si" style="display:none">Vprašanje</span></label>
+        <textarea id="fQuestion" placeholder="What should reviewers evaluate?"></textarea>
       </div>
       <div class="field">
-        <label>Priority</label>
+        <label><span class="lang-en">Priority</span><span class="lang-si" style="display:none">Prioriteta</span></label>
         <select id="fPriority">
           <option value="P0">P0 — Critical</option>
           <option value="P1">P1 — Real Capital</option>
@@ -177,15 +181,15 @@ body { font-family: system-ui,-apple-system,sans-serif; background:var(--bg); co
           <option value="P3">P3 — Research</option>
         </select>
       </div>
-      <button class="btn btn-primary" id="btnSubmit" onclick="submitReview()">Poženi KGR Review</button>
+      <button class="btn btn-primary" id="btnSubmit" onclick="submitReview()"><span class="lang-en">Run KGR Review</span><span class="lang-si" style="display:none">Poženi KGR Review</span></button>
     </div>
   </div>
 
   <!-- LIVE -->
   <div id="tab-live" class="tab-content hidden">
     <div id="liveEmpty" style="text-align:center;padding:60px;color:#94a3b8;">
-      <p style="font-size:16px;">Ni aktivnega reviewa.</p>
-      <p style="font-size:13px;margin-top:4px;">Submittaj hipotezo za začetek.</p>
+      <p style="font-size:16px;"><span class="lang-en">No active review.</span><span class="lang-si" style="display:none">Ni aktivnega reviewa.</span></p>
+      <p style="font-size:13px;margin-top:4px;"><span class="lang-en">Submit a hypothesis to start.</span><span class="lang-si" style="display:none">Submittaj hipotezo za začetek.</span></p>
     </div>
     <div id="liveFlow" class="flow hidden"></div>
   </div>
@@ -198,38 +202,38 @@ body { font-family: system-ui,-apple-system,sans-serif; background:var(--bg); co
   <!-- CONFIG -->
   <div id="tab-config" class="tab-content hidden">
     <div class="cfg-section">
-      <h3>&#9878; KGR Sestava — izberi AI za vsako vlogo</h3>
-      <p style="font-size:12px;color:var(--muted);margin-bottom:16px;">Vloge (skeptik, optimist, arbiter) so fiksne — VEGA protokol. AI-ji so zamenljivi. API ključi se hranijo lokalno v brskalniku.</p>
+      <h3>&#9878; <span class="lang-en">KGR Composition — choose AI for each role</span><span class="lang-si" style="display:none">KGR Sestava — izberi AI za vsako vlogo</span></h3>
+      <p style="font-size:12px;color:var(--muted);margin-bottom:16px;"><span class="lang-en">Roles (skeptic, optimist, arbiter) are fixed — VEGA protocol. AIs are interchangeable. API keys are stored locally in your browser.</span><span class="lang-si" style="display:none">Vloge (skeptik, optimist, arbiter) so fiksne — VEGA protokol. AI-ji so zamenljivi. API ključi se hranijo lokalno v brskalniku.</span></p>
 
       <div class="cfg-role-card">
         <div class="cfg-role-head">
-          <span class="reviewer-role role-skeptic">SKEPTIK</span>
+          <span class="reviewer-role role-skeptic"><span class="lang-en">SKEPTIC</span><span class="lang-si" style="display:none">SKEPTIK</span></span>
           <span style="font-size:14px;font-weight:600;" id="cfg-name-skeptic">—</span>
         </div>
-        <div class="cfg-role-desc">Aktivno išče napake, tveganja in pomanjkljivosti. Privzeto zavrne — odobri samo z močnim dokazom.</div>
+        <div class="cfg-role-desc"><span class="lang-en">Actively looks for flaws, risks, and weaknesses. Rejects by default — approves only with strong evidence.</span><span class="lang-si" style="display:none">Aktivno išče napake, tveganja in pomanjkljivosti. Privzeto zavrne — odobri samo z močnim dokazom.</span></div>
         <div class="cfg-row">
           <div><label>AI Provider</label><select id="cfg-adapter-skeptic" onchange="cfgAdapterChange('skeptic')"><option value="deepseek">DeepSeek</option><option value="openai">OpenAI</option><option value="gemini">Google Gemini</option><option value="claude">Anthropic Claude</option><option value="kimi">Moonshot Kimi</option></select></div>
           <div><label>Model</label><select id="cfg-model-skeptic"></select></div>
         </div>
         <div class="cfg-row">
-          <div><label>API Ključ</label><input type="password" id="cfg-key-skeptic" placeholder="sk-... ali AIza..."></div>
-          <div style="display:flex;align-items:flex-end;"><button class="btn" style="font-size:12px;padding:8px 14px;background:var(--bg);border:1px solid var(--border);" onclick="cfgTestKey('skeptic')">Testiraj</button></div>
+          <div><label><span class="lang-en">API Key</span><span class="lang-si" style="display:none">API Ključ</span></label><input type="password" id="cfg-key-skeptic" placeholder="sk-... or AIza..."></div>
+          <div style="display:flex;align-items:flex-end;"><button class="btn" style="font-size:12px;padding:8px 14px;background:var(--bg);border:1px solid var(--border);" onclick="cfgTestKey('skeptic')"><span class="lang-en">Test</span><span class="lang-si" style="display:none">Testiraj</span></button></div>
         </div>
       </div>
 
       <div class="cfg-role-card">
         <div class="cfg-role-head">
-          <span class="reviewer-role role-optimist">OPTIMIST</span>
+          <span class="reviewer-role role-optimist"><span class="lang-en">OPTIMIST</span><span class="lang-si" style="display:none">OPTIMIST</span></span>
           <span style="font-size:14px;font-weight:600;" id="cfg-name-optimist">—</span>
         </div>
-        <div class="cfg-role-desc">Išče razloge zakaj sprememba deluje. Privzeto odobri — zavrne samo ob jasnem tveganju.</div>
+        <div class="cfg-role-desc"><span class="lang-en">Looks for reasons why the change works. Approves by default — rejects only when there is clear risk.</span><span class="lang-si" style="display:none">Išče razloge zakaj sprememba deluje. Privzeto odobri — zavrne samo ob jasnem tveganju.</span></div>
         <div class="cfg-row">
           <div><label>AI Provider</label><select id="cfg-adapter-optimist" onchange="cfgAdapterChange('optimist')"><option value="openai">OpenAI</option><option value="deepseek">DeepSeek</option><option value="gemini">Google Gemini</option><option value="claude">Anthropic Claude</option><option value="kimi">Moonshot Kimi</option></select></div>
           <div><label>Model</label><select id="cfg-model-optimist"></select></div>
         </div>
         <div class="cfg-row">
-          <div><label>API Ključ</label><input type="password" id="cfg-key-optimist" placeholder="sk-... ali AIza..."></div>
-          <div style="display:flex;align-items:flex-end;"><button class="btn" style="font-size:12px;padding:8px 14px;background:var(--bg);border:1px solid var(--border);" onclick="cfgTestKey('optimist')">Testiraj</button></div>
+          <div><label><span class="lang-en">API Key</span><span class="lang-si" style="display:none">API Ključ</span></label><input type="password" id="cfg-key-optimist" placeholder="sk-... or AIza..."></div>
+          <div style="display:flex;align-items:flex-end;"><button class="btn" style="font-size:12px;padding:8px 14px;background:var(--bg);border:1px solid var(--border);" onclick="cfgTestKey('optimist')"><span class="lang-en">Test</span><span class="lang-si" style="display:none">Testiraj</span></button></div>
         </div>
       </div>
 
@@ -238,31 +242,37 @@ body { font-family: system-ui,-apple-system,sans-serif; background:var(--bg); co
           <span class="reviewer-role role-arbiter">ARBITER</span>
           <span style="font-size:14px;font-weight:600;" id="cfg-name-arbiter">—</span>
         </div>
-        <div class="cfg-role-desc">Sintetizira obe mnenji. Ne glasuje — presodi ali je konsenz dosežen ali je potreben R2/R3.</div>
+        <div class="cfg-role-desc"><span class="lang-en">Synthesizes both opinions. Does not vote — decides whether consensus is reached or R2/R3 is needed.</span><span class="lang-si" style="display:none">Sintetizira obe mnenji. Ne glasuje — presodi ali je konsenz dosežen ali je potreben R2/R3.</span></div>
         <div class="cfg-row">
           <div><label>AI Provider</label><select id="cfg-adapter-arbiter" onchange="cfgAdapterChange('arbiter')"><option value="claude">Anthropic Claude</option><option value="openai">OpenAI</option><option value="deepseek">DeepSeek</option><option value="gemini">Google Gemini</option><option value="kimi">Moonshot Kimi</option></select></div>
           <div><label>Model</label><select id="cfg-model-arbiter"></select></div>
         </div>
         <div class="cfg-row">
-          <div><label>API Ključ</label><input type="password" id="cfg-key-arbiter" placeholder="sk-... ali AIza..."></div>
-          <div style="display:flex;align-items:flex-end;"><button class="btn" style="font-size:12px;padding:8px 14px;background:var(--bg);border:1px solid var(--border);" onclick="cfgTestKey('arbiter')">Testiraj</button></div>
+          <div><label><span class="lang-en">API Key</span><span class="lang-si" style="display:none">API Ključ</span></label><input type="password" id="cfg-key-arbiter" placeholder="sk-... or AIza..."></div>
+          <div style="display:flex;align-items:flex-end;"><button class="btn" style="font-size:12px;padding:8px 14px;background:var(--bg);border:1px solid var(--border);" onclick="cfgTestKey('arbiter')"><span class="lang-en">Test</span><span class="lang-si" style="display:none">Testiraj</span></button></div>
         </div>
       </div>
 
       <div class="cfg-actions">
-        <button class="btn btn-primary" onclick="cfgSave()">Shrani konfiguracijo</button>
-        <button class="btn" style="background:var(--bg);border:1px solid var(--border);" onclick="cfgReset()">Ponastavi</button>
+        <button class="btn btn-primary" onclick="cfgSave()"><span class="lang-en">Save configuration</span><span class="lang-si" style="display:none">Shrani konfiguracijo</span></button>
+        <button class="btn" style="background:var(--bg);border:1px solid var(--border);" onclick="cfgReset()"><span class="lang-en">Reset</span><span class="lang-si" style="display:none">Ponastavi</span></button>
       </div>
       <div id="cfgStatus"></div>
     </div>
 
     <div class="cfg-section">
-      <h3>&#128273; Kako dobim API ključ?</h3>
+      <h3>&#128273; <span class="lang-en">How do I get an API key?</span><span class="lang-si" style="display:none">Kako dobim API ključ?</span></h3>
       <div class="guide-grid">
         <div class="guide-card">
-          <h4>Google Gemini <span class="guide-free yes">BREZPLAČNO</span></h4>
+          <h4>Google Gemini <span class="guide-free yes"><span class="lang-en">FREE</span><span class="lang-si" style="display:none">BREZPLAČNO</span></span></h4>
           <div class="guide-url">aistudio.google.com/apikey</div>
-          <ol>
+          <ol class="lang-en">
+            <li>Open Google AI Studio</li>
+            <li>Sign in with your Google account</li>
+            <li>Click "Create API key"</li>
+            <li>Copy the key (starts with AIza...)</li>
+          </ol>
+          <ol class="lang-si" style="display:none">
             <li>Odpri Google AI Studio</li>
             <li>Prijavi se z Google računom</li>
             <li>Klikni "Create API key"</li>
@@ -270,9 +280,15 @@ body { font-family: system-ui,-apple-system,sans-serif; background:var(--bg); co
           </ol>
         </div>
         <div class="guide-card">
-          <h4>DeepSeek <span class="guide-free no">KREDIT</span></h4>
+          <h4>DeepSeek <span class="guide-free no"><span class="lang-en">CREDIT</span><span class="lang-si" style="display:none">KREDIT</span></span></h4>
           <div class="guide-url">platform.deepseek.com/api_keys</div>
-          <ol>
+          <ol class="lang-en">
+            <li>Register at platform.deepseek.com</li>
+            <li>Add credit (min $2)</li>
+            <li>API Keys → Create new key</li>
+            <li>Copy the key (starts with sk-...)</li>
+          </ol>
+          <ol class="lang-si" style="display:none">
             <li>Registriraj se na platform.deepseek.com</li>
             <li>Dodaj kredit (min $2)</li>
             <li>API Keys → Create new key</li>
@@ -280,9 +296,15 @@ body { font-family: system-ui,-apple-system,sans-serif; background:var(--bg); co
           </ol>
         </div>
         <div class="guide-card">
-          <h4>OpenAI (GPT-4o) <span class="guide-free no">KREDIT</span></h4>
+          <h4>OpenAI (GPT-4o) <span class="guide-free no"><span class="lang-en">CREDIT</span><span class="lang-si" style="display:none">KREDIT</span></span></h4>
           <div class="guide-url">platform.openai.com/api-keys</div>
-          <ol>
+          <ol class="lang-en">
+            <li>Register at platform.openai.com</li>
+            <li>Add credit (min $5)</li>
+            <li>API keys → Create new secret key</li>
+            <li>Copy the key (starts with sk-...)</li>
+          </ol>
+          <ol class="lang-si" style="display:none">
             <li>Registriraj se na platform.openai.com</li>
             <li>Dodaj kredit (min $5)</li>
             <li>API keys → Create new secret key</li>
@@ -290,9 +312,15 @@ body { font-family: system-ui,-apple-system,sans-serif; background:var(--bg); co
           </ol>
         </div>
         <div class="guide-card">
-          <h4>Anthropic Claude <span class="guide-free no">KREDIT</span></h4>
+          <h4>Anthropic Claude <span class="guide-free no"><span class="lang-en">CREDIT</span><span class="lang-si" style="display:none">KREDIT</span></span></h4>
           <div class="guide-url">console.anthropic.com/settings/keys</div>
-          <ol>
+          <ol class="lang-en">
+            <li>Register at console.anthropic.com</li>
+            <li>Add credit (min $5)</li>
+            <li>Settings → API Keys → Create Key</li>
+            <li>Copy the key (starts with sk-ant-...)</li>
+          </ol>
+          <ol class="lang-si" style="display:none">
             <li>Registriraj se na console.anthropic.com</li>
             <li>Dodaj kredit (min $5)</li>
             <li>Settings → API Keys → Create Key</li>
@@ -300,11 +328,11 @@ body { font-family: system-ui,-apple-system,sans-serif; background:var(--bg); co
           </ol>
         </div>
       </div>
-      <p style="font-size:11px;color:var(--muted);margin-top:12px;">&#128274; API ključi se hranijo izključno v localStorage tvojega brskalnika. Ne pošiljajo se nikamor razen direktno do AI providerja med review-om.</p>
+      <p style="font-size:11px;color:var(--muted);margin-top:12px;">&#128274; <span class="lang-en">API keys are stored exclusively in your browser's localStorage. They are never sent anywhere except directly to the AI provider during a review.</span><span class="lang-si" style="display:none">API ključi se hranijo izključno v localStorage tvojega brskalnika. Ne pošiljajo se nikamor razen direktno do AI providerja med review-om.</span></p>
     </div>
 
     <div class="cfg-section">
-      <h3>&#128196; Trenutni kgr.config.json (strežnik)</h3>
+      <h3>&#128196; <span class="lang-en">Current kgr.config.json (server)</span><span class="lang-si" style="display:none">Trenutni kgr.config.json (strežnik)</span></h3>
       <div id="configJsonView" style="font-size:12px;"></div>
     </div>
   </div>
@@ -314,6 +342,32 @@ body { font-family: system-ui,-apple-system,sans-serif; background:var(--bg); co
 
 <script>
 const API = '';
+var currentLang = 'en';
+
+function setLang(lang){
+  currentLang = lang;
+  document.querySelectorAll('.lang-en').forEach(el=>el.style.display=lang==='en'?'':'none');
+  document.querySelectorAll('.lang-si').forEach(el=>el.style.display=lang==='si'?'':'none');
+  document.getElementById('btn-en').style.background=lang==='en'?'#1a56db':'#2a2a4a';
+  document.getElementById('btn-en').style.color=lang==='en'?'#fff':'#9ba3b5';
+  document.getElementById('btn-si').style.background=lang==='si'?'#1a56db':'#2a2a4a';
+  document.getElementById('btn-si').style.color=lang==='si'?'#fff':'#9ba3b5';
+  // Update placeholders
+  var ph = lang === 'en' ? {
+    fTitle: 'What do you want to change? (1 sentence)',
+    fClaimed: 'What do you expect to happen?',
+    fEvidence: 'Tier 2 — WFA 5/5, 4 years, 25 coins...',
+    fQuestion: 'What should reviewers evaluate?',
+    'cfg-key-skeptic': 'sk-... or AIza...', 'cfg-key-optimist': 'sk-... or AIza...', 'cfg-key-arbiter': 'sk-... or AIza...'
+  } : {
+    fTitle: 'Kaj hočeš spremeniti? (1 stavek)',
+    fClaimed: 'Kaj pričakuješ da se bo zgodilo?',
+    fEvidence: 'Tier 2 — WFA 5/5, 4 leta, 25 coinov...',
+    fQuestion: 'Kaj naj reviewerji ocenijo?',
+    'cfg-key-skeptic': 'sk-... ali AIza...', 'cfg-key-optimist': 'sk-... ali AIza...', 'cfg-key-arbiter': 'sk-... ali AIza...'
+  };
+  Object.keys(ph).forEach(function(id){ var el=document.getElementById(id); if(el) el.placeholder=ph[id]; });
+}
 
 function showTab(name) {
   document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
@@ -327,7 +381,7 @@ function showTab(name) {
 async function submitReview() {
   const btn = document.getElementById('btnSubmit');
   btn.disabled = true;
-  btn.textContent = 'Pošiljam...';
+  btn.textContent = currentLang === 'en' ? 'Sending...' : 'Pošiljam...';
 
   const body = {
     title: document.getElementById('fTitle').value,
@@ -366,7 +420,7 @@ async function submitReview() {
     alert('Error: ' + e.message);
   } finally {
     btn.disabled = false;
-    btn.textContent = 'Poženi KGR Review';
+    btn.innerHTML = '<span class="lang-en"'+(currentLang==='en'?'':' style="display:none"')+'>Run KGR Review</span><span class="lang-si"'+(currentLang==='si'?'':' style="display:none"')+'>Poženi KGR Review</span>';
   }
 }
 
@@ -420,7 +474,7 @@ function handleEvent(ev, flow) {
             <span class="reviewer-adapter">${ev.adapter} / ${ev.model}</span>
           </div>
           <div class="reviewer-response" id="resp-${ev.name}">
-            <span class="spinner"></span> Čakam odgovor...
+            <span class="spinner"></span> <span class="lang-en"${currentLang==='en'?'':' style="display:none"'}>Waiting for response...</span><span class="lang-si"${currentLang==='si'?'':' style="display:none"'}>Čakam odgovor...</span>
           </div>
         </div>
       `);
@@ -477,7 +531,7 @@ function handleEvent(ev, flow) {
             <span class="reviewer-adapter">${ev.adapter} / ${ev.model}</span>
           </div>
           <div class="reviewer-response" id="resp-arbiter-synth">
-            <span class="spinner"></span> Synthesizing...
+            <span class="spinner"></span> <span class="lang-en"${currentLang==='en'?'':' style="display:none"'}>Synthesizing...</span><span class="lang-si"${currentLang==='si'?'':' style="display:none"'}>Sintetiziram...</span>
           </div>
         </div>`;
     }
@@ -533,7 +587,7 @@ async function loadHistory() {
     const res = await fetch(API + '/api/history');
     const data = await res.json();
     if (!data.length) {
-      list.innerHTML = '<p style="text-align:center;padding:40px;color:#94a3b8;">Ni še reviewov.</p>';
+      list.innerHTML = '<p style="text-align:center;padding:40px;color:#94a3b8;">' + (currentLang === 'en' ? 'No reviews yet.' : 'Ni še reviewov.') + '</p>';
       return;
     }
     list.innerHTML = data.map(h => `
@@ -541,7 +595,7 @@ async function loadHistory() {
         <span class="history-id">${esc(h.id)}</span>
         <span class="history-title">${esc(h.title)}</span>
         <span class="verdict-pill verdict-${(h.verdict||'').toLowerCase()}">${h.verdict}</span>
-        <span class="history-time">${h.timestamp ? new Date(h.timestamp).toLocaleString('sl') : ''}</span>
+        <span class="history-time">${h.timestamp ? new Date(h.timestamp).toLocaleString(currentLang === 'en' ? 'en-GB' : 'sl') : ''}</span>
       </div>
     `).join('');
   } catch(e) {
@@ -643,7 +697,7 @@ function cfgSave() {
   localStorage.setItem('kgr_keys', JSON.stringify(keys));
 
   const st = document.getElementById('cfgStatus');
-  st.innerHTML = '<div class="cfg-status cfg-ok">&#10003; Konfiguracija shranjena v brskalnik. Ob naslednjem review-u se uporabijo novi nastavki.</div>';
+  st.innerHTML = '<div class="cfg-status cfg-ok">&#10003; ' + (currentLang === 'en' ? 'Configuration saved to browser. New settings will be used on the next review.' : 'Konfiguracija shranjena v brskalnik. Ob naslednjem review-u se uporabijo novi nastavki.') + '</div>';
   setTimeout(() => { st.innerHTML = ''; }, 4000);
   cfgUpdateSummary();
 }
@@ -657,14 +711,14 @@ function cfgReset() {
     cfgAdapterChange(role);
   });
   const st = document.getElementById('cfgStatus');
-  st.innerHTML = '<div class="cfg-status cfg-warn">Konfiguracija ponastavljena. Uporablja se strežniški config.</div>';
+  st.innerHTML = '<div class="cfg-status cfg-warn">' + (currentLang === 'en' ? 'Configuration reset. Using server config.' : 'Konfiguracija ponastavljena. Uporablja se strežniški config.') + '</div>';
   setTimeout(() => { st.innerHTML = ''; }, 4000);
   cfgUpdateSummary();
 }
 
 function cfgTestKey(role) {
   const key = document.getElementById('cfg-key-' + role).value.trim();
-  if (!key) { alert('Vnesi API ključ.'); return; }
+  if (!key) { alert(currentLang === 'en' ? 'Enter an API key.' : 'Vnesi API ključ.'); return; }
   const adapter = document.getElementById('cfg-adapter-' + role).value;
   const prefix = key.substring(0, 6);
   let ok = false;
@@ -674,9 +728,13 @@ function cfgTestKey(role) {
   if (adapter === 'claude' && key.startsWith('sk-ant-')) ok = true;
   if (adapter === 'kimi' && key.startsWith('sk-')) ok = true;
   if (ok) {
-    alert('Format ključa izgleda pravilen (' + prefix + '...). Dejanski test se izvede ob prvem review-u.');
+    alert(currentLang === 'en'
+      ? 'Key format looks correct (' + prefix + '...). Actual test will run on the first review.'
+      : 'Format ključa izgleda pravilen (' + prefix + '...). Dejanski test se izvede ob prvem review-u.');
   } else {
-    alert('Opozorilo: format ključa (' + prefix + '...) ne ustreza pričakovanemu za ' + ADAPTER_NAMES[adapter] + '. Preveri ali je pravilen.');
+    alert(currentLang === 'en'
+      ? 'Warning: key format (' + prefix + '...) does not match expected format for ' + ADAPTER_NAMES[adapter] + '. Check if it is correct.'
+      : 'Opozorilo: format ključa (' + prefix + '...) ne ustreza pričakovanemu za ' + ADAPTER_NAMES[adapter] + '. Preveri ali je pravilen.');
   }
 }
 
@@ -725,7 +783,7 @@ async function loadConfig() {
     }
   } catch(e) {
     const view = document.getElementById('configJsonView');
-    if (view) view.innerHTML = '<p style="color:var(--muted);font-size:12px;">Strežnik ni dosegljiv — uporabi lokalno konfiguracijo.</p>';
+    if (view) view.innerHTML = '<p style="color:var(--muted);font-size:12px;">' + (currentLang === 'en' ? 'Server not reachable — using local configuration.' : 'Strežnik ni dosegljiv — uporabi lokalno konfiguracijo.') + '</p>';
   }
 }
 

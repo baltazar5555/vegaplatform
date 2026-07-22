@@ -158,11 +158,14 @@ table.matrix td.row-h{text-align:left;position:sticky;left:0;background:var(--ca
 </style>
 
 <div class="container">
+<div style="text-align:right;padding:8px 20px">
+  <button onclick="setLang('en')" id="btn-en" style="background:#1a56db;color:#fff;border:none;padding:4px 14px;border-radius:6px 0 0 6px;font-size:12px;font-weight:600;cursor:pointer">EN</button><button onclick="setLang('si')" id="btn-si" style="background:#2a2a4a;color:#9ba3b5;border:none;padding:4px 14px;border-radius:0 6px 6px 0;font-size:12px;font-weight:600;cursor:pointer">SI</button>
+</div>
   <a href="../" class="back-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5m0 0l7 7m-7-7l7-7"/></svg> vegaplatform.app</a>
 
   <div class="page-header">
-    <h1>Document <span>Governance</span> in Action</h1>
-    <p>How VEGA manages regulatory documents from intake to compliance. Real architecture, anonymized data.</p>
+    <h1><span class="lang-en">Document <span>Governance</span> in Action</span><span class="lang-si" style="display:none">Dokumentno <span>upravljanje</span> v praksi</span></h1>
+    <p><span class="lang-en">How VEGA manages regulatory documents from intake to compliance. Real architecture, anonymized data.</span><span class="lang-si" style="display:none">Kako VEGA upravlja regulatorne dokumente od vnosa do skladnosti. Resni&#269;na arhitektura, anonimizirani podatki.</span></p>
   </div>
 
   <div class="modules">
@@ -170,212 +173,214 @@ table.matrix td.row-h{text-align:left;position:sticky;left:0;background:var(--ca
     <!-- MODULE 1: Document Pipeline -->
     <div class="module">
       <div class="module-header">
-        <div class="module-num">Module 1</div>
-        <div class="module-title">Document Lifecycle Pipeline</div>
-        <div class="module-desc">Every document flows through 6 phases. No document skips a phase.</div>
+        <div class="module-num"><span class="lang-en">Module 1</span><span class="lang-si" style="display:none">Modul 1</span></div>
+        <div class="module-title"><span class="lang-en">Document Lifecycle Pipeline</span><span class="lang-si" style="display:none">Življenjski cikel dokumentov</span></div>
+        <div class="module-desc"><span class="lang-en">Every document flows through 6 phases. No document skips a phase.</span><span class="lang-si" style="display:none">Vsak dokument potuje skozi 6 faz. Noben dokument ne presko&#269;i faze.</span></div>
       </div>
       <div class="module-screen">
         <div class="pipeline">
           <div class="pipe-stage">
-            <div class="pipe-label">Approved <span class="pipe-count">34</span></div>
+            <div class="pipe-label"><span class="lang-en">Approved</span><span class="lang-si" style="display:none">Odobreno</span> <span class="pipe-count">34</span></div>
             <div class="pipe-items">
-              <span class="doc-chip chip-green">D-001 Statute</span>
-              <span class="doc-chip chip-green">D-004 Quality Manual</span>
-              <span class="doc-chip chip-green">D-007 Board Rules</span>
-              <span class="doc-chip chip-green">D-012 Expert Policy</span>
-              <span class="doc-chip chip-green">D-019 Risk Register</span>
-              <span class="doc-chip chip-green" style="opacity:0.6">+29 more</span>
+              <span class="doc-chip chip-green"><span class="lang-en">D-001 Statute</span><span class="lang-si" style="display:none">D-001 Statut</span></span>
+              <span class="doc-chip chip-green"><span class="lang-en">D-004 Quality Manual</span><span class="lang-si" style="display:none">D-004 Priročnik kakovosti</span></span>
+              <span class="doc-chip chip-green"><span class="lang-en">D-007 Board Rules</span><span class="lang-si" style="display:none">D-007 Poslovnik sveta</span></span>
+              <span class="doc-chip chip-green"><span class="lang-en">D-012 Expert Policy</span><span class="lang-si" style="display:none">D-012 Strokovni pravilnik</span></span>
+              <span class="doc-chip chip-green"><span class="lang-en">D-019 Risk Register</span><span class="lang-si" style="display:none">D-019 Register tveganj</span></span>
+              <span class="doc-chip chip-green" style="opacity:0.6"><span class="lang-en">+29 more</span><span class="lang-si" style="display:none">+29 ve&#269;</span></span>
             </div>
           </div>
           <div class="pipe-stage">
-            <div class="pipe-label">AI Review <span class="pipe-count">8</span></div>
+            <div class="pipe-label"><span class="lang-en">AI Review</span><span class="lang-si" style="display:none">AI pregled</span> <span class="pipe-count">8</span></div>
             <div class="pipe-items">
-              <span class="doc-chip chip-yellow">D-041 Fire Safety</span>
-              <span class="doc-chip chip-yellow">D-052 Waste Protocol</span>
-              <span class="doc-chip chip-yellow">D-058 Incident Report</span>
-              <span class="doc-chip chip-yellow" style="opacity:0.6">+5 more</span>
+              <span class="doc-chip chip-yellow"><span class="lang-en">D-041 Fire Safety</span><span class="lang-si" style="display:none">D-041 Požarna varnost</span></span>
+              <span class="doc-chip chip-yellow"><span class="lang-en">D-052 Waste Protocol</span><span class="lang-si" style="display:none">D-052 Protokol odpadkov</span></span>
+              <span class="doc-chip chip-yellow"><span class="lang-en">D-058 Incident Report</span><span class="lang-si" style="display:none">D-058 Poročilo o incidentu</span></span>
+              <span class="doc-chip chip-yellow" style="opacity:0.6"><span class="lang-en">+5 more</span><span class="lang-si" style="display:none">+5 ve&#269;</span></span>
             </div>
           </div>
           <div class="pipe-stage">
-            <div class="pipe-label">Verification <span class="pipe-count">12</span></div>
+            <div class="pipe-label"><span class="lang-en">Verification</span><span class="lang-si" style="display:none">Verifikacija</span> <span class="pipe-count">12</span></div>
             <div class="pipe-items">
-              <span class="doc-chip chip-purple">D-023 Privacy Policy</span>
-              <span class="doc-chip chip-purple">D-031 Employment</span>
-              <span class="doc-chip chip-purple">D-044 Maintenance</span>
-              <span class="doc-chip chip-purple" style="opacity:0.6">+9 more</span>
+              <span class="doc-chip chip-purple"><span class="lang-en">D-023 Privacy Policy</span><span class="lang-si" style="display:none">D-023 Pravilnik o zasebnosti</span></span>
+              <span class="doc-chip chip-purple"><span class="lang-en">D-031 Employment</span><span class="lang-si" style="display:none">D-031 Zaposlovanje</span></span>
+              <span class="doc-chip chip-purple"><span class="lang-en">D-044 Maintenance</span><span class="lang-si" style="display:none">D-044 Vzdrževanje</span></span>
+              <span class="doc-chip chip-purple" style="opacity:0.6"><span class="lang-en">+9 more</span><span class="lang-si" style="display:none">+9 ve&#269;</span></span>
             </div>
           </div>
           <div class="pipe-stage">
             <div class="pipe-label">OCR <span class="pipe-count">14</span></div>
             <div class="pipe-items">
-              <span class="doc-chip chip-blue">D-055 Amendment v3</span>
-              <span class="doc-chip chip-blue">D-061 Procedure 014</span>
-              <span class="doc-chip chip-blue">D-067 Internal Audit</span>
-              <span class="doc-chip chip-blue" style="opacity:0.6">+11 more</span>
+              <span class="doc-chip chip-blue"><span class="lang-en">D-055 Amendment v3</span><span class="lang-si" style="display:none">D-055 Dopolnitev v3</span></span>
+              <span class="doc-chip chip-blue"><span class="lang-en">D-061 Procedure 014</span><span class="lang-si" style="display:none">D-061 Postopek 014</span></span>
+              <span class="doc-chip chip-blue"><span class="lang-en">D-067 Internal Audit</span><span class="lang-si" style="display:none">D-067 Notranja revizija</span></span>
+              <span class="doc-chip chip-blue" style="opacity:0.6"><span class="lang-en">+11 more</span><span class="lang-si" style="display:none">+11 ve&#269;</span></span>
             </div>
           </div>
           <div class="pipe-stage">
-            <div class="pipe-label">Flagged <span class="pipe-count">3</span></div>
+            <div class="pipe-label"><span class="lang-en">Flagged</span><span class="lang-si" style="display:none">Ozna&#269;eno</span> <span class="pipe-count">3</span></div>
             <div class="pipe-items">
-              <span class="doc-chip chip-red">D-028 Medication SOP</span>
-              <span class="doc-chip chip-red">D-064 Oversight v2</span>
-              <span class="doc-chip chip-red">D-072 Post-market</span>
+              <span class="doc-chip chip-red"><span class="lang-en">D-028 Medication SOP</span><span class="lang-si" style="display:none">D-028 SOP zdravila</span></span>
+              <span class="doc-chip chip-red"><span class="lang-en">D-064 Oversight v2</span><span class="lang-si" style="display:none">D-064 Nadzor v2</span></span>
+              <span class="doc-chip chip-red"><span class="lang-en">D-072 Post-market</span><span class="lang-si" style="display:none">D-072 Po-tržni nadzor</span></span>
             </div>
           </div>
           <div class="pipe-stage">
-            <div class="pipe-label">Intake <span class="pipe-count">9</span></div>
+            <div class="pipe-label"><span class="lang-en">Intake</span><span class="lang-si" style="display:none">Vnos</span> <span class="pipe-count">9</span></div>
             <div class="pipe-items">
-              <span class="doc-chip chip-teal">D-074 New policy</span>
-              <span class="doc-chip chip-teal">D-075 Amendment</span>
-              <span class="doc-chip chip-teal" style="opacity:0.6">+7 queued</span>
+              <span class="doc-chip chip-teal"><span class="lang-en">D-074 New policy</span><span class="lang-si" style="display:none">D-074 Nov pravilnik</span></span>
+              <span class="doc-chip chip-teal"><span class="lang-en">D-075 Amendment</span><span class="lang-si" style="display:none">D-075 Dopolnitev</span></span>
+              <span class="doc-chip chip-teal" style="opacity:0.6"><span class="lang-en">+7 queued</span><span class="lang-si" style="display:none">+7 v vrsti</span></span>
             </div>
           </div>
         </div>
       </div>
       <div class="module-footer">
-        <span>80 documents across 6 lifecycle phases</span>
-        <span class="module-tag">Drag-and-drop import</span>
+        <span><span class="lang-en">80 documents across 6 lifecycle phases</span><span class="lang-si" style="display:none">80 dokumentov v 6 fazah življenjskega cikla</span></span>
+        <span class="module-tag"><span class="lang-en">Drag-and-drop import</span><span class="lang-si" style="display:none">Uvoz s povleci-in-spusti</span></span>
       </div>
     </div>
 
     <!-- MODULE 2: Compliance Findings -->
     <div class="module">
       <div class="module-header">
-        <div class="module-num">Module 2</div>
-        <div class="module-title">Compliance Audit Tracker</div>
-        <div class="module-desc">AI-detected findings with severity, status tracking, and fix verification.</div>
+        <div class="module-num"><span class="lang-en">Module 2</span><span class="lang-si" style="display:none">Modul 2</span></div>
+        <div class="module-title"><span class="lang-en">Compliance Audit Tracker</span><span class="lang-si" style="display:none">Sledilnik revizije skladnosti</span></div>
+        <div class="module-desc"><span class="lang-en">AI-detected findings with severity, status tracking, and fix verification.</span><span class="lang-si" style="display:none">AI-zaznane ugotovitve z resnostjo, sledenjem statusa in verifikacijo popravkov.</span></div>
       </div>
       <div class="module-screen">
         <div class="findings-stats">
-          <div class="find-stat"><div class="find-stat-num" style="color:var(--red)">7</div><div class="find-stat-label">Critical</div></div>
-          <div class="find-stat"><div class="find-stat-num" style="color:var(--orange)">23</div><div class="find-stat-label">High</div></div>
-          <div class="find-stat"><div class="find-stat-num" style="color:var(--yellow)">51</div><div class="find-stat-label">Medium</div></div>
-          <div class="find-stat"><div class="find-stat-num" style="color:var(--green)">37</div><div class="find-stat-label">Fixed</div></div>
+          <div class="find-stat"><div class="find-stat-num" style="color:var(--red)">7</div><div class="find-stat-label"><span class="lang-en">Critical</span><span class="lang-si" style="display:none">Kriti&#269;no</span></div></div>
+          <div class="find-stat"><div class="find-stat-num" style="color:var(--orange)">23</div><div class="find-stat-label"><span class="lang-en">High</span><span class="lang-si" style="display:none">Visoko</span></div></div>
+          <div class="find-stat"><div class="find-stat-num" style="color:var(--yellow)">51</div><div class="find-stat-label"><span class="lang-en">Medium</span><span class="lang-si" style="display:none">Srednje</span></div></div>
+          <div class="find-stat"><div class="find-stat-num" style="color:var(--green)">37</div><div class="find-stat-label"><span class="lang-en">Fixed</span><span class="lang-si" style="display:none">Popravljeno</span></div></div>
         </div>
         <div class="findings-list">
           <div class="finding-row">
             <div class="finding-id">#001</div>
-            <div class="finding-text">Governance body mandate exceeds legislative authority (Art. 12)</div>
-            <div><span class="sev-badge sev-critical">Critical</span></div>
-            <div><span class="status-badge st-fixed">Fixed</span></div>
+            <div class="finding-text"><span class="lang-en">Governance body mandate exceeds legislative authority (Art. 12)</span><span class="lang-si" style="display:none">Mandat organa upravljanja presega zakonsko pooblastilo (&#269;l. 12)</span></div>
+            <div><span class="sev-badge sev-critical"><span class="lang-en">Critical</span><span class="lang-si" style="display:none">Kriti&#269;no</span></span></div>
+            <div><span class="status-badge st-fixed"><span class="lang-en">Fixed</span><span class="lang-si" style="display:none">Popravljeno</span></span></div>
           </div>
           <div class="finding-row">
             <div class="finding-id">#002</div>
-            <div class="finding-text">Document references repealed regulation (Official Gazette 45/2019)</div>
-            <div><span class="sev-badge sev-critical">Critical</span></div>
-            <div><span class="status-badge st-fixed">Fixed</span></div>
+            <div class="finding-text"><span class="lang-en">Document references repealed regulation (Official Gazette 45/2019)</span><span class="lang-si" style="display:none">Dokument se sklicuje na razveljavljeni predpis (Ur.l. 45/2019)</span></div>
+            <div><span class="sev-badge sev-critical"><span class="lang-en">Critical</span><span class="lang-si" style="display:none">Kriti&#269;no</span></span></div>
+            <div><span class="status-badge st-fixed"><span class="lang-en">Fixed</span><span class="lang-si" style="display:none">Popravljeno</span></span></div>
           </div>
           <div class="finding-row">
             <div class="finding-id">#003</div>
-            <div class="finding-text">Internal procedure contradicts national patient rights framework</div>
-            <div><span class="sev-badge sev-critical">Critical</span></div>
-            <div><span class="status-badge st-wip">In Progress</span></div>
+            <div class="finding-text"><span class="lang-en">Internal procedure contradicts national patient rights framework</span><span class="lang-si" style="display:none">Interni postopek v nasprotju z nacionalnim okvirom pravic pacientov</span></div>
+            <div><span class="sev-badge sev-critical"><span class="lang-en">Critical</span><span class="lang-si" style="display:none">Kriti&#269;no</span></span></div>
+            <div><span class="status-badge st-wip"><span class="lang-en">In Progress</span><span class="lang-si" style="display:none">V obdelavi</span></span></div>
           </div>
           <div class="finding-row">
             <div class="finding-id">#017</div>
-            <div class="finding-text">Risk register missing probability assessment for 3 categories</div>
-            <div><span class="sev-badge sev-high">High</span></div>
-            <div><span class="status-badge st-fixed">Fixed</span></div>
+            <div class="finding-text"><span class="lang-en">Risk register missing probability assessment for 3 categories</span><span class="lang-si" style="display:none">Register tveganj brez ocene verjetnosti za 3 kategorije</span></div>
+            <div><span class="sev-badge sev-high"><span class="lang-en">High</span><span class="lang-si" style="display:none">Visoko</span></span></div>
+            <div><span class="status-badge st-fixed"><span class="lang-en">Fixed</span><span class="lang-si" style="display:none">Popravljeno</span></span></div>
           </div>
           <div class="finding-row">
             <div class="finding-id">#024</div>
-            <div class="finding-text">Fire safety protocol references wrong building zone designation</div>
-            <div><span class="sev-badge sev-high">High</span></div>
-            <div><span class="status-badge st-open">Open</span></div>
+            <div class="finding-text"><span class="lang-en">Fire safety protocol references wrong building zone designation</span><span class="lang-si" style="display:none">Požarni protokol navaja napa&#269;no oznako požarnega sektorja</span></div>
+            <div><span class="sev-badge sev-high"><span class="lang-en">High</span><span class="lang-si" style="display:none">Visoko</span></span></div>
+            <div><span class="status-badge st-open"><span class="lang-en">Open</span><span class="lang-si" style="display:none">Odprto</span></span></div>
           </div>
           <div class="finding-row">
             <div class="finding-id">#031</div>
-            <div class="finding-text">GDPR data retention clause missing from employment contract template</div>
-            <div><span class="sev-badge sev-high">High</span></div>
-            <div><span class="status-badge st-wip">In Progress</span></div>
+            <div class="finding-text"><span class="lang-en">GDPR data retention clause missing from employment contract template</span><span class="lang-si" style="display:none">Klavzula o hrambi podatkov (GDPR) manjka v predlogi pogodbe o zaposlitvi</span></div>
+            <div><span class="sev-badge sev-high"><span class="lang-en">High</span><span class="lang-si" style="display:none">Visoko</span></span></div>
+            <div><span class="status-badge st-wip"><span class="lang-en">In Progress</span><span class="lang-si" style="display:none">V obdelavi</span></span></div>
           </div>
           <div class="finding-row">
             <div class="finding-id">#042</div>
-            <div class="finding-text">Version control: two editions of same policy active simultaneously</div>
-            <div><span class="sev-badge sev-medium">Medium</span></div>
-            <div><span class="status-badge st-fixed">Fixed</span></div>
+            <div class="finding-text"><span class="lang-en">Version control: two editions of same policy active simultaneously</span><span class="lang-si" style="display:none">Upravljanje verzij: dve izdaji istega pravilnika aktivni hkrati</span></div>
+            <div><span class="sev-badge sev-medium"><span class="lang-en">Medium</span><span class="lang-si" style="display:none">Srednje</span></span></div>
+            <div><span class="status-badge st-fixed"><span class="lang-en">Fixed</span><span class="lang-si" style="display:none">Popravljeno</span></span></div>
           </div>
           <div class="finding-row">
             <div class="finding-id">#058</div>
-            <div class="finding-text">Cross-reference to procedure D-031 uses outdated paragraph numbering</div>
-            <div><span class="sev-badge sev-medium">Medium</span></div>
-            <div><span class="status-badge st-open">Open</span></div>
+            <div class="finding-text"><span class="lang-en">Cross-reference to procedure D-031 uses outdated paragraph numbering</span><span class="lang-si" style="display:none">Navzkrižna referenca na postopek D-031 uporablja zastarelo številčenje odstavkov</span></div>
+            <div><span class="sev-badge sev-medium"><span class="lang-en">Medium</span><span class="lang-si" style="display:none">Srednje</span></span></div>
+            <div><span class="status-badge st-open"><span class="lang-en">Open</span><span class="lang-si" style="display:none">Odprto</span></span></div>
           </div>
           <div class="finding-row">
             <div class="finding-id">#073</div>
-            <div class="finding-text">Training record format inconsistent with quality management appendix</div>
-            <div><span class="sev-badge sev-low">Low</span></div>
-            <div><span class="status-badge st-fixed">Fixed</span></div>
+            <div class="finding-text"><span class="lang-en">Training record format inconsistent with quality management appendix</span><span class="lang-si" style="display:none">Format evidence usposabljanja neskladen s prilogo upravljanja kakovosti</span></div>
+            <div><span class="sev-badge sev-low"><span class="lang-en">Low</span><span class="lang-si" style="display:none">Nizko</span></span></div>
+            <div><span class="status-badge st-fixed"><span class="lang-en">Fixed</span><span class="lang-si" style="display:none">Popravljeno</span></span></div>
           </div>
         </div>
       </div>
       <div class="module-footer">
-        <span>118 findings across ~80 documents</span>
-        <span class="module-tag">Two-person verification workflow</span>
+        <span><span class="lang-en">118 findings across ~80 documents</span><span class="lang-si" style="display:none">118 ugotovitev v ~80 dokumentih</span></span>
+        <span class="module-tag"><span class="lang-en">Two-person verification workflow</span><span class="lang-si" style="display:none">Dvostopenjska verifikacija</span></span>
       </div>
     </div>
 
     <!-- MODULE 3: Entropy Matrix -->
     <div class="module">
       <div class="module-header">
-        <div class="module-num">Module 3</div>
-        <div class="module-title">Document Entropy Matrix</div>
-        <div class="module-desc">Cross-reference density heatmap — shows which documents create the most regulatory risk when changed.</div>
+        <div class="module-num"><span class="lang-en">Module 3</span><span class="lang-si" style="display:none">Modul 3</span></div>
+        <div class="module-title"><span class="lang-en">Document Entropy Matrix</span><span class="lang-si" style="display:none">Matrika entropije dokumentov</span></div>
+        <div class="module-desc"><span class="lang-en">Cross-reference density heatmap — shows which documents create the most regulatory risk when changed.</span><span class="lang-si" style="display:none">Toplotna karta gostote navzkrižnih referenc — pokaže, kateri dokumenti ustvarjajo najve&#269; regulatornega tveganja ob spremembi.</span></div>
       </div>
       <div class="module-screen">
         <div class="matrix-wrap">
           <table class="matrix">
             <thead>
               <tr>
-                <th class="row-h">Document</th>
-                <th>Legislation</th>
-                <th>Cross-refs</th>
-                <th>Versions</th>
-                <th>Findings</th>
-                <th>Entropy</th>
+                <th class="row-h"><span class="lang-en">Document</span><span class="lang-si" style="display:none">Dokument</span></th>
+                <th><span class="lang-en">Legislation</span><span class="lang-si" style="display:none">Zakonodaja</span></th>
+                <th><span class="lang-en">Cross-refs</span><span class="lang-si" style="display:none">Navzkrižne ref.</span></th>
+                <th><span class="lang-en">Versions</span><span class="lang-si" style="display:none">Verzije</span></th>
+                <th><span class="lang-en">Findings</span><span class="lang-si" style="display:none">Ugotovitve</span></th>
+                <th><span class="lang-en">Entropy</span><span class="lang-si" style="display:none">Entropija</span></th>
               </tr>
             </thead>
             <tbody>
-              <tr><td class="row-h">D-001 Statute</td><td class="h2">3</td><td class="h4">12</td><td class="h2">4</td><td class="h1">1</td><td class="h4">8.7</td></tr>
-              <tr><td class="row-h">D-004 Quality Manual</td><td class="h3">5</td><td class="h3">8</td><td class="h3">6</td><td class="h2">3</td><td class="h4">7.9</td></tr>
-              <tr><td class="row-h">D-009 Patient Rights</td><td class="h4">7</td><td class="h2">4</td><td class="h1">2</td><td class="h3">5</td><td class="h3">7.2</td></tr>
-              <tr><td class="row-h">D-012 Expert Policy</td><td class="h2">2</td><td class="h2">3</td><td class="h1">1</td><td class="h1">0</td><td class="h1">3.1</td></tr>
-              <tr><td class="row-h">D-023 Privacy Policy</td><td class="h3">4</td><td class="h1">2</td><td class="h2">3</td><td class="h2">2</td><td class="h2">5.4</td></tr>
-              <tr><td class="row-h">D-028 Medication SOP</td><td class="h4">6</td><td class="h3">6</td><td class="h3">5</td><td class="h4">7</td><td class="h4">9.2</td></tr>
-              <tr><td class="row-h">D-041 Fire Safety</td><td class="h1">1</td><td class="h1">1</td><td class="h2">3</td><td class="h2">2</td><td class="h1">2.8</td></tr>
-              <tr><td class="row-h">D-064 Oversight v2</td><td class="h3">4</td><td class="h3">7</td><td class="h4">8</td><td class="h3">4</td><td class="h4">8.4</td></tr>
+              <tr><td class="row-h"><span class="lang-en">D-001 Statute</span><span class="lang-si" style="display:none">D-001 Statut</span></td><td class="h2">3</td><td class="h4">12</td><td class="h2">4</td><td class="h1">1</td><td class="h4">8.7</td></tr>
+              <tr><td class="row-h"><span class="lang-en">D-004 Quality Manual</span><span class="lang-si" style="display:none">D-004 Priročnik kakovosti</span></td><td class="h3">5</td><td class="h3">8</td><td class="h3">6</td><td class="h2">3</td><td class="h4">7.9</td></tr>
+              <tr><td class="row-h"><span class="lang-en">D-009 Patient Rights</span><span class="lang-si" style="display:none">D-009 Pravice pacientov</span></td><td class="h4">7</td><td class="h2">4</td><td class="h1">2</td><td class="h3">5</td><td class="h3">7.2</td></tr>
+              <tr><td class="row-h"><span class="lang-en">D-012 Expert Policy</span><span class="lang-si" style="display:none">D-012 Strokovni pravilnik</span></td><td class="h2">2</td><td class="h2">3</td><td class="h1">1</td><td class="h1">0</td><td class="h1">3.1</td></tr>
+              <tr><td class="row-h"><span class="lang-en">D-023 Privacy Policy</span><span class="lang-si" style="display:none">D-023 Pravilnik o zasebnosti</span></td><td class="h3">4</td><td class="h1">2</td><td class="h2">3</td><td class="h2">2</td><td class="h2">5.4</td></tr>
+              <tr><td class="row-h"><span class="lang-en">D-028 Medication SOP</span><span class="lang-si" style="display:none">D-028 SOP zdravila</span></td><td class="h4">6</td><td class="h3">6</td><td class="h3">5</td><td class="h4">7</td><td class="h4">9.2</td></tr>
+              <tr><td class="row-h"><span class="lang-en">D-041 Fire Safety</span><span class="lang-si" style="display:none">D-041 Požarna varnost</span></td><td class="h1">1</td><td class="h1">1</td><td class="h2">3</td><td class="h2">2</td><td class="h1">2.8</td></tr>
+              <tr><td class="row-h"><span class="lang-en">D-064 Oversight v2</span><span class="lang-si" style="display:none">D-064 Nadzor v2</span></td><td class="h3">4</td><td class="h3">7</td><td class="h4">8</td><td class="h3">4</td><td class="h4">8.4</td></tr>
             </tbody>
           </table>
         </div>
       </div>
       <div class="module-footer">
-        <span>Entropy score = weighted risk of cascading changes</span>
-        <span class="module-tag">Change-impact predictor</span>
+        <span><span class="lang-en">Entropy score = weighted risk of cascading changes</span><span class="lang-si" style="display:none">Ocena entropije = uteženo tveganje kaskadnih sprememb</span></span>
+        <span class="module-tag"><span class="lang-en">Change-impact predictor</span><span class="lang-si" style="display:none">Napovedovalec vpliva sprememb</span></span>
       </div>
     </div>
 
     <!-- MODULE 4: Legal Network -->
     <div class="module">
       <div class="module-header">
-        <div class="module-num">Module 4</div>
-        <div class="module-title">Legislative Dependency Graph</div>
-        <div class="module-desc">When a law changes, every dependent document lights up. Legislation as configuration.</div>
+        <div class="module-num"><span class="lang-en">Module 4</span><span class="lang-si" style="display:none">Modul 4</span></div>
+        <div class="module-title"><span class="lang-en">Legislative Dependency Graph</span><span class="lang-si" style="display:none">Graf zakonodajnih odvisnosti</span></div>
+        <div class="module-desc"><span class="lang-en">When a law changes, every dependent document lights up. Legislation as configuration.</span><span class="lang-si" style="display:none">Ko se zakon spremeni, se vsi odvisni dokumenti osvetlijo. Zakonodaja kot konfiguracija.</span></div>
       </div>
       <div class="module-screen">
         <canvas class="legal-canvas" id="legalCanvas"></canvas>
       </div>
       <div class="module-footer">
-        <span>Automatic impact analysis on legislative change</span>
-        <span class="module-tag">Law-change alerts</span>
+        <span><span class="lang-en">Automatic impact analysis on legislative change</span><span class="lang-si" style="display:none">Avtomatska analiza vpliva ob spremembi zakonodaje</span></span>
+        <span class="module-tag"><span class="lang-en">Law-change alerts</span><span class="lang-si" style="display:none">Opozorila ob spremembi zakonodaje</span></span>
       </div>
     </div>
 
   </div>
 
-  <p class="disclaimer">All document names, finding descriptions, and data shown are anonymized demonstrations of the VEGA governance architecture. No institutional data is displayed. The system has been deployed in a public-sector compliance audit covering ~80 regulatory documents with 100+ findings.</p>
+  <div class="disclaimer"><span class="lang-en">All document names, finding descriptions, and data shown are anonymized demonstrations of the VEGA governance architecture. No institutional data is displayed. The system has been deployed in a public-sector compliance audit covering ~80 regulatory documents with 100+ findings.</span><span class="lang-si" style="display:none">Vsa imena dokumentov, opisi ugotovitev in prikazani podatki so anonimizirane predstavitve arhitekture VEGA. Nobeni institucionalni podatki niso prikazani. Sistem je bil uveden v reviziji skladnosti javnega sektorja z ~80 regulatornimi dokumenti in 100+ ugotovitvami.</span></div>
 </div>
 
 <script>
+let currentLang = 'en';
+
 const canvas = document.getElementById('legalCanvas');
 const ctx = canvas.getContext('2d');
 
@@ -408,10 +413,10 @@ const W = canvas.width / 2;
 const H = 340;
 
 const laws = [
-  { id: 'L1', label: 'Patient Rights Act', x: W * 0.15, y: 50 },
-  { id: 'L2', label: 'Health Services Act', x: W * 0.42, y: 40 },
-  { id: 'L3', label: 'GDPR / Data Protection', x: W * 0.72, y: 55, alert: true },
-  { id: 'L4', label: 'Fire Safety Regulation', x: W * 0.92, y: 45 },
+  { id: 'L1', label: 'Patient Rights Act', label_si: 'Zakon o pacientovih pravicah', x: W * 0.15, y: 50 },
+  { id: 'L2', label: 'Health Services Act', label_si: 'Zakon o zdravstveni dejavnosti', x: W * 0.42, y: 40 },
+  { id: 'L3', label: 'GDPR / Data Protection', label_si: 'GDPR / Varstvo podatkov', x: W * 0.72, y: 55, alert: true },
+  { id: 'L4', label: 'Fire Safety Regulation', label_si: 'Požarni pravilnik', x: W * 0.92, y: 45 },
 ];
 
 const docs = [
@@ -464,7 +469,7 @@ function draw() {
     ctx.fillStyle = colors.textMuted;
     ctx.font = '10px Segoe UI, system-ui';
     ctx.textAlign = 'center';
-    ctx.fillText(law.label, law.x, law.y - 18);
+    ctx.fillText(currentLang === 'si' ? law.label_si : law.label, law.x, law.y - 18);
   });
 
   docs.forEach(doc => {
@@ -507,13 +512,24 @@ function draw() {
   ctx.textAlign = 'left';
 
   ctx.beginPath(); ctx.arc(20, ly, 5, 0, Math.PI*2); ctx.fillStyle = colors.law; ctx.globalAlpha=0.3; ctx.fill(); ctx.globalAlpha=1; ctx.strokeStyle = colors.law; ctx.lineWidth=1; ctx.stroke();
-  ctx.fillStyle = colors.textMuted; ctx.fillText('Law', 30, ly + 4);
+  ctx.fillStyle = colors.textMuted; ctx.fillText(currentLang === 'si' ? 'Zakon' : 'Law', 30, ly + 4);
 
   ctx.beginPath(); ctx.arc(70, ly, 5, 0, Math.PI*2); ctx.fillStyle = colors.doc; ctx.globalAlpha=0.3; ctx.fill(); ctx.globalAlpha=1; ctx.strokeStyle = colors.doc; ctx.lineWidth=1; ctx.stroke();
-  ctx.fillStyle = colors.textMuted; ctx.fillText('Document', 80, ly + 4);
+  ctx.fillStyle = colors.textMuted; ctx.fillText(currentLang === 'si' ? 'Dokument' : 'Document', 80, ly + 4);
 
   ctx.beginPath(); ctx.arc(150, ly, 5, 0, Math.PI*2); ctx.fillStyle = colors.alert; ctx.globalAlpha=0.3; ctx.fill(); ctx.globalAlpha=1; ctx.strokeStyle = colors.alert; ctx.lineWidth=1.5; ctx.stroke();
-  ctx.fillStyle = colors.textMuted; ctx.fillText('Affected by GDPR change', 160, ly + 4);
+  ctx.fillStyle = colors.textMuted; ctx.fillText(currentLang === 'si' ? 'Prizadeto ob spremembi GDPR' : 'Affected by GDPR change', 160, ly + 4);
+}
+
+function setLang(lang){
+  currentLang = lang;
+  document.querySelectorAll('.lang-en').forEach(el=>el.style.display=lang==='en'?'':'none');
+  document.querySelectorAll('.lang-si').forEach(el=>el.style.display=lang==='si'?'':'none');
+  document.getElementById('btn-en').style.background=lang==='en'?'#1a56db':'#2a2a4a';
+  document.getElementById('btn-en').style.color=lang==='en'?'#fff':'#9ba3b5';
+  document.getElementById('btn-si').style.background=lang==='si'?'#1a56db':'#2a2a4a';
+  document.getElementById('btn-si').style.color=lang==='si'?'#fff':'#9ba3b5';
+  draw();
 }
 
 draw();
