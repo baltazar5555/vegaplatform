@@ -289,7 +289,16 @@ var currentLang = 'en';
 
 var inTD = location.pathname.replace(/\\/g,'/').indexOf('/TD/') !== -1;
 var basePath = inTD ? '' : 'TD/';
-function openDoc(f){ window.open(basePath + f, '_blank'); }
+function openDoc(f){
+  var isDemo = location.hostname.indexOf('vegaplatform') !== -1 || location.hostname.indexOf('github.io') !== -1;
+  if (isDemo) {
+    alert(currentLang === 'si'
+      ? 'DEMO — Ta dokument ni na voljo v javni predstavitvi.\nDejanski dokumenti so dostopni samo znotraj ustanove.'
+      : 'DEMO — This document is not available in the public demo.\nActual documents are only accessible within the institution.');
+    return;
+  }
+  window.open(basePath + f, '_blank');
+}
 
 function updateDate() {
   var locale = currentLang === 'en' ? 'en-GB' : 'sl-SI';
